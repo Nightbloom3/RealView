@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { TestData } from "../Charts/Data/TestData";
 import { PieData } from "../Charts/Data/PieData";
 import { Chart as ChartJS } from "chart.js/auto";
+// ^^^^^^ Må ikke slettes - ellers virker siden ikke ^^^^^^^--- import { Chart as ChartJS } from "chart.js/auto";
 
 export function Home() {
   const [testData, setTestData] = useState({
