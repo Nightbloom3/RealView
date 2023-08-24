@@ -89,11 +89,11 @@ export default function FrontPageContent() {
     });
   }, []);
 
-  const pieChartWidth = 300;
-  const pieChartHeight = 200;
+  const pieChartWidth = 500;
+  const pieChartHeight = 300;
 
   return (
-    <div class="grid-container">
+    <div class="FrontPage_Content_Grid-Container">
       <div class="grid-item">
         <PieChart ChartData={pieData} width={pieChartWidth} height={pieChartHeight} />
       </div>

@@ -5,31 +5,13 @@ import FrontPageContent from "./FrontPageContent";
 import Footer from "../Footer";
 import "./FrontPage.css";
 
-// function FrontPage() {
-//   return (
-//     <div className="FrontPage">
-//       <Header />
-//       <Navigation />
-//       <div className="ContentWrapper">
-//         <div className="ButtonWrapper">
-//           <button className="Button">Click Me</button>
-//         </div>
-//         <div className="ChartsContainer">
-//           <FrontPageContent />
-//         </div>
-//       </div>
-//       <Footer />
-//     </div>
-//   );
-// }
-
 function FrontPage() {
   return (
-    <div className="FrontPage">
-      <Header />
-      <Navigation />
-      <FrontPageContent />
-      <Footer />
+    <div className="FrontPageContainer">
+      <div class="Header"><Header/></div>
+      <div class="Navigation"><Navigation/></div>
+      <div class="FrontPageContent"><FrontPageContent/></div>
+      <div class="Footer"><Footer/></div>
     </div>
   );
 }
