@@ -1,4 +1,4 @@
-/* Reset some default styling */
+Reset some default styling
 body, h1, h2, p, ul, li {
   margin: 0;
   padding: 0;
@@ -12,8 +12,16 @@ header {
 }
 
 nav {
-  background-color: #444;
-  padding: 1rem;
+  width: 200px;
+  height: 100%;
+  background-color: #888282;
+  position: fixed;
+  top: 20;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 20px;
 }
 
 ul {
@@ -29,13 +37,36 @@ ul li a {
   color: #222;
 }
 
-main {
-  padding: 2rem;
-}
-
 footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
   background-color: #555;
   color: white;
   padding: 1rem;
   text-align: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  max-width: 70%; /* Set a maximum width for the container */
+  margin: 0 auto; /* Center the container horizontally */
+  background-color: #2196F3;
+  padding: 10px;
+  justify-content: center;
+  border: 5px solid #6f1515;
+  align-items: center;
+}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 20px 0;
+}
+
+.item1 {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }

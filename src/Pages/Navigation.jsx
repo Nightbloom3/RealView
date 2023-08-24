@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import FrontPage from './FrontPage/FrontPage';
-import MyProfilePage from "../Pages/MyProfilePage";
 
 function Navigation() {
   return (

@@ -27,6 +27,26 @@ export default function FrontPageContent() {
     ],
   });
 
+  const [pieData1, setPieData1] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "",
+        data: [],
+      },
+    ],
+  });
+
+  const [pieData3, setPieData3] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "",
+        data: [],
+      },
+    ],
+  });
+
   useEffect(() => {
     setTestData({
       labels: TestData.map((data) => data.year),
@@ -47,16 +67,45 @@ export default function FrontPageContent() {
         },
       ],
     });
+
+    setPieData1({
+      labels: PieData.map((data) => data.realtor),
+      datasets: [
+        {
+          label: "% Market Share",
+          data: PieData.map((data) => data.MarketShare),
+        },
+      ],
+    });
+
+    setPieData3({
+      labels: PieData.map((data) => data.realtor),
+      datasets: [
+        {
+          label: "% Market Share",
+          data: PieData.map((data) => data.MarketShare),
+        },
+      ],
+    });
   }, []);
 
-  const pieChartWidth = 300; // Set your desired width
-  const pieChartHeight = 200; // Set your desired height
-
+  const pieChartWidth = 300;
+  const pieChartHeight = 200;
 
   return (
-    <div>
-      <BarChart ChartData={testData} width={pieChartWidth} height={pieChartHeight} />
-      <PieChart ChartData={pieData} width={pieChartWidth} height={pieChartHeight} />
+    <div class="grid-container">
+      <div class="grid-item">
+        <PieChart ChartData={pieData} width={pieChartWidth} height={pieChartHeight} />
+      </div>
+      <div class="grid-item">
+        <PieChart ChartData={pieData1} width={pieChartWidth} height={pieChartHeight} />
+      </div>
+      <div class="grid-item">
+        <PieChart ChartData={pieData3} width={pieChartWidth} height={pieChartHeight} />
+      </div>
+      <div class="grid-item">
+        <BarChart ChartData={testData} width={pieChartWidth} height={pieChartHeight} />
+      </div>
     </div>
   );
 }
