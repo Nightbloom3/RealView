@@ -6,7 +6,7 @@ import { PieData } from "../Charts/Data/PieData";
 import { Chart as ChartJS } from "chart.js/auto";
 // ^^^^^^ Må ikke slettes - ellers virker siden ikke ^^^^^^^--- import { Chart as ChartJS } from "chart.js/auto";
 
-export function Home() {
+export default function FrontPageContent() {
   const [testData, setTestData] = useState({
     labels: [],
     datasets: [
