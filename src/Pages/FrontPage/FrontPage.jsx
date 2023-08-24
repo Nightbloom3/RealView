@@ -1,5 +1,4 @@
 import React from "react";
-import { Routes, Route, Link } from 'react-router-dom';
 import Header from "../Header";
 import Navigation from "../Navigation";
 import FrontPageContent from "./FrontPageContent";
@@ -15,7 +14,7 @@ function FrontPage() {
         <FrontPageContent />
         <Footer />
       </div>
-    </div>   
+    </div>
   );
 }
 
