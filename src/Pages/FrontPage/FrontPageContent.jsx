@@ -1,13 +1,17 @@
 import BarChart from "../../Charts/BarChart";
 import PieChart from "../../Charts/PieChart";
+import LineChart from "../../Charts/LineChart";
+import ComparisonChart from "../../Charts/ComparisonChart";
 import { useState, useEffect } from "react";
-import { TestData } from "../../Charts/Data/TestData";
+import { BarData } from "../../Charts/Data/BarData";
 import { PieData } from "../../Charts/Data/PieData";
+import { LineData } from "../../Charts/Data/LineData";
+import { ComparisonData } from "../../Charts/Data/ComparisonData";
 import { Chart as ChartJS } from "chart.js/auto";
 // ^^^^^^ Må ikke slettes - ellers virker siden ikke ^^^^^^^--- import { Chart as ChartJS } from "chart.js/auto";
 
 export default function FrontPageContent() {
-  const [testData, setTestData] = useState({
+  const [barData, setBarData] = useState({
     labels: [],
     datasets: [
       {
@@ -27,13 +31,37 @@ export default function FrontPageContent() {
     ],
   });
 
+  const [lineData, setLineData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "",
+        data: [],
+      },
+    ],
+  });
+
+  const [comparisonData, setComparisonData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "",
+        data: [],
+      },
+      {
+        label: "",
+        data: [],
+      },
+    ],
+  });
+
   useEffect(() => {
-    setTestData({
-      labels: TestData.map((data) => data.year),
+    setBarData({
+      labels: BarData.map((data) => data.year),
       datasets: [
         {
-          label: "# Houses Sold",
-          data: TestData.map((data) => data.HousesSold),
+          label: "# Houses Acquired",
+          data: BarData.map((data) => data.housesAcquired),
         },
       ],
     });
@@ -47,16 +75,67 @@ export default function FrontPageContent() {
         },
       ],
     });
+
+    setLineData({
+      labels: LineData.map((data) => data.year),
+      datasets: [
+        {
+          label: "# Houses Sold",
+          data: LineData.map((data) => data.HousesSold),
+        },
+      ],
+    });
+
+    setComparisonData({
+      labels: ComparisonData.map((data) => data.year),
+      datasets: [
+        {
+          label: "# Houses Acquired",
+          data: ComparisonData.map((data) => data.housesAcquired),
+        },
+        {
+          label: "# Houses Sold",
+          data: ComparisonData.map((data) => data.HousesSold),
+        },
+      ],
+    });
   }, []);
 
-  const pieChartWidth = 300; // Set your desired width
-  const pieChartHeight = 200; // Set your desired height
-
+  const pieChartWidth = 500; // Set your desired width
+  const pieChartHeight = 500; // Set your desired height
+  const ComparisonStyling = {
+    MaintainAspectRatio: true,
+    indexAxis: "y",
+    scales: {
+      xAxes: {
+        max: 500,
+      },
+    },
+  };
 
   return (
     <div>
-      <BarChart ChartData={testData} width={pieChartWidth} height={pieChartHeight} />
-      <PieChart ChartData={pieData} width={pieChartWidth} height={pieChartHeight} />
+      <BarChart
+        ChartData={barData}
+        width={pieChartWidth}
+        height={pieChartHeight}
+      />
+      <PieChart
+        ChartData={pieData}
+        width={pieChartWidth}
+        height={pieChartHeight}
+      />
+      <LineChart
+        ChartData={lineData}
+        width={pieChartWidth}
+        height={pieChartHeight}
+      />
+      <ComparisonChart
+        ChartData={comparisonData}
+        width={pieChartWidth}
+        height={pieChartHeight}
+        StylingOptions={ComparisonStyling}
+      />
     </div>
   );
 }
