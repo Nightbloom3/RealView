@@ -4,7 +4,6 @@ import MyProfilePage from "./Pages/MyProfilePage";
 import Header from "./Pages/Header";
 import Navigation from "./Pages/Navigation";
 import Footer from "./Pages/Footer";
-// import "./Pages/FrontPage/FrontPage.css"
 import './App.css';
 
 function App() {
