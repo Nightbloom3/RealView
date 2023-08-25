@@ -1,5 +1,5 @@
 import ComparisonChart from "../../Charts/ComparisonChart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProfilePageData } from "../../Charts/Data/ProfilePageData";
 import { Chart as ChartJS } from "chart.js/auto";
 // ^^^^^^ Må ikke slettes - ellers virker siden ikke ^^^^^^^--- import { Chart as ChartJS } from "chart.js/auto";
@@ -35,7 +35,28 @@ export default function MyProfilePageContent() {
 
     const [selectChoice, setSelectChoice] = useState("")
 
-    function handleChoiceChange(e) {
+    useEffect(() => {
+        if (selectChoice) {
+            const dynamicKey = selectChoice; // Use the selected value as the key
+            const updatedData = {
+                ...profileData,
+                datasets: profileData.datasets.map((dataset) => {
+                    if (dataset.label === "# Houses Sold" || dataset.label === "Avg Earnings") {
+                        // Keep the existing datasets
+                        return dataset;
+                    }
+                    return {
+                        ...dataset,
+                        label: selectChoice, // Update the label
+                        data: ProfilePageData.map((data) => data[dynamicKey]),
+                    };
+                }),
+            };
+            setProfileData(updatedData);
+        }
+    }, [selectChoice, profileData]); // Add profileData as a dependency to avoid stale data
+
+    function HandleChoiceChange(e) {
         setSelectChoice(e.target.value)
     }
 
@@ -52,7 +73,7 @@ export default function MyProfilePageContent() {
 
             <div className="SelectBox">
                 <p>Compare houses Sold to:</p>
-                <select id="selectChoices" onChange={handleChoiceChange}>
+                <select id="selectChoices" onChange={HandleChoiceChange}>
                     <option value="HousesAcquired"> Houses Acquired</option>
                     <option value="HousesAvgPriceSold">Average sale price of houses</option>
                     <option value="HousesAvgEarnings">Average earnings on house sales</option>
