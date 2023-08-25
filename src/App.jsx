@@ -1,20 +1,33 @@
-import { Routes, Route, Link } from 'react-router-dom';
-import FrontPage from './Pages/FrontPage/FrontPage';
-import MyProfilePage from './Pages/MyProfilePage';
-
+import { Routes, Route } from "react-router-dom";
+import FrontPage from "./Pages/FrontPage/FrontPage";
+import MyProfilePage from "./Pages/MyProfilePage";
+import Header from "./Pages/Header";
+import Navigation from "./Pages/Navigation";
+import Footer from "./Pages/Footer";
+import "./Pages/FrontPage/FrontPage.css"
 
 function App() {
-  return (    
+  return (
     <div>
-
-      <div className="App">
-        <FrontPage />
+      <div className="Header">
+      <Header />
       </div>
 
-{/* Element - hvilken page den navigere til --- > path det man kan skrive i URL */}
-        <Routes>
-            <Route path="/MyProfilePage" element={<MyProfilePage />} />
-        </Routes>
+
+      <div className="Navigation">
+      <Navigation />
+      </div>
+
+      {/* Element - hvilken page den navigere til --- > path det man kan skrive i URL */}
+      <Routes>
+        <Route path="/" element={<FrontPage/>}/>
+        <Route path="/MyProfilePage" element={<MyProfilePage />} />
+      </Routes>
+
+      <div className="Footer">
+      <Footer />
+      </div>
+
     </div>
   );
 }
