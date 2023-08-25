@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import FrontPage from "./Pages/FrontPage/FrontPage";
-import MyProfilePage from "./Pages/MyProfilePage";
+import MyProfilePage from "./Pages/MyProfilePage/MyProfilePage";
 import Header from "./Pages/Header";
 import Navigation from "./Pages/Navigation";
 import Footer from "./Pages/Footer";
