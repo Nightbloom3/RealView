@@ -3,7 +3,7 @@ import React from "react";
 function Header() {
   return (
     <header>
-      <h1>Classic Website</h1>
+      <h1>Ejendoms Rapporterne</h1>
     </header>
   );
 }
