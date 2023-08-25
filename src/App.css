@@ -32,6 +32,7 @@
   .column.middle {
     background-color: #60a862;
     width: 85%;
+    height: 800px;
     /* height: calc(100vh - 20px - 40px - 20px); */
     /* Adjust the values as needed */
     /* The above calculation subtracts the header and footer heights */

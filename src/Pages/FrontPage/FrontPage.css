@@ -3,9 +3,8 @@
 .FrontPage_Content_Grid-Container {
   display: grid;
   grid-template-columns: auto auto;
-  gap: 10px;
+  gap: 50px;
   max-width: 100%; /* Set a maximum width for the container */
-  min-height: 100%;
   background-color: #2196F3;
   padding: 10px;
   justify-content: center;
