@@ -1,13 +1,17 @@
 import BarChart from "../../Charts/BarChart";
 import PieChart from "../../Charts/PieChart";
+import LineChart from "../../Charts/LineChart";
+import ComparisonChart from "../../Charts/ComparisonChart";
 import { useState, useEffect } from "react";
-import { TestData } from "../../Charts/Data/TestData";
+import { BarData } from "../../Charts/Data/BarData";
 import { PieData } from "../../Charts/Data/PieData";
+import { LineData } from "../../Charts/Data/LineData";
+import { ComparisonData } from "../../Charts/Data/ComparisonData";
 import { Chart as ChartJS } from "chart.js/auto";
 // ^^^^^^ Må ikke slettes - ellers virker siden ikke ^^^^^^^--- import { Chart as ChartJS } from "chart.js/auto";
 
 export default function FrontPageContent() {
-  const [testData, setTestData] = useState({
+  const [barData, setBarData] = useState({
     labels: [],
     datasets: [
       {
@@ -27,7 +31,7 @@ export default function FrontPageContent() {
     ],
   });
 
-  const [pieData1, setPieData1] = useState({
+  const [lineData, setLineData] = useState({
     labels: [],
     datasets: [
       {
@@ -37,9 +41,13 @@ export default function FrontPageContent() {
     ],
   });
 
-  const [pieData3, setPieData3] = useState({
+  const [comparisonData, setComparisonData] = useState({
     labels: [],
     datasets: [
+      {
+        label: "",
+        data: [],
+      },
       {
         label: "",
         data: [],
@@ -48,12 +56,12 @@ export default function FrontPageContent() {
   });
 
   useEffect(() => {
-    setTestData({
-      labels: TestData.map((data) => data.year),
+    setBarData({
+      labels: BarData.map((data) => data.year),
       datasets: [
         {
-          label: "# Houses Sold",
-          data: TestData.map((data) => data.HousesSold),
+          label: "# Houses Acquired",
+          data: BarData.map((data) => data.housesAcquired),
         },
       ],
     });
@@ -68,22 +76,26 @@ export default function FrontPageContent() {
       ],
     });
 
-    setPieData1({
-      labels: PieData.map((data) => data.realtor),
+    setLineData({
+      labels: LineData.map((data) => data.year),
       datasets: [
         {
-          label: "% Market Share",
-          data: PieData.map((data) => data.MarketShare),
+          label: "# Houses Sold",
+          data: LineData.map((data) => data.HousesSold),
         },
       ],
     });
 
-    setPieData3({
-      labels: PieData.map((data) => data.realtor),
+    setComparisonData({
+      labels: ComparisonData.map((data) => data.year),
       datasets: [
         {
-          label: "% Market Share",
-          data: PieData.map((data) => data.MarketShare),
+          label: "# Houses Acquired",
+          data: ComparisonData.map((data) => data.housesAcquired),
+        },
+        {
+          label: "# Houses Sold",
+          data: ComparisonData.map((data) => data.HousesSold),
         },
       ],
     });
@@ -92,19 +104,42 @@ export default function FrontPageContent() {
   const pieChartWidth = 500;
   const pieChartHeight = 300;
 
+  const ComparisonStyling = {
+    MaintainAspectRatio: true,
+    indexAxis: "y",
+    scales: {
+      xAxes: {
+        max: 500,
+      },
+    },
+  };
+
   return (
     <div class="FrontPage_Content_Grid-Container">
       <div class="grid-item">
-        <PieChart ChartData={pieData} width={pieChartWidth} height={pieChartHeight} />
+        <BarChart
+          ChartData={barData}
+          width={pieChartWidth}
+          height={pieChartHeight}/>
       </div>
       <div class="grid-item">
-        <PieChart ChartData={pieData1} width={pieChartWidth} height={pieChartHeight} />
+        <PieChart
+          ChartData={pieData}
+          width={pieChartWidth}
+          height={pieChartHeight}/>
       </div>
       <div class="grid-item">
-        <PieChart ChartData={pieData3} width={pieChartWidth} height={pieChartHeight} />
+        <LineChart
+          ChartData={lineData}
+          width={pieChartWidth}
+          height={pieChartHeight}/>
       </div>
       <div class="grid-item">
-        <BarChart ChartData={testData} width={pieChartWidth} height={pieChartHeight} />
+        <ComparisonChart
+          ChartData={comparisonData}
+          width={pieChartWidth}
+          height={pieChartHeight}
+          StylingOptions={ComparisonStyling}/>
       </div>
     </div>
   );
