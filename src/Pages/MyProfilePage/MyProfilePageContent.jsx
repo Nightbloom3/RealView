@@ -40,10 +40,12 @@ export default function MyProfilePageContent() {
       {
         label: selectText1,
         data: ProfilePageData.map((data) => data[selectChoice1]),
+        backgroundColor: ["blue"],
       },
       {
         label: selectText2,
         data: ProfilePageData.map((data) => data[selectChoice2]),
+        backgroundColor: ["red"],
       },
     ],
   });
@@ -55,10 +57,12 @@ export default function MyProfilePageContent() {
         {
           label: selectText1,
           data: ProfilePageData.map((data) => data[selectChoice1]),
+          backgroundColor: ["blue"],
         },
         {
           label: selectText2,
           data: ProfilePageData.map((data) => data[selectChoice2]),
+          backgroundColor: ["red"],
         },
       ],
     });
