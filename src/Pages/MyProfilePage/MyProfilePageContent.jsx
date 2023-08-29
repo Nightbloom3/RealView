@@ -2,9 +2,12 @@ import ComparisonChart from "../../Charts/ComparisonChart";
 import { useEffect, useState } from "react";
 import { ProfilePageData } from "../../Charts/Data/ProfilePageData";
 import { Chart as ChartJS } from "chart.js/auto";
-// ^^^^^^ Må ikke slettes - ellers virker siden ikke ^^^^^^^--- import { Chart as ChartJS } from "chart.js/auto";
+// ^^^^^^ Do not delete, the unused import, ChartJS needs it like this for it to work ^^^^^^^";
 
 // Reusable component for the select box
+// onChange is for whichever onChange function you want to run with the SelectBox
+// options is the choices that the SelectBox will use, check the selectOptions variable below for the format
+// defaultValue as its name implies defines the default value you want the SelectBox to show initially
 function SelectBox({ onChange, options, defaultValue }) {
   return (
     <div className="SelectBox">
@@ -29,8 +32,10 @@ export default function MyProfilePageContent() {
     indexAxis: "y",
   };
 
+  // useStates for the Chart's Data
   const [selectChoice1, setSelectChoice1] = useState("HousesSold");
   const [selectText1, setSelectText1] = useState("Houses Sold");
+
   const [selectChoice2, setSelectChoice2] = useState("HousesAcquired");
   const [selectText2, setSelectText2] = useState("Houses Acquired");
 
@@ -50,6 +55,7 @@ export default function MyProfilePageContent() {
     ],
   });
 
+  // useEffect to change the data that the chart uses whenever there is a change in the associated values
   useEffect(() => {
     setProfileData({
       labels: ProfilePageData.map((data) => data.year),
@@ -68,18 +74,20 @@ export default function MyProfilePageContent() {
     });
   }, [selectChoice1, selectChoice2, selectText1, selectText2]); // State variable dependencies
 
-  function HandleChoiceChange1(e) {
+  // Function to be used as the onChange part of the SelectBoxes
+  // setSelectChoice and setSelectText in this case are not the set functions to a useState
+  // at least not directly, they are instead pointers to set functions for useStates,
+  // so that you can chose which useStates you want to update here
+  function HandleChoiceChange(e, setSelectChoice, setSelectText) {
     const selectedIndex = e.target.selectedIndex;
-    setSelectChoice1(e.target.value);
-    setSelectText1(e.target.options[selectedIndex].label);
+    setSelectChoice(e.target.value);
+    setSelectText(e.target.options[selectedIndex].label);
   }
 
-  function HandleChoiceChange2(e) {
-    const selectedIndex = e.target.selectedIndex;
-    setSelectChoice2(e.target.value);
-    setSelectText2(e.target.options[selectedIndex].label);
-  }
-
+  // Array of options for the SelectBoxes,
+  // label being the text shown for the option,
+  // value being the internal value for the choice,
+  // both values are extracted by useStates to use for the chart
   const selectOptions = [
     { label: "Houses Sold", value: "HousesSold" },
     { label: "Houses Acquired", value: "HousesAcquired" },
@@ -100,7 +108,9 @@ export default function MyProfilePageContent() {
       </div>
 
       <SelectBox
-        onChange={HandleChoiceChange1}
+        onChange={(e) =>
+          HandleChoiceChange(e, setSelectChoice1, setSelectText1)
+        }
         options={selectOptions}
         defaultValue={selectChoice1}
       ></SelectBox>
@@ -108,7 +118,9 @@ export default function MyProfilePageContent() {
       <p>Compare to:</p>
 
       <SelectBox
-        onChange={HandleChoiceChange2}
+        onChange={(e) =>
+          HandleChoiceChange(e, setSelectChoice2, setSelectText2)
+        }
         options={selectOptions}
         defaultValue={selectChoice2}
       ></SelectBox>
