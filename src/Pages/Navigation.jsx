@@ -13,10 +13,10 @@ function Navigation() {
               <Link to="/MyProfilePage">MyProfilePage</Link>
             </li>
             <li>
-              <Link to="/MyProfilePage">FakePage1</Link>
+              <Link to="/FindMyRealtor">Find min ejendomsmægler</Link>
             </li>
             <li>
-              <Link to="/MyProfilePage">FakePage2</Link>
+              <Link to="/MyProfilePage">Søgning</Link>
             </li>
             <li>
               <Link to="/MyProfilePage">FakePage3</Link>

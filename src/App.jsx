@@ -5,6 +5,7 @@ import Header from "./Pages/Header";
 import Navigation from "./Pages/Navigation";
 import Footer from "./Pages/Footer";
 import './App.css';
+import FindMyRealtor from "./Pages/FindMyRealtor/FindMyRealtor";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<FrontPage />} />
           <Route path="/MyProfilePage" element={<MyProfilePage />} />
+          <Route path="/FindMyRealtor" element={<FindMyRealtor />} />
         </Routes>
         </div>
       </div>
