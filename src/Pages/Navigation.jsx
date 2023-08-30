@@ -16,7 +16,7 @@ function Navigation() {
               <Link to="/MarketReport">Market Report</Link>
             </li>
             <li>
-              <Link to="/MyProfilePage">FakePage2</Link>
+              <Link to="/MyProfilePage">Søgning</Link>
             </li>
             <li>
               <Link to="/MyProfilePage">FakePage3</Link>

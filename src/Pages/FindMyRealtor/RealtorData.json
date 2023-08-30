@@ -1,0 +1,37 @@
+[
+    {
+      "name": "Home",
+      "zipCode": "4000",
+      "city": "København",
+      "commune": "København",
+      "region": "Storby"
+    },
+    {
+      "name": "EDC",
+      "zipCode": "3400",
+      "city": "Roskilde",
+      "commune": "København",
+      "region": "Storby"
+    },
+    {
+      "name": "ANO",
+      "zipCode": "3400",
+      "city": "Roskilde",
+      "commune": "København",
+      "region": "Storby"
+    },
+    {
+      "name": "Dunno",
+      "zipCode": "3400",
+      "city": "Roskilde",
+      "commune": "København",
+      "region": "Storby"
+    },
+    {
+      "name": "DeLux Ejendomme",
+      "zipCode": "3400",
+      "city": "Roskilde",
+      "commune": "København",
+      "region": "Storby"
+    }
+]
