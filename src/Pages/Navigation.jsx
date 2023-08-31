@@ -10,10 +10,10 @@ function Navigation() {
               <Link to="/"> Front Page</Link>
             </li>
             <li>
-              <Link to="/MyProfilePage">MyProfilePage</Link>
+              <Link to="/MyProfilePage">Profile Page</Link>
             </li>
             <li>
-              <Link to="/MyProfilePage">FakePage1</Link>
+              <Link to="/MarketReport">Market Report</Link>
             </li>
             <li>
               <Link to="/MyProfilePage">FakePage2</Link>

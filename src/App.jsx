@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import FrontPage from "./Pages/FrontPage/FrontPage";
 import MyProfilePage from "./Pages/MyProfilePage/MyProfilePage";
+import MarketReport from "./Pages/MarketReport/MarketReport";
 import Header from "./Pages/Header";
 import Navigation from "./Pages/Navigation";
 import Footer from "./Pages/Footer";
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<FrontPage />} />
           <Route path="/MyProfilePage" element={<MyProfilePage />} />
+          <Route path="/MarketReport" element={<MarketReport />}/>
         </Routes>
         </div>
       </div>
