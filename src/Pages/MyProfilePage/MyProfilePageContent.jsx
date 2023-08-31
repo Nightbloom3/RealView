@@ -1,6 +1,8 @@
 import ComparisonChart from "../../Charts/ComparisonChart";
+import LineChart from "../../Charts/LineChart";
 import { useEffect, useState } from "react";
 import { ProfilePageData } from "../../Charts/Data/ProfilePageData";
+import { ProfilePageStats } from "../../Charts/Data/ProfilePageStats";
 import { Chart as ChartJS } from "chart.js/auto";
 // ^^^^^^ Do not delete, the unused import, ChartJS needs it like this for it to work ^^^^^^^";
 
@@ -24,8 +26,8 @@ function SelectBox({ onChange, options, defaultValue }) {
 
 export default function MyProfilePageContent() {
   //Options for the chart
-  const ChartStylingWidth = 500; // Set your desired width
-  const ChartStylingHeight = 500; // Set your desired height
+  const ChartStylingWidth = 400; // Set your desired width
+  const ChartStylingHeight = 200; // Set your desired height
   const ComparisonStyling = {
     MaintainAspectRatio: true,
     responsive: true,
@@ -39,7 +41,7 @@ export default function MyProfilePageContent() {
   const [selectChoice2, setSelectChoice2] = useState("HousesAcquired");
   const [selectText2, setSelectText2] = useState("Houses Acquired");
 
-  const [profileData, setProfileData] = useState({
+  const [profileComparisonData, setProfileComparisonData] = useState({
     labels: ProfilePageData.map((data) => data.year),
     datasets: [
       {
@@ -55,9 +57,23 @@ export default function MyProfilePageContent() {
     ],
   });
 
+  const [statChart1, setStatChart1] = useState({
+    labels: ProfilePageStats.map((data) => data.year),
+    datasets: [
+      {
+        label: "Houses for Sale",
+        data: ProfilePageStats.map((data) => data.HousesForSale),
+      },
+      {
+        label: "Houses Sold",
+        data: ProfilePageStats.map((data) => data.HousesSold),
+      },
+    ],
+  });
+
   // useEffect to change the data that the chart uses whenever there is a change in the associated values
   useEffect(() => {
-    setProfileData({
+    setProfileComparisonData({
       labels: ProfilePageData.map((data) => data.year),
       datasets: [
         {
@@ -97,33 +113,74 @@ export default function MyProfilePageContent() {
   ];
 
   return (
-    <div>
-      <div className="Chart">
-        <ComparisonChart
-          ChartData={profileData}
-          width={ChartStylingWidth}
-          height={ChartStylingHeight}
-          StylingOptions={ComparisonStyling}
-        />
+    <div className="MyProfilePage_Content_Grid-container">
+      <div className="ComparisonDiv">
+        <div className="TextDiv">
+          <h1>LOREM IPSUM</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+        </div>
+
+        <br />
+
+        <div className="Chart">
+          <ComparisonChart
+            ChartData={profileComparisonData}
+            width={ChartStylingWidth}
+            height={ChartStylingHeight}
+            StylingOptions={ComparisonStyling}
+          />
+        </div>
+
+        <br />
+
+        <SelectBox
+          onChange={(e) =>
+            HandleChoiceChange(e, setSelectChoice1, setSelectText1)
+          }
+          options={selectOptions}
+          defaultValue={selectChoice1}
+        ></SelectBox>
+
+        <p>Compare to:</p>
+
+        <SelectBox
+          onChange={(e) =>
+            HandleChoiceChange(e, setSelectChoice2, setSelectText2)
+          }
+          options={selectOptions}
+          defaultValue={selectChoice2}
+        ></SelectBox>
       </div>
 
-      <SelectBox
-        onChange={(e) =>
-          HandleChoiceChange(e, setSelectChoice1, setSelectText1)
-        }
-        options={selectOptions}
-        defaultValue={selectChoice1}
-      ></SelectBox>
+      <div className="ChartDiv">
+        <div className="StatChart">
+          <LineChart
+            ChartData={statChart1}
+            width={ChartStylingWidth}
+            height={ChartStylingHeight}
+          />
 
-      <p>Compare to:</p>
+          <LineChart
+            ChartData={statChart1}
+            width={ChartStylingWidth}
+            height={ChartStylingHeight}
+          />
 
-      <SelectBox
-        onChange={(e) =>
-          HandleChoiceChange(e, setSelectChoice2, setSelectText2)
-        }
-        options={selectOptions}
-        defaultValue={selectChoice2}
-      ></SelectBox>
+          <LineChart
+            ChartData={statChart1}
+            width={ChartStylingWidth}
+            height={ChartStylingHeight}
+          />
+        </div>
+      </div>
     </div>
   );
 }
