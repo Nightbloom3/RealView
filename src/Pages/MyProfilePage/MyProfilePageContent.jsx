@@ -1,8 +1,11 @@
 import ComparisonChart from "../../Charts/ComparisonChart";
 import LineChart from "../../Charts/LineChart";
+import BarChart from "../../Charts/BarChart"
 import { useEffect, useState } from "react";
 import { ProfilePageData } from "../../Charts/Data/ProfilePageData";
-import { ProfilePageStats } from "../../Charts/Data/ProfilePageStats";
+import { ProfilePageStats1 } from "../../Charts/Data/ProfilePageStats1";
+import { ProfilePageStats2 } from "../../Charts/Data/ProfilePageStats2";
+import { ProfilePageStats3 } from "../../Charts/Data/ProfilePageStats3";
 import { Chart as ChartJS } from "chart.js/auto";
 // ^^^^^^ Do not delete, the unused import, ChartJS needs it like this for it to work ^^^^^^^";
 
@@ -33,6 +36,16 @@ export default function MyProfilePageContent() {
     responsive: true,
     indexAxis: "y",
   };
+  const BiddingTimeStyling = {
+    plugins: {
+      legend: {
+        labels: {
+          boxWidth: 0,
+          boxHeight: 0,
+        },
+      },
+    },
+  }
 
   // useStates for the Chart's Data
   const [selectChoice1, setSelectChoice1] = useState("HousesSold");
@@ -58,18 +71,60 @@ export default function MyProfilePageContent() {
   });
 
   const [statChart1, setStatChart1] = useState({
-    labels: ProfilePageStats.map((data) => data.year),
+    labels: ProfilePageStats1.map((data) => data.year),
     datasets: [
       {
         label: "Houses for Sale",
-        data: ProfilePageStats.map((data) => data.HousesForSale),
+        data: ProfilePageStats1.map((data) => data.HousesForSale),
+        borderColor: ["blue"],
+        backgroundColor: ["black"]
       },
       {
         label: "Houses Sold",
-        data: ProfilePageStats.map((data) => data.HousesSold),
+        data: ProfilePageStats1.map((data) => data.HousesSold),
+        borderColor: ["red"],
+        backgroundColor: ["black"]
       },
     ],
   });
+
+  const lastMonth = ProfilePageStats2[ProfilePageStats2.length - 1];
+  const [statChart2, setStatChart2] = useState({
+    labels: [lastMonth.Month],
+    datasets: [
+      {
+      label: "Villa Houses",
+      data: [lastMonth.VillaHousesSold],
+      backgroundColor: ["blue"]
+    },
+    {
+      label: "Holiday Houses",
+      data: [lastMonth.HolidayHousesSold],
+      backgroundColor: ["red"]
+    },
+    {
+      label: "Condominium Houses",
+      data: [lastMonth.CondominiumHousesSold],
+      backgroundColor: ["orange"]
+    },
+    {
+      label: "Cooperative Houses",
+      data: [lastMonth.CooperativeHousesSold],
+      backgroundColor: ["yellow"]
+    }
+  ]
+  })
+
+  const [statChart3, setStatChart3] = useState({
+    labels: ProfilePageStats3.map((data) => data.CommunityCode),
+    datasets: [
+      {
+        label: "Bidding time in days",
+        data: ProfilePageStats3.map((data) => data.AvgBiddingTime),
+        backgroundColor: ["blue", "red", "green", "yellow", "purple", "orange"]
+      }
+    ]
+  })
 
   // useEffect to change the data that the chart uses whenever there is a change in the associated values
   useEffect(() => {
@@ -161,23 +216,24 @@ export default function MyProfilePageContent() {
       </div>
 
       <div className="ChartDiv">
-        <div className="StatChart">
+        <div className="StatCharts">
           <LineChart
             ChartData={statChart1}
             width={ChartStylingWidth}
             height={ChartStylingHeight}
           />
 
-          <LineChart
-            ChartData={statChart1}
+          <BarChart
+            ChartData={statChart2}
             width={ChartStylingWidth}
             height={ChartStylingHeight}
           />
 
-          <LineChart
-            ChartData={statChart1}
+          <BarChart
+            ChartData={statChart3}
             width={ChartStylingWidth}
             height={ChartStylingHeight}
+            StylingOptions={BiddingTimeStyling}
           />
         </div>
       </div>
