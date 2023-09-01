@@ -1,13 +1,15 @@
-.suggestion {
-    padding: 5px;
-    border: 1px solid #ccc;
-    margin-bottom: 5px;
+.suggestion-container {
+    margin-bottom: 10px; /* Add spacing between containers */
   }
   
-  .suggestion-city {
-    background-color: #f0f0f0; /* Add your desired background color */
+  .suggestion-city-container {
+    border: 1px solid #ccc; /* Add your desired border style for City container */
   }
   
-  .suggestion-commune {
-    background-color: #e0e0e0; /* Add your desired background color */
+  .suggestion-commune-container {
+    border: 1px solid #ccc; /* Add your desired border style for Commune container */
+  }
+
+  .suggestion-region-container {
+    border: 1px solid #ccc; /* Add your desired border style for Commune container */
   }

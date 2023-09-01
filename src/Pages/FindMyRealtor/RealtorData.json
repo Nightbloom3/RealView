@@ -71,5 +71,21 @@
       "city": "Kallerup",
       "commune": "Høje-Taastrup",
       "region": "Hovedstaden"
+    },
+
+
+    {
+      "name": "Dunno",
+      "zipCode": "2640",
+      "city": "Test",
+      "commune": "Test",
+      "region": "Test"
+    },
+    {
+      "name": "Dunno",
+      "zipCode": "2640",
+      "city": "Test",
+      "commune": "Test",
+      "region": "Test"
     }
 ]
