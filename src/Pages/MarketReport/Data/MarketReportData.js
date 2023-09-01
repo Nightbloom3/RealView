@@ -1,0 +1,167 @@
+export const MarketReportData = [
+    {
+        id: 1,
+        realtor: "Brikk",
+        housesForSale: 3,
+        marketShare: 3.23,
+        avgPricePerM2: 26108,
+        avgSizeInM2: 149,
+        avgTimeListedInDays: 180,
+        priceReducedHousePercentage: 33.3,
+        avgPercentagePriceReduction: 3.0
+    },
+    {
+        id: 2,
+        realtor: "Danbolig",
+        housesForSale: 22,
+        marketShare: 23.66,
+        avgPricePerM2: 32229,
+        avgSizeInM2: 134,
+        avgTimeListedInDays: 128,
+        priceReducedHousePercentage: 45.5,
+        avgPercentagePriceReduction: 2.9
+    },
+    {
+        id: 3,
+        realtor: "EDC",
+        housesForSale: 18,
+        marketShare: 12.90,
+        avgPricePerM2: 35155,
+        avgSizeInM2: 126,
+        avgTimeListedInDays: 82,
+        priceReducedHousePercentage: 41.7,
+        avgPercentagePriceReduction: 2.1
+    },
+    {
+        id: 4,
+        realtor: "& Living",
+        housesForSale: 1,
+        marketShare: 1.08,
+        avgPricePerM2: 33088,
+        avgSizeInM2: 136,
+        avgTimeListedInDays: 41,
+        priceReducedHousePercentage: 0.0,
+        avgPercentagePriceReduction: 0.0
+    },
+    {
+        id: 5,
+        realtor: "Ivan Eltoft Nielsen",
+        housesForSale: 1,
+        marketShare: 1.08,
+        avgPricePerM2: 40208,
+        avgSizeInM2: 240,
+        avgTimeListedInDays: 191,
+        priceReducedHousePercentage: 0.0,
+        avgPercentagePriceReduction: 0.0
+    },
+    {
+        id: 6,
+        realtor: "Estaldo",
+        housesForSale: 1,
+        marketShare: 1.08,
+        avgPricePerM2: 35690,
+        avgSizeInM2: 210,
+        avgTimeListedInDays: 148,
+        priceReducedHousePercentage: 100.0,
+        avgPercentagePriceReduction: 5.1
+    },
+    {
+        id: 7,
+        realtor: "Estate",
+        housesForSale: 5,
+        marketShare: 5.38,
+        avgPricePerM2: 37580,
+        avgSizeInM2: 176,
+        avgTimeListedInDays: 195,
+        priceReducedHousePercentage: 20.0,
+        avgPercentagePriceReduction: 5.5
+    },
+    {
+        id: 8,
+        realtor: "Home",
+        housesForSale: 7,
+        marketShare: 7.53,
+        avgPricePerM2: 28472,
+        avgSizeInM2: 155,
+        avgTimeListedInDays: 70,
+        priceReducedHousePercentage: 42.9,
+        avgPercentagePriceReduction: 3.5
+    },
+    {
+        id: 9,
+        realtor: "Irving Jensen & Co.",
+        housesForSale: 1,
+        marketShare: 1.08,
+        avgPricePerM2: 29050,
+        avgSizeInM2: 258,
+        avgTimeListedInDays: 134,
+        priceReducedHousePercentage: 0.0,
+        avgPercentagePriceReduction: 0.0
+    },
+    {
+        id: 10,
+        realtor: "Lokalbolig",
+        housesForSale: 22,
+        marketShare: 23.66,
+        avgPricePerM2: 34803,
+        avgSizeInM2: 124,
+        avgTimeListedInDays: 78,
+        priceReducedHousePercentage: 31.8,
+        avgPercentagePriceReduction: 2.1
+    },
+    {
+        id: 11,
+        realtor: "Irving Jensen & Co.",
+        housesForSale: 1,
+        marketShare: 1.08,
+        avgPricePerM2: 29050,
+        avgSizeInM2: 258,
+        avgTimeListedInDays: 134,
+        priceReducedHousePercentage: 0.0,
+        avgPercentagePriceReduction: 0.0
+    },
+    {
+        id: 12,
+        realtor: "Moestrup Bolig",
+        housesForSale: 1,
+        marketShare: 1.08,
+        avgPricePerM2: 46360,
+        avgSizeInM2: 125,
+        avgTimeListedInDays: 132,
+        priceReducedHousePercentage: 100.0,
+        avgPercentagePriceReduction: 5.8
+    },
+    {
+        id: 13,
+        realtor: "Nybolig",
+        housesForSale: 12,
+        marketShare: 12.90,
+        avgPricePerM2: 33414,
+        avgSizeInM2: 136,
+        avgTimeListedInDays: 93,
+        priceReducedHousePercentage: 33.3,
+        avgPercentagePriceReduction: 3.6
+    },
+    {
+        id: 14,
+        realtor: "RealMæglerne",
+        housesForSale: 4,
+        marketShare: 4.31,
+        avgPricePerM2: 34508,
+        avgSizeInM2: 120,
+        avgTimeListedInDays: 170,
+        priceReducedHousePercentage: 50.0,
+        avgPercentagePriceReduction: 1.4
+    },
+    {
+        id: 15,
+        realtor: "Tvangsauktion",
+        housesForSale: 1,
+        marketShare: 1.08,
+        avgPricePerM2: 3400,
+        avgSizeInM2: 647,
+        avgTimeListedInDays: 13,
+        priceReducedHousePercentage: 0.0,
+        avgPercentagePriceReduction: 0.0
+    },
+]

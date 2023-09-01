@@ -115,26 +115,26 @@ export default function FrontPageContent() {
   };
 
   return (
-    <div class="FrontPage_Content_Grid-Container">
-      <div class="grid-item">
+    <div className="FrontPage_Content_Grid-Container">
+      <div className="grid-item">
         <BarChart
           ChartData={barData}
           width={pieChartWidth}
           height={pieChartHeight}/>
       </div>
-      <div class="grid-item">
+      <div className="grid-item">
         <PieChart
           ChartData={pieData}
           width={pieChartWidth}
           height={pieChartHeight}/>
       </div>
-      <div class="grid-item">
+      <div className="grid-item">
         <LineChart
           ChartData={lineData}
           width={pieChartWidth}
           height={pieChartHeight}/>
       </div>
-      <div class="grid-item">
+      <div className="grid-item">
         <ComparisonChart
           ChartData={comparisonData}
           width={pieChartWidth}
