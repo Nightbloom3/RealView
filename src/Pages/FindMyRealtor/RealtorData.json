@@ -1,37 +1,75 @@
 [
     {
-      "name": "Home",
-      "zipCode": "4000",
-      "city": "København",
-      "commune": "København",
-      "region": "Storby"
-    },
-    {
-      "name": "EDC",
-      "zipCode": "3400",
-      "city": "Roskilde",
-      "commune": "København",
-      "region": "Storby"
-    },
-    {
       "name": "ANO",
-      "zipCode": "3400",
-      "city": "Roskilde",
+      "zipCode": "1050",
+      "city": "København København",
       "commune": "København",
-      "region": "Storby"
+      "region": "Hovedstaden"
     },
     {
       "name": "Dunno",
-      "zipCode": "3400",
-      "city": "Roskilde",
+      "zipCode": "2100",
+      "city": "København Øst",
       "commune": "København",
-      "region": "Storby"
+      "region": "Hovedstaden"
     },
     {
-      "name": "DeLux Ejendomme",
-      "zipCode": "3400",
-      "city": "Roskilde",
+      "name": "Home",
+      "zipCode": "2200",
+      "city": "København Nord",
       "commune": "København",
-      "region": "Storby"
+      "region": "Hovedstaden"
+    },
+    {
+      "name": "ANO",
+      "zipCode": "2300",
+      "city": "København Syd",
+      "commune": "København",
+      "region": "Hovedstaden"
+    },
+    {
+      "name": "EDC",
+      "zipCode": "2400",
+      "city": "København Nordvest",
+      "commune": "København",
+      "region": "Hovedstaden"
+    },
+    {
+      "name": "Dunno",
+      "zipCode": "2450",
+      "city": "København Syd Vest",
+      "commune": "København",
+      "region": "Hovedstaden"
+    },
+
+
+
+    {
+      "name": "DeLux Ejendomme",
+      "zipCode": "2640",
+      "city": "Hedehusene",
+      "commune": "Høje-Taastrup",
+      "region": "Hovedstaden"
+    },
+    {
+      "name": "Dunno",
+      "zipCode": "2640",
+      "city": "Fløng",
+      "commune": "Høje-Taastrup",
+      "region": "Hovedstaden"
+    },
+    {
+      "name": "Dunno",
+      "zipCode": "2640",
+      "city": "Charlotteager",
+      "commune": "Høje-Taastrup",
+      "region": "Hovedstaden"
+    },
+    {
+      "name": "Dunno",
+      "zipCode": "2640",
+      "city": "Kallerup",
+      "commune": "Høje-Taastrup",
+      "region": "Hovedstaden"
     }
 ]
