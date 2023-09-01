@@ -2,7 +2,7 @@ import React from 'react';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 //npm install react-leaflet leaflet
 import 'leaflet/dist/leaflet.css';
-import Freedraw, {  CREATE,  EDIT,  DELETE,  APPEND,  ALL } from "react-leaflet-freedraw";
+// import Freedraw, {  CREATE,  EDIT,  DELETE,  APPEND,  ALL } from "react-leaflet-freedraw";
 
 function MapComponet({ onSelectCity }) {
   const handleMapClick = async (event) => {
