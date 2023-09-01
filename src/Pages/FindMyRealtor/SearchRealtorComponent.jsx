@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
 import realtorData from './RealtorData.json';
 import MapComponet from './MapComponet';
+import "./Search.css";
 
 function SearchRealtor() {
     const [searchText, setSearchText] = useState('');
     const [foundRealtors, setFoundRealtors] = useState([]);
+    const [suggestions, setSuggestions] = useState([]);
   
     const handleSearchChange = (event) => {
-      setSearchText(event.target.value);
+      const text = event.target.value;
+      setSearchText(text);
+  
+      // Generate suggestions based on the current input
+      const suggestionsList = generateSuggestions(text);
+      setSuggestions(suggestionsList);
     };
       
     // Should mabaye divide the function
@@ -24,30 +31,56 @@ function SearchRealtor() {
         setFoundRealtors(filteredRealtors);
     };
 
+    const handleSelectSuggestion = (suggestion) => {
+      // Set the selected suggestion in the search field
+      setSearchText(suggestion.text);
+      // Clear suggestions
+      setSuggestions([]);
+    };
+
+    const generateSuggestions = (text) => {
+      const searchTextLower = text.toLowerCase();
+      const suggestionsList = [];
+      const addedSuggestions = new Set(); // Create a Set to store added suggestions
+
+
+      if (searchTextLower === '') {
+        // If the search field is empty, return an empty list of suggestions
+        return suggestionsList;
+      }
+  
+  // Push suggestions based on your search criteria
+  realtorData.forEach((realtor) => {
+    const cityLower = realtor.city.toLowerCase();
+    const communeLower = realtor.commune.toLowerCase();
+
+    // Check if the city starts with the search text in the correct order
+    if (cityLower.startsWith(searchTextLower)) {
+      suggestionsList.push({ text: `${realtor.city} - City`, type: 'City' });
+    }
+
+    // Check if the commune starts with the search text in the correct order
+    if (communeLower.startsWith(searchTextLower)) {
+      const suggestionText = `${realtor.commune} - Commune`;
+
+      // Only add the suggestion if it's not already in the Set
+      if (!addedSuggestions.has(suggestionText)) {
+        suggestionsList.push({ text: suggestionText, type: 'Commune' });
+        addedSuggestions.add(suggestionText); // Add the suggestion to the Set
+      }
+    }
+
+    // Add similar checks for other search criteria (zipCode, region) here
+  });
+
+  return suggestionsList;
+};
+
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
             handleSearchClick();
         }
     };
-
-    // so it will look like this
-
-    // const matchesSearchCriteria = (realtor, searchTextLower) => {
-    //     return (
-    //       realtor.zipcode.includes(searchTextLower) ||
-    //       realtor.city.toLowerCase().includes(searchTextLower) ||
-    //     );
-    //   };
-
-    // const handleSearchClick = () => {
-    //     const searchTextLower = searchText.toLowerCase();
-      
-    //     const filteredRealtors = realtorsData.filter((realtor) =>
-    //       matchesSearchCriteria(realtor, searchTextLower)
-    //     );
-    //     setFoundRealtors(filteredRealtors);
-    //   };
-
     const handleSelectCity = (city) => {
         setSearchText(city); // Update the search field when a city is selected
     };
@@ -61,7 +94,20 @@ function SearchRealtor() {
         onChange={handleSearchChange}
         onKeyDown={handleKeyPress}
       />
+
       <button onClick={handleSearchClick}>Search</button>
+
+      <div>
+        {suggestions.map((suggestion, index) => (
+          <div
+            key={index}
+            className="suggestion"
+            onClick={() => handleSelectSuggestion(suggestion)}
+          >
+            {suggestion.text}
+          </div>
+        ))}
+      </div>
 
       <MapComponet onSelectCity={handleSelectCity} />
 
