@@ -43,7 +43,6 @@ function SearchRealtor() {
       const suggestionsList = [];
       const addedSuggestions = new Set(); // Create a Set to store added suggestions
 
-
       if (searchTextLower === '') {
         // If the search field is empty, return an empty list of suggestions
         return suggestionsList;
@@ -53,15 +52,27 @@ function SearchRealtor() {
   realtorData.forEach((realtor) => {
     const cityLower = realtor.city.toLowerCase();
     const communeLower = realtor.commune.toLowerCase();
+    const regionLower = realtor.region.toLowerCase();
 
     // Check if the city starts with the search text in the correct order
     if (cityLower.startsWith(searchTextLower)) {
-      suggestionsList.push({ text: `${realtor.city} - City`, type: 'City' });
+      suggestionsList.push({ text: `${realtor.city}`, type: 'City' });
+    }
+
+    // Check if the commune starts with the search text in the correct order
+    if (regionLower.startsWith(searchTextLower)) {
+      const suggestionText = `${realtor.region}`;
+
+      // Only add the suggestion if it's not already in the Set
+      if (!addedSuggestions.has(suggestionText)) {
+        suggestionsList.push({ text: suggestionText, type: 'Region' });
+        addedSuggestions.add(suggestionText); // Add the suggestion to the Set
+      }
     }
 
     // Check if the commune starts with the search text in the correct order
     if (communeLower.startsWith(searchTextLower)) {
-      const suggestionText = `${realtor.commune} - Commune`;
+      const suggestionText = `${realtor.commune}`;
 
       // Only add the suggestion if it's not already in the Set
       if (!addedSuggestions.has(suggestionText)) {
@@ -98,7 +109,52 @@ function SearchRealtor() {
       <button onClick={handleSearchClick}>Search</button>
 
       <div>
-        {suggestions.map((suggestion, index) => (
+      {suggestions
+        .filter((suggestion) => suggestion.type === 'City')
+        .length > 0 && (
+        <div className="suggestion-container suggestion-city-container">
+          <h3>By</h3>
+          {suggestions
+            .filter((suggestion) => suggestion.type === 'City')
+            .map((suggestion, index) => (
+              <div
+                key={index}
+                className="suggestion"
+                onClick={() => handleSelectSuggestion(suggestion)}
+              >
+                {suggestion.text}
+              </div>
+            ))}
+        </div>
+      )}
+
+      {suggestions
+        .filter((suggestion) => suggestion.type === 'Commune')
+        .length > 0 && (
+        <div className="suggestion-container suggestion-commune-container">
+          <h3>Kommune</h3>
+          {suggestions
+            .filter((suggestion) => suggestion.type === 'Commune')
+            .map((suggestion, index) => (
+              <div
+                key={index}
+                className="suggestion"
+                onClick={() => handleSelectSuggestion(suggestion)}
+              >
+                {suggestion.text}
+              </div>
+            ))}
+        </div>
+      )}
+
+{suggestions
+    .filter((suggestion) => suggestion.type === 'Region')
+    .length > 0 && (
+    <div className="suggestion-container suggestion-region-container">
+      <h3>Region</h3>
+      {suggestions
+        .filter((suggestion) => suggestion.type === 'Region')
+        .map((suggestion, index) => (
           <div
             key={index}
             className="suggestion"
@@ -107,7 +163,9 @@ function SearchRealtor() {
             {suggestion.text}
           </div>
         ))}
-      </div>
+    </div>
+  )}
+</div>
 
       <MapComponet onSelectCity={handleSelectCity} />
 
