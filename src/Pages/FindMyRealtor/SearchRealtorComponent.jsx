@@ -7,6 +7,7 @@ function SearchRealtor() {
     const [searchText, setSearchText] = useState('');
     const [foundRealtors, setFoundRealtors] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false); // Track suggestion visibility
   
     const handleSearchChange = (event) => {
       const text = event.target.value;
@@ -15,28 +16,38 @@ function SearchRealtor() {
       // Generate suggestions based on the current input
       const suggestionsList = generateSuggestions(text);
       setSuggestions(suggestionsList);
-    };
-      
-    // Should mabaye divide the function
-    const handleSearchClick = () => {
-        const filteredRealtors = realtorData.filter((realtor) => {
-          const searchTextLower = searchText.toLowerCase();
-          return (
-            realtor.zipCode.includes(searchTextLower) ||
-            realtor.city.toLowerCase().includes(searchTextLower) ||
-            realtor.commune.toLowerCase().includes(searchTextLower) ||
-            realtor.region.toLowerCase().includes(searchTextLower)
-          );
-        });
-        setFoundRealtors(filteredRealtors);
-    };
 
-    const handleSelectSuggestion = (suggestion) => {
-      // Set the selected suggestion in the search field
-      setSearchText(suggestion.text);
-      // Clear suggestions
-      setSuggestions([]);
-    };
+    // Show suggestions when the input field is focused
+    setShowSuggestions(true);
+  };
+      
+  const handleSearchClick = () => {
+    const filteredRealtors = realtorData.filter((realtor) => {
+      const searchTextLower = searchText.toLowerCase();
+      return (
+        realtor.zipCode.includes(searchTextLower) ||
+        realtor.city.toLowerCase().includes(searchTextLower) ||
+        realtor.commune.toLowerCase().includes(searchTextLower) ||
+        realtor.region.toLowerCase().includes(searchTextLower)
+      );
+    });
+    setFoundRealtors(filteredRealtors);
+  
+    // Log the value of showSuggestions
+    console.log('showSuggestions:', showSuggestions);
+  
+    // Hide suggestions when the Search button is pressed
+    setShowSuggestions(false);
+  };
+
+  const handleSelectSuggestion = (suggestion) => {
+    // Set the selected suggestion in the search field
+    setSearchText(suggestion.text);
+    // Clear suggestions
+    setSuggestions([]);
+    // Hide suggestions when a suggestion is selected
+    setShowSuggestions(false);
+  };
 
     const generateSuggestions = (text) => {
       const searchTextLower = text.toLowerCase();
@@ -96,76 +107,79 @@ function SearchRealtor() {
         setSearchText(city); // Update the search field when a city is selected
     };
 
-  return (
-    <div>
-      <input
-        type="text"
-        placeholder="Enter search text"
-        value={searchText}
-        onChange={handleSearchChange}
-        onKeyDown={handleKeyPress}
-      />
-
-      <button onClick={handleSearchClick}>Search</button>
-
+    return (
       <div>
-      {suggestions
-        .filter((suggestion) => suggestion.type === 'City')
-        .length > 0 && (
-        <div className="suggestion-container suggestion-city-container">
-          <h3>By</h3>
-          {suggestions
-            .filter((suggestion) => suggestion.type === 'City')
-            .map((suggestion, index) => (
-              <div
-                key={index}
-                className="suggestion"
-                onClick={() => handleSelectSuggestion(suggestion)}
-              >
-                {suggestion.text}
+          <input
+              type="text"
+              placeholder="Enter search text"
+              value={searchText}
+              onChange={handleSearchChange}
+              onKeyDown={handleKeyPress}
+          />
+  
+          <button onClick={handleSearchClick}>Search</button>
+  
+          {/* if showSuggestions is ture, show div - else return null */}
+          {showSuggestions ? (
+              <div>
+                  {suggestions
+                      .filter((suggestion) => suggestion.type === 'City')
+                      .length > 0 && (
+                          <div className="suggestion-container suggestion-city-container">
+                              <h3>By</h3>
+                              {suggestions
+                                  .filter((suggestion) => suggestion.type === 'City')
+                                  .map((suggestion, index) => (
+                                      <div
+                                          key={index}
+                                          className="suggestion"
+                                          onClick={() => handleSelectSuggestion(suggestion)}
+                                      >
+                                          {suggestion.text}
+                                      </div>
+                                  ))}
+                          </div>
+                      )}
+  
+                  {suggestions
+                      .filter((suggestion) => suggestion.type === 'Commune')
+                      .length > 0 && (
+                          <div className="suggestion-container suggestion-commune-container">
+                              <h3>Kommune</h3>
+                              {suggestions
+                                  .filter((suggestion) => suggestion.type === 'Commune')
+                                  .map((suggestion, index) => (
+                                      <div
+                                          key={index}
+                                          className="suggestion"
+                                          onClick={() => handleSelectSuggestion(suggestion)}
+                                      >
+                                          {suggestion.text}
+                                      </div>
+                                  ))}
+                          </div>
+                      )}
+  
+                  {suggestions
+                      .filter((suggestion) => suggestion.type === 'Region')
+                      .length > 0 && (
+                          <div className="suggestion-container suggestion-region-container">
+                              <h3>Region</h3>
+                              {suggestions
+                                  .filter((suggestion) => suggestion.type === 'Region')
+                                  .map((suggestion, index) => (
+                                      <div
+                                          key={index}
+                                          className="suggestion"
+                                          onClick={() => handleSelectSuggestion(suggestion)}
+                                      >
+                                          {suggestion.text}
+                                      </div>
+                                  ))}
+                          </div>
+                      )}
               </div>
-            ))}
-        </div>
-      )}
-
-      {suggestions
-        .filter((suggestion) => suggestion.type === 'Commune')
-        .length > 0 && (
-        <div className="suggestion-container suggestion-commune-container">
-          <h3>Kommune</h3>
-          {suggestions
-            .filter((suggestion) => suggestion.type === 'Commune')
-            .map((suggestion, index) => (
-              <div
-                key={index}
-                className="suggestion"
-                onClick={() => handleSelectSuggestion(suggestion)}
-              >
-                {suggestion.text}
-              </div>
-            ))}
-        </div>
-      )}
-
-{suggestions
-    .filter((suggestion) => suggestion.type === 'Region')
-    .length > 0 && (
-    <div className="suggestion-container suggestion-region-container">
-      <h3>Region</h3>
-      {suggestions
-        .filter((suggestion) => suggestion.type === 'Region')
-        .map((suggestion, index) => (
-          <div
-            key={index}
-            className="suggestion"
-            onClick={() => handleSelectSuggestion(suggestion)}
-          >
-            {suggestion.text}
-          </div>
-        ))}
-    </div>
-  )}
-</div>
+          ) : null}
 
       <MapComponet onSelectCity={handleSelectCity} />
 

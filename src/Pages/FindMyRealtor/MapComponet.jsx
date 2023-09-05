@@ -33,8 +33,8 @@ function MapComponet({ onSelectCity }) {
   //might be possible to extract the mapContainer from the div and create a external CSS file
   return (
     <div style={{ width: '50%', float: 'right' }}>
-      <button>Draw</button>
-      <button>Delete</button>
+      <button>Free Draw knap</button>
+      <button>Delete free draw område</button>
     <MapContainer
       center={[56.2639, 9.5018]}
       zoom={7}
