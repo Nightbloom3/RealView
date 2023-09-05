@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import realtorData from './RealtorData.json';
 import MapComponet from './MapComponet';
 import "./Search.css";
@@ -8,6 +8,26 @@ function SearchRealtor() {
     const [foundRealtors, setFoundRealtors] = useState([]);
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false); // Track suggestion visibility
+
+    const searchInputRef = useRef(null); // Create a ref for the search input element
+
+    useEffect(() => {
+      // Add a click event listener to the document
+      const handleClickOutside = (event) => {
+        if (searchInputRef.current && !searchInputRef.current.contains(event.target)) {
+          // Clicked outside of the search input
+          setShowSuggestions(false);
+        }
+      };
+  
+      // Attach the event listener when the component mounts
+      document.addEventListener('click', handleClickOutside);
+  
+      // Clean up the event listener when the component unmounts
+      return () => {
+        document.removeEventListener('click', handleClickOutside);
+      };
+    }, []);
   
     const handleSearchChange = (event) => {
       const text = event.target.value;
@@ -115,13 +135,14 @@ function SearchRealtor() {
               value={searchText}
               onChange={handleSearchChange}
               onKeyDown={handleKeyPress}
+              ref={searchInputRef} // Attach the ref to the search input element
           />
   
           <button onClick={handleSearchClick}>Search</button>
   
           {/* if showSuggestions is ture, show div - else return null */}
           {showSuggestions ? (
-              <div>
+              <div className='suggestionDiv'>
                   {suggestions
                       .filter((suggestion) => suggestion.type === 'City')
                       .length > 0 && (
