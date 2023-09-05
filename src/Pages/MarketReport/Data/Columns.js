@@ -8,34 +8,34 @@ export const columns = [
         accessor: "realtor",
     },
     {
-        Header: <div style={{ whiteSpace: "pre-line"}}> Number of<br />Houses</div>,
+        Header: <div> Number of<br />Houses</div>,
         accessor: "housesForSale",
         id:"housesForSale",
         Footer: <span>{_.sum(_.map(MarketReportData, d => d.housesForSale))}</span>
     },
     {
-        Header: <div style={{ whiteSpace: "pre-line"}}> Market<br />Share</div>,
+        Header: <div> Market<br />Share</div>,
         accessor: "marketShare",
         Cell: ({ value}) => { return value, value + ' %' },
         id:"marketShare",
         Footer: <span>{_.sum(_.map(MarketReportData, d => d.marketShare)) + " %"}</span>
     },
     {
-        Header: <div style={{ whiteSpace: "pre-line"}}> Average<br />Price</div>,
+        Header: <div> Average<br />Price</div>,
         accessor: "avgPricePerM2",
         Cell: ({ value}) => { return value, value + ' m²' },
         id:"avgPricePerM2",
         Footer: <span>{_.mean(_.map(MarketReportData, d => d.avgPricePerM2)).toFixed(0) + " m²"}</span>
     },
     {
-        Header: <div style={{ whiteSpace: "pre-line"}}> Average<br />Size</div>,
+        Header: <div> Average<br />Size</div>,
         accessor: "avgSizeInM2",
         Cell: ({ value}) => { return value, value + ' m²' },
         id:"avgSizeInM2",
         Footer: <span>{_.mean(_.map(MarketReportData, d => d.avgSizeInM2)).toFixed(0) + " m²"}</span>
     },
     {
-        Header: <div style={{ whiteSpace: "pre-line"}}> Average<br />Time Listed</div>,
+        Header: <div> Average<br />Time Listed</div>,
         accessor: "avgTimeListedInDays",
         Cell: ({ value}) => { return value, value + ' days' },
         id:"avgTimeListedInDays",
@@ -49,7 +49,7 @@ export const columns = [
         Footer: <span>{_.mean(_.map(MarketReportData, d => d.priceReducedHousePercentage)).toFixed(2) + " %"}</span>
     },
     {
-        Header: <div style={{ whiteSpace: "pre-line"}}> Average<br />Price Reduction</div>,
+        Header: <div> Average<br />Price Reduction</div>,
         accessor: "avgPercentagePriceReduction",
         Cell: ({ value}) => { return value, value + ' %' },
         id:"avgPercentagePriceReduction",
