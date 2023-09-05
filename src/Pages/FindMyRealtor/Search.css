@@ -33,3 +33,21 @@
   .suggestion-region-container {
     border: 1px solid #ccc; /* Add your desired border style for Commune container */
   }
+
+  .suggestionDiv {
+    background-color: aqua;
+    max-width: 200px;
+  }
+
+  
+
+.Content_Grid_Container {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 50px;
+  max-width: 100%; /* Set a maximum width for the container */
+  background-color: #2196F3;
+  padding: 10px;
+  justify-content: center;
+  border: 5px solid #6f1515;
+}
