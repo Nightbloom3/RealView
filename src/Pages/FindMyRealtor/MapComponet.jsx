@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 //npm install react-leaflet leaflet
 import 'leaflet/dist/leaflet.css';
 // import Freedraw, {  CREATE,  EDIT,  DELETE,  APPEND,  ALL } from "react-leaflet-freedraw";
+import "./mapComponet.css";
 
 function MapComponet({ onSelectCity }) {
   const handleMapClick = async (event) => {
@@ -32,13 +33,13 @@ function MapComponet({ onSelectCity }) {
 
   //might be possible to extract the mapContainer from the div and create a external CSS file
   return (
-    <div style={{ width: '50%', float: 'right' }}>
+    <div className='mapComponetDiv'>
       <button>Free Draw knap</button>
       <button>Delete free draw område</button>
     <MapContainer
       center={[56.2639, 9.5018]}
       zoom={7}
-      style={{ height: '400px', width: '100%' }}
+      style={{ height: '600px', width: '100%' }}
     >
       <ClickListener />
       <TileLayer
