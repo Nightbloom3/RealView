@@ -128,108 +128,113 @@ function SearchRealtor() {
     };
 
     return (
-      <div>
+      <div className="findMyRealtorDiv">
+        <div className="searchDiv">
           <input
-              type="text"
-              placeholder="Enter search text"
-              value={searchText}
-              onChange={handleSearchChange}
-              onKeyDown={handleKeyPress}
-              ref={searchInputRef} // Attach the ref to the search input element
+            type="text"
+            placeholder="Enter search text"
+            value={searchText}
+            onChange={handleSearchChange}
+            onKeyDown={handleKeyPress}
+            ref={searchInputRef}
           />
-  
           <button onClick={handleSearchClick}>Search</button>
-  
+
+          <div className="searchResualtDiv">
+          {/* Returns and shows the list of found realtors */}
+          <table>
+            <thead>
+              <tr>
+                <th>Navn</th>
+                <th>Postnummer</th>
+                <th>By</th>
+                <th>Kommune</th>
+                <th>Region</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* Maps over to list them all on each line */}
+              {foundRealtors.map((realtor, index) => (
+                <tr key={index}>
+                  <td>{realtor.name}</td>
+                  <td>{realtor.zipCode}</td>
+                  <td>{realtor.city}</td>
+                  <td>{realtor.commune}</td>
+                  <td>{realtor.region}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        </div>
+
           {/* if showSuggestions is ture, show div - else return null */}
           {showSuggestions ? (
-              <div className='suggestionDiv'>
+            <div className="suggestionDiv">
+              {suggestions.filter((suggestion) => suggestion.type === "City")
+                .length > 0 && (
+                <div className="suggestion-container suggestion-city-container">
+                  <h3>By</h3>
                   {suggestions
-                      .filter((suggestion) => suggestion.type === 'City')
-                      .length > 0 && (
-                          <div className="suggestion-container suggestion-city-container">
-                              <h3>By</h3>
-                              {suggestions
-                                  .filter((suggestion) => suggestion.type === 'City')
-                                  .map((suggestion, index) => (
-                                      <div
-                                          key={index}
-                                          className="suggestion"
-                                          onClick={() => handleSelectSuggestion(suggestion)}
-                                      >
-                                          {suggestion.text}
-                                      </div>
-                                  ))}
-                          </div>
-                      )}
-  
+                    .filter((suggestion) => suggestion.type === "City")
+                    .map((suggestion, index) => (
+                      <div
+                        key={index}
+                        className="suggestion"
+                        onClick={() => handleSelectSuggestion(suggestion)}
+                      >
+                        {suggestion.text}
+                      </div>
+                    ))}
+                </div>
+              )}
+
+              {suggestions.filter((suggestion) => suggestion.type === "Commune")
+                .length > 0 && (
+                <div className="suggestion-container suggestion-commune-container">
+                  <h3>Kommune</h3>
                   {suggestions
-                      .filter((suggestion) => suggestion.type === 'Commune')
-                      .length > 0 && (
-                          <div className="suggestion-container suggestion-commune-container">
-                              <h3>Kommune</h3>
-                              {suggestions
-                                  .filter((suggestion) => suggestion.type === 'Commune')
-                                  .map((suggestion, index) => (
-                                      <div
-                                          key={index}
-                                          className="suggestion"
-                                          onClick={() => handleSelectSuggestion(suggestion)}
-                                      >
-                                          {suggestion.text}
-                                      </div>
-                                  ))}
-                          </div>
-                      )}
-  
+                    .filter((suggestion) => suggestion.type === "Commune")
+                    .map((suggestion, index) => (
+                      <div
+                        key={index}
+                        className="suggestion"
+                        onClick={() => handleSelectSuggestion(suggestion)}
+                      >
+                        {suggestion.text}
+                      </div>
+                    ))}
+                </div>
+              )}
+
+              {suggestions.filter((suggestion) => suggestion.type === "Region")
+                .length > 0 && (
+                <div className="suggestion-container suggestion-region-container">
+                  <h3>Region</h3>
                   {suggestions
-                      .filter((suggestion) => suggestion.type === 'Region')
-                      .length > 0 && (
-                          <div className="suggestion-container suggestion-region-container">
-                              <h3>Region</h3>
-                              {suggestions
-                                  .filter((suggestion) => suggestion.type === 'Region')
-                                  .map((suggestion, index) => (
-                                      <div
-                                          key={index}
-                                          className="suggestion"
-                                          onClick={() => handleSelectSuggestion(suggestion)}
-                                      >
-                                          {suggestion.text}
-                                      </div>
-                                  ))}
-                          </div>
-                      )}
-              </div>
+                    .filter((suggestion) => suggestion.type === "Region")
+                    .map((suggestion, index) => (
+                      <div
+                        key={index}
+                        className="suggestion"
+                        onClick={() => handleSelectSuggestion(suggestion)}
+                      >
+                        {suggestion.text}
+                      </div>
+                    ))}
+                </div>
+              )}
+            </div>
           ) : null}
 
-      <MapComponet onSelectCity={handleSelectCity} />
 
-      {/* Returns and shows the list of found realtors */}
-      <table>
-        <thead>
-          <tr>
-            <th>Navn</th>
-            <th>Postnummer</th>
-            <th>By</th>
-            <th>Kommune</th>
-            <th>Region</th>
-          </tr>
-        </thead>
-        <tbody>
-            {/* Maps over to list them all on each line */}
-          {foundRealtors.map((realtor, index) => (
-            <tr key={index}>
-              <td>{realtor.name}</td>
-              <td>{realtor.zipCode}</td>
-              <td>{realtor.city}</td>
-              <td>{realtor.commune}</td>
-              <td>{realtor.region}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
+
+
+        <div className="mapComponetDiv">
+          <MapComponet onSelectCity={handleSelectCity} />
+        </div>
+      </div>
+    );
 }
 
 export default SearchRealtor;
