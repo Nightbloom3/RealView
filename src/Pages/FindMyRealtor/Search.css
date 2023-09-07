@@ -1,3 +1,28 @@
+.findMyRealtorDiv {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns, one for map, one for search */
+  grid-template-rows: auto auto; /* Two rows, one for searchDiv, one for searchResualtDiv */
+  grid-gap: 20px; /* Adjust the gap as needed */
+}
+
+.mapComponetDiv {
+  background-color: brown;
+  grid-column: 2; /* Place the map in column 2 */
+  grid-row: 1 / span 2; /* Span both rows */
+  overflow: hidden; /* This prevents the map from overflowing its container */
+}
+
+.searchDiv {
+  background-color: chartreuse;
+}
+
+.searchResualtDiv {
+  background-color: blueviolet;
+  height: 600px; /* Set your desired height */
+  overflow-y: auto; /* Add vertical scroll if content exceeds height */
+}
+
+
 .suggestion-container {
     margin-bottom: 10px; /* Add spacing between containers */
   }
@@ -13,18 +38,3 @@
   .suggestion-region-container {
     border: 1px solid #ccc; /* Add your desired border style for Commune container */
   }
-  
-  .suggestionDiv {
-    background-color: aqua;
-    max-width: 200px;
- }
-
-
-
-.Content_Grid_Container {
-  display: grid;
-  grid-template-columns: auto auto;
-  max-width: 100%;
-  background-color: #2196F3;
-  padding: 10px;
-}
