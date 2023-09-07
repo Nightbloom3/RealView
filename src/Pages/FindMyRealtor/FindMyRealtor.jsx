@@ -9,7 +9,9 @@ function FindMyRealtor() {
             så det ikke er ejendomsmægler totale antal boliger til salg,
             men kun for det valgte postnummer
         </p>
-        <SearchRealtorComponent />
+        <div className="Content_Grid_Container">
+          <SearchRealtorComponent/>
+        </div>
     </div>
   );
 }
