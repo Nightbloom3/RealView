@@ -1,46 +1,49 @@
-import React, { useState, useEffect, useRef } from 'react';
-import realtorData from './RealtorData.json';
-import MapComponet from './MapComponet';
+import React, { useState, useEffect, useRef } from "react";
+import realtorData from "./RealtorData.json";
+import MapComponet from "./MapComponet";
 import "./Search.css";
 
 function SearchRealtor() {
-    const [searchText, setSearchText] = useState('');
-    const [foundRealtors, setFoundRealtors] = useState([]);
-    const [suggestions, setSuggestions] = useState([]);
-    const [showSuggestions, setShowSuggestions] = useState(false); // Track suggestion visibility
+  const [searchText, setSearchText] = useState("");
+  const [foundRealtors, setFoundRealtors] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false); // Track suggestion visibility
 
-    const searchInputRef = useRef(null); // Create a ref for the search input element
+  const searchInputRef = useRef(null); // Create a ref for the search input element
 
-    useEffect(() => {
-      // Add a click event listener to the document
-      const handleClickOutside = (event) => {
-        if (searchInputRef.current && !searchInputRef.current.contains(event.target)) {
-          // Clicked outside of the search input
-          setShowSuggestions(false);
-        }
-      };
-  
-      // Attach the event listener when the component mounts
-      document.addEventListener('click', handleClickOutside);
-  
-      // Clean up the event listener when the component unmounts
-      return () => {
-        document.removeEventListener('click', handleClickOutside);
-      };
-    }, []);
-  
-    const handleSearchChange = (event) => {
-      const text = event.target.value;
-      setSearchText(text);
-  
-      // Generate suggestions based on the current input
-      const suggestionsList = generateSuggestions(text);
-      setSuggestions(suggestionsList);
+  useEffect(() => {
+    // Add a click event listener to the document
+    const handleClickOutside = (event) => {
+      if (
+        searchInputRef.current &&
+        !searchInputRef.current.contains(event.target)
+      ) {
+        // Clicked outside of the search input
+        setShowSuggestions(false);
+      }
+    };
+
+    // Attach the event listener when the component mounts
+    document.addEventListener("click", handleClickOutside);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  const handleSearchChange = (event) => {
+    const text = event.target.value;
+    setSearchText(text);
+
+    // Generate suggestions based on the current input
+    const suggestionsList = generateSuggestions(text);
+    setSuggestions(suggestionsList);
 
     // Show suggestions when the input field is focused
     setShowSuggestions(true);
   };
-      
+
   const handleSearchClick = () => {
     const filteredRealtors = realtorData.filter((realtor) => {
       const searchTextLower = searchText.toLowerCase();
@@ -52,10 +55,10 @@ function SearchRealtor() {
       );
     });
     setFoundRealtors(filteredRealtors);
-  
+
     // Log the value of showSuggestions
-    console.log('showSuggestions:', showSuggestions);
-  
+    console.log("showSuggestions:", showSuggestions);
+
     // Hide suggestions when the Search button is pressed
     setShowSuggestions(false);
   };
@@ -69,79 +72,81 @@ function SearchRealtor() {
     setShowSuggestions(false);
   };
 
-    const generateSuggestions = (text) => {
-      const searchTextLower = text.toLowerCase();
-      const suggestionsList = [];
-      const addedSuggestions = new Set(); // Create a Set to store added suggestions
+  const generateSuggestions = (text) => {
+    const searchTextLower = text.toLowerCase();
+    const suggestionsList = [];
+    const addedSuggestions = new Set(); // Create a Set to store added suggestions
 
-      if (searchTextLower === '') {
-        // If the search field is empty, return an empty list of suggestions
-        return suggestionsList;
-      }
-  
-  // Push suggestions based on your search criteria
-  realtorData.forEach((realtor) => {
-    const cityLower = realtor.city.toLowerCase();
-    const communeLower = realtor.commune.toLowerCase();
-    const regionLower = realtor.region.toLowerCase();
-
-    // Check if the city starts with the search text in the correct order
-    if (cityLower.startsWith(searchTextLower)) {
-      suggestionsList.push({ text: `${realtor.city}`, type: 'City' });
+    if (searchTextLower === "") {
+      // If the search field is empty, return an empty list of suggestions
+      return suggestionsList;
     }
 
-    // Check if the commune starts with the search text in the correct order
-    if (regionLower.startsWith(searchTextLower)) {
-      const suggestionText = `${realtor.region}`;
+    // Push suggestions based on your search criteria
+    realtorData.forEach((realtor) => {
+      const cityLower = realtor.city.toLowerCase();
+      const communeLower = realtor.commune.toLowerCase();
+      const regionLower = realtor.region.toLowerCase();
 
-      // Only add the suggestion if it's not already in the Set
-      if (!addedSuggestions.has(suggestionText)) {
-        suggestionsList.push({ text: suggestionText, type: 'Region' });
-        addedSuggestions.add(suggestionText); // Add the suggestion to the Set
+      // Check if the city starts with the search text in the correct order
+      if (cityLower.startsWith(searchTextLower)) {
+        suggestionsList.push({ text: `${realtor.city}`, type: "City" });
       }
-    }
 
-    // Check if the commune starts with the search text in the correct order
-    if (communeLower.startsWith(searchTextLower)) {
-      const suggestionText = `${realtor.commune}`;
+      // Check if the commune starts with the search text in the correct order
+      if (regionLower.startsWith(searchTextLower)) {
+        const suggestionText = `${realtor.region}`;
 
-      // Only add the suggestion if it's not already in the Set
-      if (!addedSuggestions.has(suggestionText)) {
-        suggestionsList.push({ text: suggestionText, type: 'Commune' });
-        addedSuggestions.add(suggestionText); // Add the suggestion to the Set
-      }
-    }
-
-    // Add similar checks for other search criteria (zipCode, region) here
-  });
-
-  return suggestionsList;
-};
-
-    const handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-            handleSearchClick();
+        // Only add the suggestion if it's not already in the Set
+        if (!addedSuggestions.has(suggestionText)) {
+          suggestionsList.push({ text: suggestionText, type: "Region" });
+          addedSuggestions.add(suggestionText); // Add the suggestion to the Set
         }
-    };
-    const handleSelectCity = (city) => {
-        setSearchText(city); // Update the search field when a city is selected
-    };
+      }
 
-    return (
-      <div className="findMyRealtorDiv">
-        <div className="searchDiv">
-          <input
-            type="text"
-            placeholder="Enter search text"
-            value={searchText}
-            onChange={handleSearchChange}
-            onKeyDown={handleKeyPress}
-            ref={searchInputRef}
-          />
-          <button onClick={handleSearchClick}>Search</button>
+      // Check if the commune starts with the search text in the correct order
+      if (communeLower.startsWith(searchTextLower)) {
+        const suggestionText = `${realtor.commune}`;
 
-          <div className="searchResualtDiv">
-          {/* Returns and shows the list of found realtors */}
+        // Only add the suggestion if it's not already in the Set
+        if (!addedSuggestions.has(suggestionText)) {
+          suggestionsList.push({ text: suggestionText, type: "Commune" });
+          addedSuggestions.add(suggestionText); // Add the suggestion to the Set
+        }
+      }
+
+      // Add similar checks for other search criteria (zipCode, region) here
+    });
+
+    return suggestionsList;
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSearchClick();
+    }
+  };
+  const handleSelectCity = (city) => {
+    setSearchText(city); // Update the search field when a city is selected
+  };
+
+  return (
+    <div className="findMyRealtorDiv">
+      <div className="searchDiv">
+        <input
+          type="text"
+          placeholder="Enter search text"
+          value={searchText}
+          onChange={handleSearchChange}
+          onKeyDown={handleKeyPress}
+          ref={searchInputRef}
+        />
+        <button onClick={handleSearchClick}>Search</button>
+
+        <div
+          id="searchResultDiv"
+          style={{ display: showSuggestions ? "none" : "block" }}
+        >
           <table>
             <thead>
               <tr>
@@ -166,9 +171,11 @@ function SearchRealtor() {
             </tbody>
           </table>
         </div>
-        </div>
 
-          {/* if showSuggestions is ture, show div - else return null */}
+        <div
+          id="suggestionDiv"
+          style={{ display: showSuggestions ? "block" : "none" }}
+        >
           {showSuggestions ? (
             <div className="suggestionDiv">
               {suggestions.filter((suggestion) => suggestion.type === "City")
@@ -226,15 +233,14 @@ function SearchRealtor() {
               )}
             </div>
           ) : null}
-
-
-
-
-        <div className="mapComponetDiv">
-          <MapComponet onSelectCity={handleSelectCity} />
         </div>
       </div>
-    );
+
+      <div className="mapComponetDiv">
+        <MapComponet onSelectCity={handleSelectCity} />
+      </div>
+    </div>
+  );
 }
 
 export default SearchRealtor;
