@@ -14,14 +14,9 @@
 
 .searchDiv {
   background-color: chartreuse;
-}
-
-.searchResualtDiv {
-  background-color: blueviolet;
   height: 600px; /* Set your desired height */
   overflow-y: auto; /* Add vertical scroll if content exceeds height */
 }
-
 
 .suggestion-container {
     margin-bottom: 10px; /* Add spacing between containers */
