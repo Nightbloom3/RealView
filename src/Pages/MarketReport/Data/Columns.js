@@ -16,9 +16,9 @@ export const columns = [
     {
         Header: <div> Market<br />Share</div>,
         accessor: "marketShare",
-        Cell: ({ value}) => { return value, value + ' %' },
+        Cell: ({ value}) => { return value, value.toFixed(2) + ' %' },
         id:"marketShare",
-        Footer: <span>{_.sum(_.map(MarketReportData, d => d.marketShare)) + " %"}</span>
+        Footer: <span>{_.sum(_.map(MarketReportData, d => d.marketShare)).toFixed(2) + " %"}</span>
     },
     {
         Header: <div> Average<br />Price</div>,
