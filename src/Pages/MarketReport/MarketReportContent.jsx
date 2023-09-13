@@ -43,18 +43,6 @@ export default function MarketReportContent() {
     return colors;
   };
 
-  /*const realtorDatasets = MarketReportData.map((data) => ({
-    label: data.realtor,
-    data: [
-      {
-        x: data.avgTimeListedInDays,
-        y: data.avgPricePerM2,
-      },
-    ],
-    backgroundColor: randomColor(1), // Generate a unique color for each realtor
-    pointRadius: 4,
-  }));*/
-
   const numberOfDataPoints = MarketReportData.length;
 
   const [scatterChartData, setScatterChartData] = useState({
