@@ -9,8 +9,11 @@ function SearchRealtor() {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false); // Track suggestion visibility
 
-  const searchInputRef = useRef(null); // Create a ref for the search input element
+  const searchInputRef = useRef(null); // Create a reference for the search input element
 
+  // Click event listener
+  // if clicked inside "search"
+  // suggestion list SHOW / true
   useEffect(() => {
     // Add a click event listener to the document
     const handleClickOutside = (event) => {
@@ -32,6 +35,7 @@ function SearchRealtor() {
     };
   }, []);
 
+  // Updates the search input - for every key press
   const handleSearchChange = (event) => {
     const text = event.target.value;
     setSearchText(text);
@@ -44,6 +48,7 @@ function SearchRealtor() {
     setShowSuggestions(true);
   };
 
+  // Returns a list of search results when button is clicked. 
   const handleSearchClick = () => {
     const filteredRealtors = realtorData.filter((realtor) => {
       const searchTextLower = searchText.toLowerCase();
@@ -56,13 +61,11 @@ function SearchRealtor() {
     });
     setFoundRealtors(filteredRealtors);
 
-    // Log the value of showSuggestions
-    console.log("showSuggestions:", showSuggestions);
-
     // Hide suggestions when the Search button is pressed
     setShowSuggestions(false);
   };
 
+  // when a suggestion is clicked from the list
   const handleSelectSuggestion = (suggestion) => {
     // Set the selected suggestion in the search field
     setSearchText(suggestion.text);
@@ -82,7 +85,7 @@ function SearchRealtor() {
       return suggestionsList;
     }
 
-    // Push suggestions based on your search criteria
+    // Push suggestions based on search criteria
     realtorData.forEach((realtor) => {
       const cityLower = realtor.city.toLowerCase();
       const communeLower = realtor.commune.toLowerCase();
@@ -114,10 +117,8 @@ function SearchRealtor() {
           addedSuggestions.add(suggestionText); // Add the suggestion to the Set
         }
       }
-
-      // Add similar checks for other search criteria (zipCode, region) here
     });
-
+    
     return suggestionsList;
   };
 
