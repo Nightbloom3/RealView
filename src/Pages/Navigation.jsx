@@ -16,7 +16,7 @@ function Navigation() {
               <Link to="/MarketReport">Market Report</Link>
             </li>
             <li>
-              <Link to="/MyProfilePage">Søgning</Link>
+              <Link to="/FindMyRealtor">Find min ejendomsmægler</Link>
             </li>
             <li>
               <Link to="/MyProfilePage">FakePage3</Link>
