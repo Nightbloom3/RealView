@@ -6,8 +6,7 @@ import { ProfilePageData } from "../../Charts/Data/ProfilePageData";
 import { ProfilePageStats1 } from "../../Charts/Data/ProfilePageStats1";
 import { ProfilePageStats2 } from "../../Charts/Data/ProfilePageStats2";
 import { ProfilePageStats3 } from "../../Charts/Data/ProfilePageStats3";
-//import { Chart as ChartJS } from "chart.js/auto";
-// ^^^ This import is required for ChartJS to work.
+import "chart.js/auto";
 
 // Reusable component for the select box
 // onChange is for whichever onChange function you want to run with the SelectBox

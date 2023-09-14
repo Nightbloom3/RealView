@@ -3,8 +3,7 @@ import { useTable, useSortBy } from "react-table";
 import { MarketReportData } from "./Data/MarketReportData";
 import { columns } from "./Data/Columns";
 import ScatterChart from "../../Charts/ScatterChart";
-//import { Chart as ChartJS } from "chart.js/auto";
-// ^^^ This import is required for ChartJS to work.
+import "chart.js/auto";
 
 export default function MarketReportContent() {
   const ChartStylingWidth = 800; // Set your desired width
