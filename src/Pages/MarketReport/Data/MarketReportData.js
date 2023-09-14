@@ -93,7 +93,7 @@ export const MarketReportData = [
         avgTimeListedInDays: 176,
         priceReducedHousePercentage: 0.0,
         avgPercentagePriceReduction: 0.0,
-        infoBlurb: "Estate Hillerød\Frederiksværksgade 15 B\n3400 Hillerød"
+        infoBlurb: "Estate Hillerød\nFrederiksværksgade 15 B\n3400 Hillerød"
     },
     {
         id: 9,
