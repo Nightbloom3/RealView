@@ -3,7 +3,8 @@ import { useTable, useSortBy } from "react-table";
 import { MarketReportData } from "./Data/MarketReportData";
 import { columns } from "./Data/Columns";
 import ScatterChart from "../../Charts/ScatterChart";
-import { Chart as ChartJS } from "chart.js/auto";
+//import { Chart as ChartJS } from "chart.js/auto";
+// ^^^ This import is required for ChartJS to work.
 
 export default function MarketReportContent() {
   const ChartStylingWidth = 800; // Set your desired width
@@ -57,7 +58,7 @@ export default function MarketReportContent() {
   const numberOfDataPoints = MarketReportData.length;
 
   //Setting up data for chart, will need to make use of the set method and a useEffect once there is access to the DB
-  const [scatterChartData, setScatterChartData] = useState({
+  const scatterChartData = ({
     labels: MarketReportData.map((data) => data.realtor),
     datasets: [
       {

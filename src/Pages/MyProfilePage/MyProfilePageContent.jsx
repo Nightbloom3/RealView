@@ -6,8 +6,8 @@ import { ProfilePageData } from "../../Charts/Data/ProfilePageData";
 import { ProfilePageStats1 } from "../../Charts/Data/ProfilePageStats1";
 import { ProfilePageStats2 } from "../../Charts/Data/ProfilePageStats2";
 import { ProfilePageStats3 } from "../../Charts/Data/ProfilePageStats3";
-import { Chart as ChartJS } from "chart.js/auto";
-// ^^^^^^ Do not delete, the unused import, ChartJS needs it like this for it to work ^^^^^^^";
+//import { Chart as ChartJS } from "chart.js/auto";
+// ^^^ This import is required for ChartJS to work.
 
 // Reusable component for the select box
 // onChange is for whichever onChange function you want to run with the SelectBox
@@ -70,7 +70,7 @@ export default function MyProfilePageContent() {
     ],
   });
 
-  const [statChart1, setStatChart1] = useState({
+  const statChart1 = ({
     labels: ProfilePageStats1.map((data) => data.year),
     datasets: [
       {
@@ -89,7 +89,7 @@ export default function MyProfilePageContent() {
   });
 
   const lastMonth = ProfilePageStats2[ProfilePageStats2.length - 1];
-  const [statChart2, setStatChart2] = useState({
+  const statChart2 = ({
     labels: [lastMonth.Month],
     datasets: [
       {
@@ -115,7 +115,7 @@ export default function MyProfilePageContent() {
   ]
   })
 
-  const [statChart3, setStatChart3] = useState({
+  const statChart3 = ({
     labels: ProfilePageStats3.map((data) => data.CommunityCode),
     datasets: [
       {

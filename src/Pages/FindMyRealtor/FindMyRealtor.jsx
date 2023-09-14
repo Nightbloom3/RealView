@@ -1,5 +1,4 @@
 import "./FindMyRealtor.css";
-import MapComponet from "./MapComponet";
 import SearchRealtorComponent from './SearchRealtorComponent';
 
 function FindMyRealtor() {

@@ -7,8 +7,8 @@ import { BarData } from "../../Charts/Data/BarData";
 import { PieData } from "../../Charts/Data/PieData";
 import { LineData } from "../../Charts/Data/LineData";
 import { ComparisonData } from "../../Charts/Data/ComparisonData";
-import { Chart as ChartJS } from "chart.js/auto";
-// ^^^^^^ Må ikke slettes - ellers virker siden ikke ^^^^^^^--- import { Chart as ChartJS } from "chart.js/auto";
+//import { Chart as ChartJS } from "chart.js/auto";
+// ^^^ This import is required for ChartJS to work.
 
 export default function FrontPageContent() {
   const [barData, setBarData] = useState({
