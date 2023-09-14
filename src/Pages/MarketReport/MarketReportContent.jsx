@@ -132,7 +132,7 @@ export default function MarketReportContent() {
                   </div>
                 ))}
               </div>
-              <table {...getTableProps()}>
+              <table className="MarketReportTable" {...getTableProps()}>
                 <thead>
                   {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()}>

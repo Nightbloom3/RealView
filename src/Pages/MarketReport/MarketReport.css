@@ -22,27 +22,32 @@
     margin-right: 60px; /* Add margin between checkboxes */
   }
 
-  table {
+  .MarketReportTable {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
   }
-
-  table th, table td {
+  
+  .MarketReportTable th,
+  .MarketReportTable td {
     border: 1px solid #6f1515;
     padding: 4px;
     color: #ddd;
   }
-
-  tbody tr:nth-child(even){background-color: #2f4f4f;}
-
-  tbody tr:nth-child(odd){background-color: #483d8b;}
-
-  tbody tr:hover {background-color: #789012;}
-
-  tfoot tr:hover {background-color: #789012;}
-
-  table th {
+  
+  .MarketReportTable tbody tr:nth-child(even) {
+    background-color: #2f4f4f;
+  }
+  
+  .MarketReportTable tbody tr:nth-child(odd) {
+    background-color: #483d8b;
+  }
+  
+  .MarketReportTable tbody tr:hover {
+    background-color: #789012;
+  }
+  
+  .MarketReportTable th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: center;
