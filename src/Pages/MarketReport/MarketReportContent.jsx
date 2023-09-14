@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTable, useSortBy } from "react-table";
 import { MarketReportData } from "./Data/MarketReportData";
+import { MarketReportData2 } from "./Data/MarketReportData2";
 import { columns } from "./Data/Columns";
 import ScatterChart from "../../Charts/ScatterChart";
 import "chart.js/auto";
@@ -40,6 +41,18 @@ export default function MarketReportContent() {
     },
   };
 
+  const [currentDataset, setCurrentDataset] = useState(MarketReportData)
+  console.log(currentDataset)
+  console.log("fishysticks")
+  console.log(MarketReportData)
+
+  /*useEffect(() => {
+    setCurrentDataset({
+
+    })
+  }, [])
+  */
+ 
   // a small function that picks a random hex color for the purpose of coloring the plots in the scatter plot
   const randomColor = (count) => {
     const colors = [];
@@ -101,6 +114,13 @@ export default function MarketReportContent() {
 
   return (
     <div className="MarketReport_Content_Grid-container">
+
+      <div className="ChoiceDiv">
+        <fieldset>
+          <legend>Choose your character!</legend>
+        </fieldset>
+      </div>
+
       <div className="ChartDiv">
         <ScatterChart
           ChartData={scatterChartData}

@@ -98,7 +98,7 @@ export default function FrontPageContent() {
         },
       ],
     });
-  }, []);
+  }, [BarData, PieData, LineData, ComparisonData]);
 
   const pieChartWidth = 500;
   const pieChartHeight = 300;
