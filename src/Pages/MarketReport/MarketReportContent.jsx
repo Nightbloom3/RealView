@@ -8,7 +8,13 @@ import { Chart as ChartJS } from "chart.js/auto";
 export default function MarketReportContent() {
   const ChartStylingWidth = 800; // Set your desired width
   const ChartStylingHeight = 400; // Set your desired height
+  //Its important to note that the aspect ratio for the charts must always be 1:2,
+  //any overflowing height will simply be added under the chart as a sort of padding 
 
+  //ScatterChartStyling contains the styling options for the scatter plot chart seen below,
+  //in the scales section we setup the title texts for the x-axis and the y-axis,
+  //in the plugins section we disable the chart title and the interactive Legends,
+  //as the chart becomes to cluttered when there are more than 10 realtors in a region 
   const scatterChartStyling = {
     scales: {
       x: {
@@ -34,6 +40,7 @@ export default function MarketReportContent() {
     },
   };
 
+  // a small function that picks a random hex color for the purpose of coloring the plots in the scatter plot
   const randomColor = (count) => {
     const colors = [];
     for (let i = 0; i < count; i++) {
@@ -43,8 +50,13 @@ export default function MarketReportContent() {
     return colors;
   };
 
+  //small method for finding the length amount of colors neded to give the dataset
+  //If given simply 1 color, lets say "red", then all the points would be red, if it were given
+  //"red, blue" then it would alternate between red and blue for each point,
+  //so to make sure each point has its own colour we need to assign all of them a color
   const numberOfDataPoints = MarketReportData.length;
 
+  //Setting up data for chart, will need to make use of the set method and a useEffect once there is access to the DB
   const [scatterChartData, setScatterChartData] = useState({
     labels: MarketReportData.map((data) => data.realtor),
     datasets: [
@@ -60,11 +72,14 @@ export default function MarketReportContent() {
     ],
   });
 
+  //useState for tracking whether or not the div holding the table is hidden or not
   const [isDivHidden, setIsDivHidden] = useState(false);
 
+  //Memoizing of the table data and columns
   const tableData = useMemo(() => MarketReportData, []);
   const tableColumns = useMemo(() => columns, []);
 
+  //React Table setup with deconstruction and the approriate method needed for this setup
   const {
     getTableProps,
     getTableBodyProps,
@@ -81,6 +96,7 @@ export default function MarketReportContent() {
     useSortBy
   );
 
+  //Short method for making sure that the footer in the table gets the right alternating colour
   const isEvenRows = rows.length % 2 === 0;
 
   return (
