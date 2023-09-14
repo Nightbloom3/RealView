@@ -1,6 +1,11 @@
 import _ from "lodash"
 import { MarketReportData } from "./MarketReportData";
 
+//short explanation of the used elements in a react table column,
+//Header, contains the information that you want to have in the header.
+//Footer, likewise with Header, is the information you want in the footer.
+//accessor, is the data you want in the cell for the column, it should usually refer to a value from your data
+//Cell, is what is actually displayed in the cell(s) for the column and can be used to format the data, like seen below.
 export const columns = [
     {
         Header: "Realtor",
