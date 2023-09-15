@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
-import { useTable, useSortBy } from "react-table";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { MarketReportData } from "./Data/MarketReportData";
 import { MarketReportData2 } from "./Data/MarketReportData2";
 import { columns } from "./Data/Columns";
-import ScatterChart from "../../Charts/ScatterChart";
+import ScatterChart from "../../Components/Charts/ScatterChart";
+import DataTable from "../../Components/Tables/DataTable";
 import "chart.js/auto";
 
 export default function MarketReportContent() {
@@ -41,17 +41,37 @@ export default function MarketReportContent() {
     },
   };
 
-  const [currentDataset, setCurrentDataset] = useState(MarketReportData)
-  console.log(currentDataset)
-  console.log("fishysticks")
-  console.log(MarketReportData)
+  const [checkboxItems, setCheckboxItems] = useState(["3450", "3520"])
+  const [checkedItems, setCheckedItems] = useState(checkboxItems.map(() => false));
+  const [currentDataset, setCurrentDataset] = useState([])
+  const datasetsRef = useRef({
+    dataset1: MarketReportData,
+    dataset2: MarketReportData2,
+  })
 
-  /*useEffect(() => {
-    setCurrentDataset({
 
-    })
-  }, [])
-  */
+  const handleCheckboxClick = (index) => {
+    const newCheckedItems = [...checkedItems];
+    newCheckedItems[index] = !newCheckedItems[index];
+    setCheckedItems(newCheckedItems);
+  };
+
+  useEffect(() => {
+    let newCurrentDataset = [];
+    for (let i = 0; i < checkedItems.length; i++) {
+      if (checkedItems[i]) {
+        const datasetKey = `dataset${i + 1}`;
+        newCurrentDataset = newCurrentDataset.concat(datasetsRef.current[datasetKey]);
+      }
+    }
+    setCurrentDataset((prevCurrentDataset) => {
+      if (JSON.stringify(prevCurrentDataset) !== JSON.stringify(newCurrentDataset)) {
+        return newCurrentDataset;
+      }
+      return prevCurrentDataset;
+    });
+  }, [checkedItems]);
+
  
   // a small function that picks a random hex color for the purpose of coloring the plots in the scatter plot
   const randomColor = (count) => {
@@ -67,15 +87,15 @@ export default function MarketReportContent() {
   //If given simply 1 color, lets say "red", then all the points would be red, if it were given
   //"red, blue" then it would alternate between red and blue for each point,
   //so to make sure each point has its own colour we need to assign all of them a color
-  const numberOfDataPoints = MarketReportData.length;
+  const numberOfDataPoints = currentDataset.length;
 
   //Setting up data for chart, will need to make use of the set method and a useEffect once there is access to the DB
   const scatterChartData = ({
-    labels: MarketReportData.map((data) => data.realtor),
+    labels: currentDataset.map((data) => data.realtor),
     datasets: [
       {
         label: "Average Time Listed / Average Price per M²",
-        data: MarketReportData.map((data) => ({
+        data: currentDataset.map((data) => ({
           x: data.avgTimeListedInDays,
           y: data.avgPricePerM2,
         })),
@@ -89,35 +109,28 @@ export default function MarketReportContent() {
   const [isDivHidden, setIsDivHidden] = useState(false);
 
   //Memoizing of the table data and columns
-  const tableData = useMemo(() => MarketReportData, []);
+  const tableData = useMemo(() => currentDataset, [currentDataset]);
   const tableColumns = useMemo(() => columns, []);
-
-  //React Table setup with deconstruction and the approriate method needed for this setup
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    footerGroups,
-    rows,
-    prepareRow,
-    allColumns,
-  } = useTable(
-    {
-      columns: tableColumns,
-      data: tableData,
-    },
-    useSortBy
-  );
-
-  //Short method for making sure that the footer in the table gets the right alternating colour
-  const isEvenRows = rows.length % 2 === 0;
 
   return (
     <div className="MarketReport_Content_Grid-container">
 
       <div className="ChoiceDiv">
         <fieldset>
-          <legend>Choose your character!</legend>
+          <legend>Choose a area</legend>
+
+          {checkboxItems.map((item, index) => (
+            <div key={index}>
+              <input
+              type="checkbox"
+              id={`option${index + 1}`}
+              checked={checkedItems[index]}
+              onChange={() => handleCheckboxClick(index)}
+              />
+              <label htmlFor={`option${index + 1}`}>{item}</label>
+            </div>
+          ))}
+
         </fieldset>
       </div>
 
@@ -130,6 +143,7 @@ export default function MarketReportContent() {
         />
       </div>
 
+    {currentDataset.length > 0 && (
       <div className="FormDiv">
         <>
           <div>
@@ -139,86 +153,15 @@ export default function MarketReportContent() {
           </div>
           {isDivHidden ? null : (
             <div>
-              <div className="CheckBoxDiv">
-                {allColumns.map((column) => (
-                  <div key={column.id}>
-                    <label>
-                      <input
-                        type="checkbox"
-                        {...column.getToggleHiddenProps()}
-                      />
-                      {column.Header}
-                    </label>
-                  </div>
-                ))}
-              </div>
-              <table className="MarketReportTable" {...getTableProps()}>
-                <thead>
-                  {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                      {headerGroup.headers.map((column) => (
-                        <th
-                          {...column.getHeaderProps(
-                            column.getSortByToggleProps({ title: undefined })
-                          )}
-                        >
-                          {column.render("Header")}
-                          <span>
-                            {column.isSorted
-                              ? column.isSortedDesc
-                                ? " ↓"
-                                : " ↑"
-                              : ""}
-                          </span>
-                        </th>
-                      ))}
-                    </tr>
-                  ))}
-                </thead>
-                <tbody {...getTableBodyProps()}>
-                  {rows.map((row) => {
-                    prepareRow(row);
-                    return (
-                      <tr {...row.getRowProps()}>
-                        {row.cells.map((cell) => {
-                          return (
-                            <td {...cell.getCellProps()}>
-                              {cell.column.id === "realtor" ? (
-                                <div title={cell.row.original.infoBlurb}>
-                                  {cell.render("Cell")}
-                                </div>
-                              ) : (
-                                cell.render(
-                                  "Cell"
-                                ) /* Note the capitalized C, its quite important otherwise you'll enjoy plenty of rendering issues*/
-                              )}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-                <tfoot
-                  style={{
-                    backgroundColor: isEvenRows ? "#483d8b" : "#2f4f4f",
-                  }}
-                >
-                  {footerGroups.map((footerGroup) => (
-                    <tr {...footerGroup.getFooterGroupProps()}>
-                      {footerGroup.headers.map((column) => (
-                        <td {...column.getFooterProps()}>
-                          {column.render("Footer")}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tfoot>
-              </table>
+              <DataTable
+              tableData={tableData}
+              tableColumns={tableColumns}
+              />
             </div>
           )}
         </>
       </div>
+      )}
     </div>
   );
 }

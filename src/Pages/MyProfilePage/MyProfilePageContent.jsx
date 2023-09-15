@@ -1,11 +1,11 @@
-import ComparisonChart from "../../Charts/ComparisonChart";
-import LineChart from "../../Charts/LineChart";
-import BarChart from "../../Charts/BarChart"
+import ComparisonChart from "../../Components/Charts/ComparisonChart";
+import LineChart from "../../Components/Charts/LineChart";
+import BarChart from "../../Components/Charts/BarChart"
 import { useEffect, useState } from "react";
-import { ProfilePageData } from "../../Charts/Data/ProfilePageData";
-import { ProfilePageStats1 } from "../../Charts/Data/ProfilePageStats1";
-import { ProfilePageStats2 } from "../../Charts/Data/ProfilePageStats2";
-import { ProfilePageStats3 } from "../../Charts/Data/ProfilePageStats3";
+import { ProfilePageData } from "../../Data/ProfilePageData";
+import { ProfilePageStats1 } from "../../Data/ProfilePageStats1";
+import { ProfilePageStats2 } from "../../Data/ProfilePageStats2";
+import { ProfilePageStats3 } from "../../Data/ProfilePageStats3";
 import "chart.js/auto";
 
 // Reusable component for the select box

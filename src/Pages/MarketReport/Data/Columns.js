@@ -16,14 +16,41 @@ export const columns = [
         Header: <div> Number of<br />Houses</div>,
         accessor: "housesForSale",
         id:"housesForSale",
-        Footer: <span>{_.sum(_.map(MarketReportData, d => d.housesForSale))}</span>
+        Footer: columnProps => {
+
+            const totalHousesForSale = _.sum(_.map(columnProps.data, d => d.housesForSale))
+            console.log(totalHousesForSale)
+            
+            return (
+                <span>
+                    {totalHousesForSale}
+                </span>
+            )
+        }
     },
     {
         Header: <div> Market<br />Share</div>,
-        accessor: "marketShare",
-        Cell: ({ value}) => { return value.toFixed(2) + ' %' },
+        Cell: ({ row, column }) => {
+            // Access the "housesForSale" value from the previous column
+            const housesForSale = row.original.housesForSale || 0;
+            
+            // Access the sum of "housesForSale" from the footer of the "Number of Houses" column
+            const totalHousesForSale = row.cells.find(cell => cell.column.id === 'housesForSale');
+            console.log(totalHousesForSale.column.Footer);
+            
+            // Calculate market share as a percentage
+            const marketShare = (housesForSale / totalHousesForSale) * 100;
+    
+            return marketShare.toFixed(2) + ' %';
+        },
         id:"marketShare",
-        Footer: <span>{_.sum(_.map(MarketReportData, d => d.marketShare)).toFixed(2) + " %"}</span>
+        Footer: columnProps => {
+            return (
+                <span>
+                    {columnProps.data.length > 0 ? _.sum(_.map(columnProps.data, d => d.marketShare)) : 0}
+                </span>
+            )
+        }
     },
     {
         Header: <div> Average<br />Price</div>,
