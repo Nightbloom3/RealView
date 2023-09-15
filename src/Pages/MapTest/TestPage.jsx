@@ -1,7 +1,7 @@
-import "./FindMyRealtor.css";
-import SearchRealtorComponent from './SearchRealtorComponent';
+import MapCompTest from './MapCompTest';
+//import SearchRealtorComponent from '../FindMyRealtor/SearchRealtorComponent';
 
-function FindMyRealtor() {
+function TestPage() {
   return (
     <div>
         <h1>Find min ejendomsmægler</h1>
@@ -9,11 +9,11 @@ function FindMyRealtor() {
             så det ikke er ejendomsmægler totale antal boliger til salg,
             men kun for det valgte postnummer
         </p>
-        <div className="Content_Grid_Container">
-          <SearchRealtorComponent/>
+        <div>
+          <MapCompTest></MapCompTest>
         </div>
     </div>
   );
 }
 
-export default FindMyRealtor;
+export default TestPage;

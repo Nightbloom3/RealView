@@ -7,6 +7,7 @@ import Navigation from "./Pages/Navigation";
 import Footer from "./Pages/Footer";
 import './App.css';
 import FindMyRealtor from "./Pages/FindMyRealtor/FindMyRealtor";
+import TestPage from "./Pages/MapTest/TestPage";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path="/MyProfilePage" element={<MyProfilePage />} />
           <Route path="/FindMyRealtor" element={<FindMyRealtor />} />
           <Route path="/MarketReport" element={<MarketReport />}/>
+          <Route path="/TestPage" element={<TestPage />}/>
         </Routes>
         </div>
       </div>
