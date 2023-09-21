@@ -25,7 +25,7 @@ function Navigation() {
 
           <ul>
             <li>
-              <Link to="/MyProfilePage">FakePage4</Link>
+              <Link to="/AnotherMapTest">AnotherMapTest</Link>
             </li>
           </ul>
 
