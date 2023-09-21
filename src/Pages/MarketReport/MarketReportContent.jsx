@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MarketReportData } from "./Data/MarketReportData";
 import { MarketReportData2 } from "./Data/MarketReportData2";
-import { columns } from "./Data/Columns";
+import { generateColumns } from "./Data/Columns";
 import ScatterChart from "../../Components/Charts/ScatterChart";
 import DataTable from "../../Components/Tables/DataTable";
 import "chart.js/auto";
+import _ from "lodash";
 
 export default function MarketReportContent() {
   const ChartStylingWidth = 800; // Set your desired width
@@ -108,9 +109,58 @@ export default function MarketReportContent() {
   //useState for tracking whether or not the div holding the table is hidden or not
   const [isDivHidden, setIsDivHidden] = useState(false);
 
+  const mergeRowsByRealtor = (dataset) => {
+    const mergedData = [];
+    const realtorDictionary = {};
+  
+    dataset.forEach((row) => {
+      const realtor = row.realtor;
+  
+      if (realtorDictionary[realtor]) {
+        const mergedRow = realtorDictionary[realtor];
+        mergedRow.housesForSale += row.housesForSale;
+        mergedRow.avgPricePerM2 = (mergedRow.avgPricePerM2 + row.avgPricePerM2) / 2;
+        mergedRow.avgSizeInM2 = (mergedRow.avgSizeInM2 + row.avgSizeInM2) / 2;
+        mergedRow.avgTimeListedInDays = (mergedRow.avgTimeListedInDays + row.avgTimeListedInDays) / 2;
+  
+        mergedRow.priceReducedHousePercentage = Math.round(
+          (mergedRow.housesForSale * mergedRow.priceReducedHousePercentage +
+            row.housesForSale * row.priceReducedHousePercentage) /
+            (mergedRow.housesForSale + row.housesForSale)
+        );
+  
+        if (mergedRow.avgPercentagePriceReduction === 0 || row.avgPercentagePriceReduction === 0) {
+          mergedRow.avgPercentagePriceReduction += row.avgPercentagePriceReduction;
+        } else if (mergedRow.avgPercentagePriceReduction > 0 && row.avgPercentagePriceReduction > 0) {
+          mergedRow.avgPercentagePriceReduction = (mergedRow.avgPercentagePriceReduction + row.avgPercentagePriceReduction) / 2;
+        }
+  
+        mergedRow.infoBlurb = row.infoBlurb;
+  
+      } else {
+        const newRow = { ...row };
+        realtorDictionary[realtor] = newRow;
+      }
+    });
+  
+    // Push merged rows into the mergedData array
+    for (const realtor in realtorDictionary) {
+      mergedData.push(realtorDictionary[realtor]);
+    }
+  
+    return mergedData;
+  };
+
+  const mergedDataSet = mergeRowsByRealtor(currentDataset)
+
+  // Calculate the totalHousesForSale outside of the columns definition
+  const totalHousesForSale = useMemo(() => {
+    return _.sum(_.map(mergedDataSet, (d) => d.housesForSale));
+  }, [mergedDataSet]);
+
   //Memoizing of the table data and columns
-  const tableData = useMemo(() => currentDataset, [currentDataset]);
-  const tableColumns = useMemo(() => columns, []);
+  const tableData = useMemo(() => mergedDataSet, [mergedDataSet]);
+  const tableColumns = useMemo(() => generateColumns({ mergedDataSet: mergedDataSet, totalHousesForSale }), [mergedDataSet, totalHousesForSale]);
 
   return (
     <div className="MarketReport_Content_Grid-container">

@@ -1,18 +1,13 @@
 import _ from "lodash";
-import { MarketReportData } from "./MarketReportData";
-import { useMemo } from "react";
 
-// Calculate the totalHousesForSale outside of the columns definition
-const totalHousesForSale = useMemo(() => {
-  return _.sum(_.map(MarketReportData, (d) => d.housesForSale));
-}, [MarketReportData]);
+export function generateColumns({mergedDataSet, totalHousesForSale}) {
 
 //short explanation of the used elements in a react table column,
 //Header, contains the information that you want to have in the header.
 //Footer, likewise with Header, is the information you want in the footer.
 //accessor, is the data you want in the cell for the column, it should usually refer to a value from your data
 //Cell, is what is actually displayed in the cell(s) for the column and can be used to format the data, like seen below.
-export const columns = [
+const columns = [
   {
     Header: "Realtor",
     Footer: "Total",
@@ -42,32 +37,34 @@ export const columns = [
         Share
       </div>
     ),
-    Cell: ({ row, column }) => {
+    Cell: ({ row }) => {
       // Access the "housesForSale" value from the previous column
       const housesForSale = row.original.housesForSale || 0;
-      console.log("housesForSale:", housesForSale);
-
-      // Access the totalHousesForSale from the column
-      const totalHousesFromColumn = column.totalHousesForSale || 0;
-      console.log("totalHousesFromColumn:", totalHousesFromColumn);
 
       // Calculate market share as a percentage, handling division by zero
       const marketShare =
-        totalHousesFromColumn !== 0
-          ? (housesForSale / totalHousesFromColumn) * 100
+        totalHousesForSale !== 0
+          ? (housesForSale / totalHousesForSale) * 100
           : 0;
 
       return isFinite(marketShare) ? marketShare.toFixed(2) + " %" : "N/A";
     },
     id: "marketShare",
     Footer: (columnProps) => {
-      return (
-        <span>
-          {columnProps.data.length > 0
-            ? _.sum(_.map(columnProps.data, (d) => d.marketShare)).toFixed(2) +
-              " %"
-            : 0}
-        </span>
+        // Calculate the total market share based on the total houses across datasets
+        const totalMarketShare =
+        totalHousesForSale !== 0
+            ? (_.sumBy(columnProps.data, (d) => d.housesForSale) /
+            totalHousesForSale) *
+              100
+            : 0;
+
+        return (
+          <span>
+            {columnProps.data.length > 0
+              ? totalMarketShare.toFixed(2) + " %"
+              : 0}
+          </span>
       );
     },
   },
@@ -87,7 +84,7 @@ export const columns = [
     id: "avgPricePerM2",
     Footer: (
       <span>
-        {_.mean(_.map(MarketReportData, (d) => d.avgPricePerM2)).toFixed(0) +
+        {_.mean(_.map(mergedDataSet, (d) => d.avgPricePerM2)).toFixed(0) +
           " m²"}
       </span>
     ),
@@ -108,7 +105,7 @@ export const columns = [
     id: "avgSizeInM2",
     Footer: (
       <span>
-        {_.mean(_.map(MarketReportData, (d) => d.avgSizeInM2)).toFixed(0) +
+        {_.mean(_.map(mergedDataSet, (d) => d.avgSizeInM2)).toFixed(0) +
           " m²"}
       </span>
     ),
@@ -129,7 +126,7 @@ export const columns = [
     id: "avgTimeListedInDays",
     Footer: (
       <span>
-        {_.mean(_.map(MarketReportData, (d) => d.avgTimeListedInDays)).toFixed(
+        {_.mean(_.map(mergedDataSet, (d) => d.avgTimeListedInDays)).toFixed(
           0
         ) + " days"}
       </span>
@@ -152,7 +149,7 @@ export const columns = [
     Footer: (
       <span>
         {_.mean(
-          _.map(MarketReportData, (d) => d.priceReducedHousePercentage)
+          _.map(mergedDataSet, (d) => d.priceReducedHousePercentage)
         ).toFixed(2) + " %"}
       </span>
     ),
@@ -174,9 +171,12 @@ export const columns = [
     Footer: (
       <span>
         {_.mean(
-          _.map(MarketReportData, (d) => d.avgPercentagePriceReduction)
+          _.map(mergedDataSet, (d) => d.avgPercentagePriceReduction)
         ).toFixed(2) + " %"}
       </span>
     ),
   },
 ];
+
+return columns
+}
