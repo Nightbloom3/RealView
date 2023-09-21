@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useReducer, useRef } from "reac
 import { MapContainer, TileLayer } from "react-leaflet";
 import Freedraw, { CREATE, EDIT, DELETE, APPEND, ALL } from "react-leaflet-freedraw";
 import CheckboxContainer from "./Checkboxes";
+import "./styles.css";
 
 const intialState = [
   {

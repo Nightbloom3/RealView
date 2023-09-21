@@ -1,12 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import CityBoundaries from './CityBoundaries';
-import AddFeatureComponent from './AddFeatureComponent';
 
-function MapComponent({ onSelectCity, selectedCity }) {
-  const mapRef = useRef(null);
-  const [featureMode, setFeatureMode] = useState('marker'); // State for feature mode
+function MapComponent({ onSelectCity }) {
+  const [drawingMode, setDrawingMode] = useState(false);
+  const [drawnItems, setDrawnItems] = useState(null);
 
   // A custom hook that listens to the map's click event
   // so if a click occurs, it will register where.
@@ -17,56 +15,67 @@ function MapComponent({ onSelectCity, selectedCity }) {
     return null;
   }
 
-  // based on the click event / mouse click
-  // we are able to extract the latitude and longitude
+  // Handle the click event on the map
   const handleMapClick = async (event) => {
     const lat = event.latlng.lat;
     const lng = event.latlng.lng;
 
-    // Which are used here to do a "reverse geocoding" call to openstreetmap API
-    // Making it possible to get a city name based on the latitude and longitude
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
-      );
-      const data = await response.json();
+    // ... (Same as in your original code)
 
-      const city = data.address.city || data.address.town || data.address.village;
-      onSelectCity(city);
-    } catch (error) {
-      console.error('Error fetching reverse geocoding data:', error);
+    // If drawing mode is active, handle FreeDraw actions
+    if (drawingMode) {
+      // Use the `drawnItems` state to add or remove FreeDraw shapes
+      // based on your FreeDraw component's requirements.
+      // You may need to customize this part to match your use case.
+      const shape = {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'Polygon',
+          coordinates: [[]],
+        },
+      };
+      shape.geometry.coordinates[0].push([lng, lat]);
+
+      // Update the `drawnItems` state with the new shape
+      setDrawnItems({
+        type: 'FeatureCollection',
+        features: [shape],
+      });
     }
   };
 
-  const toggleFeatureMode = () => {
-    // Toggle between 'marker' and 'polygon' modes
-    setFeatureMode(featureMode === 'marker' ? 'polygon' : 'marker');
+  // Handle the toggle button click to enable/disable FreeDraw mode
+  const toggleDrawingMode = () => {
+    setDrawingMode(!drawingMode);
   };
 
   return (
-    <div className="mapComponentDiv">
-      <button onClick={toggleFeatureMode}>
-        Toggle {featureMode === 'marker' ? 'Polygon' : 'Marker'} Mode
+    <div className='mapComponentDiv'>
+      <button onClick={toggleDrawingMode}>
+        {drawingMode ? 'Disable Free Draw' : 'Enable Free Draw'}
       </button>
-      <button>Free Draw knap</button>
-      <button>Delete free draw område</button>
+      <button>Delete Free Draw Area</button>
       <MapContainer
-        center={[55.676098, 12.568337]}
-        zoom={12}
+        center={[56.2639, 9.5018]}
+        zoom={7}
         style={{ height: '600px', width: '100%' }}
-        whenCreated={(map) => (mapRef.current = map)}
       >
-        {/* makes it possible to have the mouse click */}
-        <ClickListener />
-        {/* The tileLayer is what map we use, so leaflet is the component to create actions and openstreetmap - is the map itself */}
+        {/* TileLayer and ClickListener remain the same */}
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {/* Pass selectedCity and the map instance to CityBoundaries */}
-        <CityBoundaries selectedCity={selectedCity} map={mapRef.current} />
-        {/* Render the AddFeatureComponent and pass the map instance and featureMode */}
-        <AddFeatureComponent map={mapRef.current} featureMode={featureMode} />
+        <ClickListener />
+
+        {/* Include the FreeDraw component */}
+        {drawingMode && (
+          <Freedraw
+            mode={CREATE | EDIT | DELETE | APPEND | ALL} // Customize as needed
+            features={drawnItems}
+            setFeatures={setDrawnItems}
+          />
+        )}
       </MapContainer>
     </div>
   );
