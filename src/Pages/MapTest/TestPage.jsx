@@ -1,5 +1,6 @@
-import MapCompTest from './MapCompTest';
+// import MapCompTest from './MapCompTest';
 //import SearchRealtorComponent from '../FindMyRealtor/SearchRealtorComponent';
+import FreeDrawComp from './FreeDrawComp';
 
 function TestPage() {
   return (
@@ -10,7 +11,7 @@ function TestPage() {
             men kun for det valgte postnummer
         </p>
         <div>
-          <MapCompTest></MapCompTest>
+          <FreeDrawComp/>
         </div>
     </div>
   );
