@@ -6,6 +6,7 @@ import ScatterChart from "../../Components/Charts/ScatterChart";
 import DataTable from "../../Components/Tables/DataTable";
 import "chart.js/auto";
 import _ from "lodash";
+import { calculateNewValue } from "@testing-library/user-event/dist/utils";
 
 export default function MarketReportContent() {
   const ChartStylingWidth = 800; // Set your desired width
@@ -109,6 +110,10 @@ export default function MarketReportContent() {
   //useState for tracking whether or not the div holding the table is hidden or not
   const [isDivHidden, setIsDivHidden] = useState(false);
 
+  function percentageCalc (percentage, whole) {
+    return ((percentage / 100) * whole);
+  }
+
   const mergeRowsByRealtor = (dataset) => {
     const mergedData = [];
     const realtorDictionary = {};
@@ -118,17 +123,23 @@ export default function MarketReportContent() {
   
       if (realtorDictionary[realtor]) {
         const mergedRow = realtorDictionary[realtor];
+
+        //logic block for calculating the new percentage of houses that have their price reduced,
+        //has to take place before the new sum of houses are calculated otherwise it will mess with the formular
+        const currentRow = Math.round(percentageCalc(mergedRow.priceReducedHousePercentage, mergedRow.housesForSale))
+        const mergingRow = Math.round(percentageCalc(row.priceReducedHousePercentage, row.housesForSale))
+        const mergingHousesForSale = (mergedRow.housesForSale + row.housesForSale)
+        const mergedPercentage = parseFloat((((currentRow + mergingRow) / mergingHousesForSale) * 100).toFixed(2))
+
         mergedRow.housesForSale += row.housesForSale;
         mergedRow.avgPricePerM2 = (mergedRow.avgPricePerM2 + row.avgPricePerM2) / 2;
         mergedRow.avgSizeInM2 = (mergedRow.avgSizeInM2 + row.avgSizeInM2) / 2;
         mergedRow.avgTimeListedInDays = (mergedRow.avgTimeListedInDays + row.avgTimeListedInDays) / 2;
-  
-        mergedRow.priceReducedHousePercentage = Math.round(
-          (mergedRow.housesForSale * mergedRow.priceReducedHousePercentage +
-            row.housesForSale * row.priceReducedHousePercentage) /
-            (mergedRow.housesForSale + row.housesForSale)
-        );
-  
+
+        mergedRow.priceReducedHousePercentage = mergedPercentage
+
+
+
         if (mergedRow.avgPercentagePriceReduction === 0 || row.avgPercentagePriceReduction === 0) {
           mergedRow.avgPercentagePriceReduction += row.avgPercentagePriceReduction;
         } else if (mergedRow.avgPercentagePriceReduction > 0 && row.avgPercentagePriceReduction > 0) {
