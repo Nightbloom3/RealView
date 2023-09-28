@@ -145,7 +145,7 @@ export default function MarketReportContent() {
   };
 
   //Set function should be used in the future to hold whatever postal numbers are chosen by the user
-  const [checkboxItems, setCheckboxItems] = useState("3450", "3520")
+  const [checkboxItems, setCheckboxItems] = useState(["3450", "3520"])
   //useState to keep track of what checkboxes are checked
   const [checkedItems, setCheckedItems] = useState(checkboxItems.map(() => false));
 
