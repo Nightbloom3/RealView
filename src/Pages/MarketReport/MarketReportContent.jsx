@@ -125,12 +125,26 @@ export default function MarketReportContent() {
         title: {
           display: true,
           text: "Average Time Listed (Days)",
+          color: "white",
+        },
+        ticks: {
+          color: "white",
+        },
+        grid: {
+          color: "white",
         },
       },
       y: {
         title: {
           display: true,
           text: "Average Price per M²",
+          color: "white",
+        },
+        ticks: {
+          color: "white",
+        },
+        grid: {
+          color: "white",
         },
       },
     },

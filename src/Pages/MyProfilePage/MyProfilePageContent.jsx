@@ -181,10 +181,8 @@ export default function MyProfilePageContent() {
             culpa qui officia deserunt mollit anim id est laborum.
           </p>
         </div>
-
-        <br />
-
-        <div className="Chart">
+        
+        <div className="IndividualChart">
           <ComparisonChart
             ChartData={profileComparisonData}
             width={ChartStylingWidth}
@@ -193,8 +191,7 @@ export default function MyProfilePageContent() {
           />
         </div>
 
-        <br />
-
+        <div>
         <SelectBox
           onChange={(e) =>
             HandleChoiceChange(e, setSelectChoice1, setSelectText1)
@@ -212,28 +209,39 @@ export default function MyProfilePageContent() {
           options={selectOptions}
           defaultValue={selectChoice2}
         ></SelectBox>
+        </div>
       </div>
 
-      <div className="ChartDiv">
+      <div className="StatDiv">
         <div className="StatCharts">
+          <div className="IndividualChart">
           <LineChart
             ChartData={statChart1}
             width={ChartStylingWidth}
             height={ChartStylingHeight}
           />
+          </div>
 
+          <br />
+          
+          <div className="IndividualChart">
           <BarChart
             ChartData={statChart2}
             width={ChartStylingWidth}
             height={ChartStylingHeight}
           />
+          </div>
 
+          <br />
+
+          <div className="IndividualChart">
           <BarChart
             ChartData={statChart3}
             width={ChartStylingWidth}
             height={ChartStylingHeight}
             StylingOptions={BiddingTimeStyling}
           />
+          </div>
         </div>
       </div>
     </div>

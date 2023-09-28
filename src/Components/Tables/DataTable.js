@@ -87,7 +87,7 @@ function DataTable({ tableData, tableColumns }) {
                     </tbody>
                     <tfoot
                         style={{
-                            backgroundColor: isEvenRows ? '#483d8b' : '#2f4f4f',
+                            backgroundColor: isEvenRows ? '#d9e2ea' : '#ecf0f5',
                         }}
                     >
                         {footerGroups.map((footerGroup) => (
