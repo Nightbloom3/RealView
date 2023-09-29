@@ -1,6 +1,7 @@
 // import MapCompTest from './MapCompTest';
 //import SearchRealtorComponent from '../FindMyRealtor/SearchRealtorComponent';
 import FreeDrawComp from "./FreeDrawComp";
+import PylogonAreaButtonComp from "./PylogonAreaButtonComp"
 
 function TestPage() {
   // Define your onSelectCity function here
@@ -16,7 +17,7 @@ function TestPage() {
 
       <div>
         {/* Render the FreeDrawComp component and pass onSelectCity as a prop */}
-        <FreeDrawComp onSelectCity={onSelectCity} />
+        <PylogonAreaButtonComp onSelectCity={onSelectCity} />
       </div>
     </div>
   );
