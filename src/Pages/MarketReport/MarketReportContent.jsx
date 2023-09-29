@@ -4,18 +4,9 @@ import { MarketReportData2 } from "./Data/MarketReportData2";
 import { generateColumns } from "./Data/Columns";
 import ScatterChart from "../../Components/Charts/ScatterChart";
 import DataTable from "../../Components/Tables/DataTable";
+import { GenerateRandomColor } from "../../Components/HelperFunctions/GenerateRandomColor";
 import "chart.js/auto";
 import _ from "lodash";
-
-//Short function to generate a random colour for every plot in the scatterplot
-function generateRandomColor(count) {
-  const colors = [];
-  for (let i = 0; i < count; i++) {
-    const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-    colors.push(color);
-  }
-  return colors;
-};
 
 //Short function to calculate the whole number of houses that have had their price reduced,
 //based on an existing number of houses and a percentage of those houses having had their price reduced
@@ -101,7 +92,7 @@ function transformDataForScatterChart(dataset) {
           x: data.avgTimeListedInDays,
           y: data.avgPricePerM2,
         })),
-        backgroundColor: generateRandomColor(dataset.length),
+        backgroundColor: GenerateRandomColor(dataset.length),
         pointRadius: 4,
       },
     ],
@@ -110,8 +101,8 @@ function transformDataForScatterChart(dataset) {
 
 //Main function itself
 export default function MarketReportContent() {
-  const ChartStylingWidth = 800; // Set your desired width
-  const ChartStylingHeight = 400; // Set your desired height
+  const ChartStylingWidth = 1000; // Set your desired width
+  const ChartStylingHeight = 500; // Set your desired height
   //Its important to note that the aspect ratio for the charts must always be 1:2,
   //any overflowing height will simply be added under the chart as a sort of padding 
 
@@ -125,26 +116,26 @@ export default function MarketReportContent() {
         title: {
           display: true,
           text: "Average Time Listed (Days)",
-          color: "white",
+          color: "#F8F8F8",
         },
         ticks: {
-          color: "white",
+          color: "#F8F8F8",
         },
         grid: {
-          color: "white",
+          color: "#F8F8F8",
         },
       },
       y: {
         title: {
           display: true,
           text: "Average Price per M²",
-          color: "white",
+          color: "#F8F8F8",
         },
         ticks: {
-          color: "white",
+          color: "#F8F8F8",
         },
         grid: {
-          color: "white",
+          color: "#F8F8F8",
         },
       },
     },

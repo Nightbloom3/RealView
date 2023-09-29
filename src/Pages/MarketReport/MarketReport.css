@@ -16,15 +16,15 @@
 
   .ChoiceDiv fieldset {
     background-color: #5f84a9;
-    color: white;
-    border: 2px solid white;
+    color: #F8F8F8;
+    border: 2px solid #F8F8F8;
     padding: 10px;
   }
 
   .ChoiceDiv legend {
     background-color: #5f84a9;
-    border: 2px solid transparent white;
-    color: white;
+    border: 2px solid transparent #F8F8F8;
+    color: #F8F8F8;
     padding: 0 10px;
     margin: 0;
   }
@@ -34,8 +34,8 @@
     flex-wrap: wrap; /* Allow items to wrap to the next line if necessary */
     max-width: 100%;
     background-color: #5f84a9;
-    color: white;
-    border: 2px solid white;
+    color: #F8F8F8;
+    border: 2px solid #F8F8F8;
   }
   
   .CheckBoxDiv label {
@@ -53,7 +53,7 @@
   
   .MarketReportTable th,
   .MarketReportTable td {
-    border: 2px solid white;
+    border: 2px solid #F8F8F8;
     padding: 2px;
     color: #295b8c;
   }
@@ -67,11 +67,11 @@
   }
   
   .MarketReportTable tbody tr:hover:nth-child(even) {
-    background-color: #c5d5e6;
+    background-color: #a9c9e6;
   }
 
   .MarketReportTable tbody tr:hover:nth-child(odd) {
-    background-color: #b1c5da;
+    background-color: #93aecf;
   }
   
   .MarketReportTable th {
@@ -79,5 +79,5 @@
     padding-bottom: 12px;
     text-align: center;
     background-color: #5f84a9;
-    color: white;
+    color: #F8F8F8;
   }

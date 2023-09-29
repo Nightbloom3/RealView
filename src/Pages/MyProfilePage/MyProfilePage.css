@@ -9,14 +9,16 @@
   }
 
 .ComparisonDiv {
-  grid-template-rows: 40% 30% 30%;
-  display: grid;
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
 .StatDiv {
-    grid-template-rows: 33% 33% 33%;
-    display: grid;
+    display: flex;
     justify-content: right; /* Horizontally center-align */
+    align-items: flex-start;
 }
 
 .IndividualChart {

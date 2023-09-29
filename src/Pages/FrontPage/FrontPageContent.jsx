@@ -114,6 +114,19 @@ export default function FrontPageContent() {
   };
 
   return (
+    <div className="FrontPage_Content">
+      <div>
+      <h1 className="FrontPageHeader">LOREM IPSUM</h1>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+      </div>
     <div className="FrontPage_Content_Grid-Container">
       <div className="grid-item">
         <BarChart
@@ -132,7 +145,7 @@ export default function FrontPageContent() {
           ChartData={lineData}
           width={pieChartWidth}
           height={pieChartHeight}/>
-      </div>
+        </div>
       <div className="grid-item">
         <ComparisonChart
           ChartData={comparisonData}
@@ -140,6 +153,7 @@ export default function FrontPageContent() {
           height={pieChartHeight}
           StylingOptions={ComparisonStyling}/>
       </div>
+    </div>
     </div>
   );
 }

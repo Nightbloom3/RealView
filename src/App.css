@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+.App {
+  background-color: #F8F8F8;
+}
+
 body {
   margin: 0;
 }
@@ -30,7 +34,6 @@ body {
 }
 
 .column.middle {
-  background-color: #FFFFFF;
   width: 85%;
   min-height: calc(100vh - 20px - 40px - 20px); /* Adjust the values as needed */
   /* The above calculation subtracts the header and footer heights */
