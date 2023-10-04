@@ -9,7 +9,9 @@ function MapComponet({ onSelectCity }) {
   const [drawingMode, setDrawingMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(true); // Start with Delete Mode active
   const [drawnItems, setDrawnItems] = useState({});
-  const freedrawRef = useRef(null);
+  const freedrawRef = useRef(null); 
+ // Leaflet can't render undefined values.
+  const [cityAreaCoordinates, setCityAreaCoordinates] = useState([[0, 0]]); // Initialize with a placeholder coordinate
 
   const handleEscapeKey = useCallback(
     (event) => {
@@ -38,16 +40,22 @@ function MapComponet({ onSelectCity }) {
 
   const handleShowCityArea = () => {
     // Coordinates for the polygon
-    const cityAreaCoordinates = [
-      [12.5638, 55.7553], // Top-left corner
-      [12.5863, 55.7553], // Top-right corner
-      [12.5863, 55.7495], // Top-right inner corner
-      [12.5638, 55.7553], // Top-left corner (closing the polygon)
+    const newCityAreaCoordinates = [
+      [12.623291015625, 55.66732320580018],
+      [12.521667480468752, 55.60220840547116],
+      [12.594451904296875, 55.55640828885052],
+      [12.676849365234377, 55.619272742171056],
+      [12.623291015625, 55.66732320580018],
     ];
 
+    console.log(newCityAreaCoordinates);
+  
+    // Set the coordinates for the city area
+    setCityAreaCoordinates(newCityAreaCoordinates);
+  
     // Set the drawing mode to CREATE so that you can draw the polygons
     setDrawingMode(CREATE);
-
+  
     // Set the coordinates for the drawn items (polygons)
     setDrawnItems({
       type: "FeatureCollection",
@@ -56,7 +64,7 @@ function MapComponet({ onSelectCity }) {
           type: "Feature",
           geometry: {
             type: "Polygon",
-            coordinates: [cityAreaCoordinates],
+            coordinates: [newCityAreaCoordinates],
           },
           properties: {},
         },
@@ -139,54 +147,79 @@ function MapComponet({ onSelectCity }) {
     properties: {},
   };
 
+  const cityAreaFeature = {
+    type: "Feature",
+    geometry: {
+      type: "Polygon",
+      coordinates: [cityAreaCoordinates],
+    },
+    properties: {},
+  };
+
   // Map Container is just to determine where on the map i should focus when render
   // and the size  and zoom
-  return (
-    <div className="mapComponetDiv">
-      <button onClick={handleToggleFreeDraw} disabled={drawingMode}>
-        Enable Free Draw
-      </button>
-      <button onClick={handleToggleDeleteMode} disabled={deleteMode}>
-        Enable Delete Mode
-      </button>
-      <button onClick={handleShowCityArea}>Press to see city area</button>
-      <MapContainer
-        center={[56.2639, 9.5018]}
-        zoom={7}
-        style={{ height: "600px", width: "100%" }}
-      >
-        {/* makes it possible to have the mouse click */}
-        <ClickListener />
-        {/* The tileLayer is what map we use, so leaflet is the component to create actions and openstreetmap - is the map itself */}
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-        {/* Add the Marker with the custom icon */}
-        <Marker position={markerCoordinates} icon={customIcon}>
-          <Popup>Default Marker Popup Content</Popup>
-        </Marker>
+return (
+  <div className="mapComponetDiv">
+    <button onClick={handleToggleFreeDraw} disabled={drawingMode}>
+      Enable Free Draw
+    </button>
+    <button onClick={handleToggleDeleteMode} disabled={deleteMode}>
+      Enable Delete Mode
+    </button>
+    <button onClick={handleShowCityArea}>Press to see city area</button>
+    <MapContainer
+      center={[56.2639, 9.5018]}
+      zoom={7}
+      style={{ height: "600px", width: "100%" }}
+    >
+      {/* makes it possible to have the mouse click */}
+      <ClickListener />
+      {/* The tileLayer is what map we use, so leaflet is the component to create actions and openstreetmap - is the map itself */}
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      />
+      {/* Add the Marker with the custom icon */}
+      <Marker position={markerCoordinates} icon={customIcon}>
+        <Popup>Default Marker Popup Content</Popup>
+      </Marker>
 
-        <Freedraw
-          mode={mode}
-          features={drawnItems}
-          setFeatures={setDrawnItems}
-          ref={freedrawRef}
-        />
+      <Freedraw
+        mode={mode}
+        features={drawnItems}
+        setFeatures={setDrawnItems}
+        ref={freedrawRef}
+      />
 
-        {/* Render the green area */}
+      {/* Render the green area */}
+      <GeoJSON
+        data={greenAreaFeature}
+        style={() => ({
+          color: "green", // Change the color of the polygon border
+          fillColor: "green", // Change the fill color of the polygon
+          weight: 2, // Adjust the border weight
+          opacity: 1, // Adjust the opacity of the polygon border
+          fillOpacity: 0.5, // Adjust the fill opacity
+        })}
+      />
+
+      {/* Conditional rendering of the city area */}
+      The city area polygon is only rendered if cityAreaCoordinates does not contain the initial placeholder value [0, 0]
+      There by forceing a re-render of the map, showing the polygons      
+      {cityAreaCoordinates[0][0] !== 0 && (
         <GeoJSON
-          data={greenAreaFeature}
+          data={cityAreaFeature}
           style={() => ({
-            color: "green", // Change the color of the polygon border
-            fillColor: "green", // Change the fill color of the polygon
+            color: "blue", // Change the color of the polygon border
+            fillColor: "blue", // Change the fill color of the polygon
             weight: 2, // Adjust the border weight
             opacity: 1, // Adjust the opacity of the polygon border
             fillOpacity: 0.5, // Adjust the fill opacity
           })}
         />
-      </MapContainer>
-    </div>
+      )}
+    </MapContainer>
+  </div>
   );
 }
 
