@@ -132,10 +132,13 @@ function MapComponet({ onSelectCity }) {
         return latDiff < 0.01 && lngDiff < 0.01; // Adjust the threshold as needed
       });
 
+      // This might need a change from line 135 - 140
+      onSelectCity(city);
+
       if (matchingCity) {
         handleCityClick(matchingCity.name);
-        onSelectCity(city);
       }
+
     } catch (error) {
       console.error("Error fetching reverse geocoding data:", error);
     }
