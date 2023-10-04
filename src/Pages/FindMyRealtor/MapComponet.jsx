@@ -121,10 +121,13 @@ function MapComponet({ onSelectCity }) {
 
   // Define the GeoJSON data for the green area between markers
   const greenAreaCoordinates = [
-    [12.5638, 55.7553], // Top-left corner
-    [12.5863, 55.7553], // Top-right corner
-    [12.5863, 55.7495], // Top-right inner corner
-    [12.5638, 55.7553], // Top-left corner (closing the polygon)
+    [12.568394062182847, 55.73629251717131],
+    [12.469517109057847, 55.67284135822011],
+    [12.453037616870349, 55.60540853422476],
+    [12.505909320971911, 55.63642654736689],
+    [12.569767353198474, 55.665483648721555],
+    [12.597919819018786, 55.704579816001036],
+    [12.568394062182847, 55.73629251717131],
   ];
 
   const greenAreaFeature = {
