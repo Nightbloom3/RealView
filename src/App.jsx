@@ -8,7 +8,6 @@ import Footer from "./Pages/Footer";
 import './App.css';
 import FindMyRealtor from "./Pages/FindMyRealtor/FindMyRealtor";
 import TestPage from "./Pages/MapTest/TestPage";
-import AnotherMapTestPage from "./Pages/AnotherMapTest/AnotherMapTestPage";
 
 function App() {
   return (
@@ -35,7 +34,6 @@ function App() {
           <Route path="/FindMyRealtor" element={<FindMyRealtor />} />
           <Route path="/MarketReport" element={<MarketReport />}/>
           <Route path="/TestPage" element={<TestPage />}/>
-          <Route path="/AnotherMapTest" element={<AnotherMapTestPage />}/>
         </Routes>
         </div>
       </div>
