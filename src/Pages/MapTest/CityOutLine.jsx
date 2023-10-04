@@ -3,18 +3,15 @@ import { MapContainer, TileLayer, useMapEvents, Marker, Popup } from 'react-leaf
 import Freedraw, { CREATE, EDIT, DELETE, APPEND, ALL } from "react-leaflet-freedraw";
 import { Icon, divIcon, point } from "leaflet";
 import { GeoJSON } from 'react-leaflet';
-
 import 'leaflet/dist/leaflet.css';
-import cityBoundaries from "./CityBoundaries.json"; // Import the JSON file
 
 function MapComponet({ onSelectCity }) {
   const [drawingMode, setDrawingMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(true); // Start with Delete Mode active
   const [drawnItems, setDrawnItems] = useState({});
-  const freedrawRef = useRef(null);
+  const freedrawRef = useRef(null); 
  // Leaflet can't render undefined values.
   const [cityAreaCoordinates, setCityAreaCoordinates] = useState([[0, 0]]); // Initialize with a placeholder coordinate
-  const [selectedCity, setSelectedCity] = useState(null);
 
   const handleEscapeKey = useCallback(
     (event) => {
@@ -39,20 +36,6 @@ function MapComponet({ onSelectCity }) {
   const handleToggleDeleteMode = () => {
     setDeleteMode(!deleteMode);
     setDrawingMode(false); // Disable Free Draw when enabling Delete Mode
-  };
-
-  
-  const handleCityClick = (cityName) => {
-    // Find the selected city object based on its name
-    const selectedCityObject = cityBoundaries.find((city) => city.name === cityName);
-  
-    if (selectedCityObject) {
-      // Set the coordinates for the city area
-      setCityAreaCoordinates(selectedCityObject.coordinates);
- 
-      // Set the selected city
-      setSelectedCity(cityName);
-    }
   };
 
   const handleShowCityArea = () => {
@@ -125,17 +108,10 @@ function MapComponet({ onSelectCity }) {
       console.log("Clicked at Longitude:", lng);
       console.log("City:", city);
 
-      const matchingCity = cityBoundaries.find((cityObject) => {
-        const [cityLng, cityLat] = cityObject.coordinates[0]; // Assuming the first coordinate represents the city's location
-        const latDiff = Math.abs(lat - cityLat);
-        const lngDiff = Math.abs(lng - cityLng);
-        return latDiff < 0.01 && lngDiff < 0.01; // Adjust the threshold as needed
-      });
+      // Update the marker coordinates when the map is clicked
+      setMarkerCoordinates([lat, lng]);
 
-      if (matchingCity) {
-        handleCityClick(matchingCity.name);
-        onSelectCity(city);
-      }
+      onSelectCity(city);
     } catch (error) {
       console.error("Error fetching reverse geocoding data:", error);
     }
@@ -227,9 +203,9 @@ return (
         })}
       />
 
-      {/* Conditional rendering of the city area
+      {/* Conditional rendering of the city area */}
       The city area polygon is only rendered if cityAreaCoordinates does not contain the initial placeholder value [0, 0]
-      There by forceing a re-render of the map, showing the polygons       */}
+      There by forceing a re-render of the map, showing the polygons      
       {cityAreaCoordinates[0][0] !== 0 && (
         <GeoJSON
           data={cityAreaFeature}
@@ -248,4 +224,3 @@ return (
 }
 
 export default MapComponet;
-
