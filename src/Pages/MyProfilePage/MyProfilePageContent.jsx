@@ -7,7 +7,9 @@ import { ProfilePageStats1 } from "../../Data/ProfilePageStats1";
 import { ProfilePageStats2 } from "../../Data/ProfilePageStats2";
 import { ProfilePageStats3 } from "../../Data/ProfilePageStats3";
 import { GenerateRandomColor } from "../../Components/HelperFunctions/GenerateRandomColor";
+import ChartStyling from "../../Components/Charts/ChartStyling";
 import "chart.js/auto";
+import _ from "lodash";
 
 // Reusable component for the select box
 // onChange is for whichever onChange function you want to run with the SelectBox
@@ -33,92 +35,13 @@ export default function MyProfilePageContent() {
   const ChartStylingHeight = 240; // Set your desired height
   const MainChartStylingWidth = 700;
   const MainChartStylingHeight = 350;
-  const GenericStyling = {
-    scales: {
-      x: {
-        ticks: {
-          color: "#F8F8F8",
-        },
-        grid: {
-          color: "#F8F8F8",
-        },
-      },
-      y: {
-        ticks: {
-          color: "#F8F8F8",
-        },
-        grid: {
-          color: "#F8F8F8",
-        },
-      }
-    },
-    plugins: {
-      legend: {
-        labels: {
-          color: "#F8F8F8", 
-        }
-      }
-    }
-  }
-  const ComparisonStyling = {
-    MaintainAspectRatio: true,
-    responsive: true,
-    indexAxis: "y",
-    scales: {
-      x: {
-        ticks: {
-          color: "#F8F8F8",
-        },
-        grid: {
-          color: "#F8F8F8",
-        },
-      },
-      y: {
-        ticks: {
-          color: "#F8F8F8",
-        },
-        grid: {
-          color: "#F8F8F8",
-        },
-      }
-    },
-    plugins: {
-      legend: {
-        labels: {
-          color: "#F8F8F8", 
-        }
-      }
-    }
-  };
-  const BiddingTimeStyling = {
-    plugins: {
-      legend: {
-        labels: {
-          boxWidth: 0,
-          boxHeight: 0,
-          color: "#F8F8F8",
-        },
-      },
-    },
-    scales: {
-      x: {
-        ticks: {
-          color: "#F8F8F8",
-        },
-        grid: {
-          color: "#F8F8F8",
-        },
-      },
-      y: {
-        ticks: {
-          color: "#F8F8F8",
-        },
-        grid: {
-          color: "#F8F8F8",
-        },
-      }
-    },
-  }
+
+  const ComparisonStyling = _.cloneDeep(ChartStyling)
+  ComparisonStyling.indexAxis = "y"
+
+  const BiddingTimeStyling = _.cloneDeep(ChartStyling)
+  BiddingTimeStyling.plugins.legend.labels.boxWidth = 0;
+  BiddingTimeStyling.plugins.legend.labels.boxHeight = 0;
 
   // useStates for the Chart's Data
   const [selectChoice1, setSelectChoice1] = useState("HousesSold");
@@ -298,7 +221,7 @@ export default function MyProfilePageContent() {
             ChartData={statChart1}
             width={ChartStylingWidth}
             height={ChartStylingHeight}
-            StylingOptions={GenericStyling}
+            StylingOptions={ChartStyling}
           />
           </div>
 
@@ -309,7 +232,7 @@ export default function MyProfilePageContent() {
             ChartData={statChart2}
             width={ChartStylingWidth}
             height={ChartStylingHeight}
-            StylingOptions={GenericStyling}
+            StylingOptions={ChartStyling}
           />
           </div>
 

@@ -52,6 +52,23 @@ body {
   width: 100%;
 }
 
+.IndividualChart {
+  background-color: #5f84a9;
+}
+
+.IndividualChartCentered {
+  display: grid;
+  grid-template-columns: auto 33.3% auto; 
+  background-color: #5f84a9;
+}
+
+.IWishIWasCentered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
 @media screen and (max-width: 600px) {
   .column.side, .column.middle {
     width: 100%;

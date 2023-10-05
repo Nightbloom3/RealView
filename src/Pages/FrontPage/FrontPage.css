@@ -7,7 +7,7 @@
 
 .FrontPage_Content_Grid-Container {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 48% 48%;
   gap: 50px;
   max-width: 100%; /* Set a maximum width for the container */
 }

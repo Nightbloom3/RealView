@@ -5,6 +5,7 @@ import { generateColumns } from "./Data/Columns";
 import ScatterChart from "../../Components/Charts/ScatterChart";
 import DataTable from "../../Components/Tables/DataTable";
 import { GenerateRandomColor } from "../../Components/HelperFunctions/GenerateRandomColor";
+import ChartStyling from "../../Components/Charts/ChartStyling";
 import "chart.js/auto";
 import _ from "lodash";
 
@@ -110,44 +111,12 @@ export default function MarketReportContent() {
   //in the scales section we setup the title texts for the x-axis and the y-axis,
   //in the plugins section we disable the chart title and the interactive Legends,
   //as the chart becomes to cluttered when there are more than 10 realtors in a region 
-  const scatterChartStyling = {
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Average Time Listed (Days)",
-          color: "#F8F8F8",
-        },
-        ticks: {
-          color: "#F8F8F8",
-        },
-        grid: {
-          color: "#F8F8F8",
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Average Price per M²",
-          color: "#F8F8F8",
-        },
-        ticks: {
-          color: "#F8F8F8",
-        },
-        grid: {
-          color: "#F8F8F8",
-        },
-      },
-    },
-    plugins: {
-      title: {
-        display: false,
-      },
-      legend: {
-        display: false,
-      },
-    },
-  };
+  const scatterChartStyling = _.cloneDeep(ChartStyling)
+  scatterChartStyling.scales.x.title.text = "Average Time Listed (Days)"
+  scatterChartStyling.scales.y.title.text = "Average Price per M²"
+  scatterChartStyling.plugins.title.display = false;
+  scatterChartStyling.plugins.legend.display = false;
+  scatterChartStyling.layout.padding.top = 20;
 
   //Set function should be used in the future to hold whatever postal numbers are chosen by the user
   const [checkboxItems, setCheckboxItems] = useState(["3450", "3520"])

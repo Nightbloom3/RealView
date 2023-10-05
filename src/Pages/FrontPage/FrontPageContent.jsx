@@ -7,9 +7,21 @@ import { BarData } from "../../Data/BarData";
 import { PieData } from "../../Data/PieData";
 import { LineData } from "../../Data/LineData";
 import { ComparisonData } from "../../Data/ComparisonData";
+import { GenerateRandomColor } from "../../Components/HelperFunctions/GenerateRandomColor";
+import ChartStyling from "../../Components/Charts/ChartStyling";
 import "chart.js/auto";
+import _ from "lodash";
 
 export default function FrontPageContent() {
+  const ChartStylingWidth = 600;
+  const ChartStylingHeight = 300;
+  const PieStylingWidth = 300;
+  const PieStylingHeight = 300;
+
+  const PieStyling = _.cloneDeep(ChartStyling)
+  PieStyling.scales.x.display = false;
+  PieStyling.scales.y.display = false;
+
   const [barData, setBarData] = useState({
     labels: [],
     datasets: [
@@ -100,19 +112,6 @@ export default function FrontPageContent() {
     });
   }, []);
 
-  const pieChartWidth = 500;
-  const pieChartHeight = 300;
-
-  const ComparisonStyling = {
-    MaintainAspectRatio: true,
-    indexAxis: "y",
-    scales: {
-      xAxes: {
-        max: 500,
-      },
-    },
-  };
-
   return (
     <div className="FrontPage_Content">
       <div>
@@ -129,29 +128,47 @@ export default function FrontPageContent() {
       </div>
     <div className="FrontPage_Content_Grid-Container">
       <div className="grid-item">
+        <div className="IndividualChart">
         <BarChart
           ChartData={barData}
-          width={pieChartWidth}
-          height={pieChartHeight}/>
+          width={ChartStylingWidth}
+          height={ChartStylingHeight}
+          StylingOptions={ChartStyling}
+          />
+        </div>
       </div>
       <div className="grid-item">
-        <PieChart
+        <div className="IndividualChartCentered">
+          <div></div>
+          <div className="IWishIWasCentered">
+          <PieChart
           ChartData={pieData}
-          width={pieChartWidth}
-          height={pieChartHeight}/>
+          width={PieStylingWidth}
+          height={PieStylingHeight}
+          StylingOptions={PieStyling}
+          />
+          </div>
+          <div></div>
+        </div>
       </div>
       <div className="grid-item">
+      <div className="IndividualChart">
         <LineChart
           ChartData={lineData}
-          width={pieChartWidth}
-          height={pieChartHeight}/>
+          width={ChartStylingWidth}
+          height={ChartStylingHeight}
+          StylingOptions={ChartStyling}
+          />
+        </div>
         </div>
       <div className="grid-item">
+      <div className="IndividualChart">
         <ComparisonChart
           ChartData={comparisonData}
-          width={pieChartWidth}
-          height={pieChartHeight}
-          StylingOptions={ComparisonStyling}/>
+          width={ChartStylingWidth}
+          height={ChartStylingHeight}
+          StylingOptions={ChartStyling}/>
+        </div>
       </div>
     </div>
     </div>
