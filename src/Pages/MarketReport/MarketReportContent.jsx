@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MarketReportData } from "./Data/MarketReportData";
 import { MarketReportData2 } from "./Data/MarketReportData2";
+import { MarketReportData3 } from "./Data/MarketReportData3";
 import { generateColumns } from "./Data/Columns";
 import ScatterChart from "../../Components/Charts/ScatterChart";
 import DataTable from "../../Components/Tables/DataTable";
@@ -119,7 +120,7 @@ export default function MarketReportContent() {
   scatterChartStyling.layout.padding.top = 20;
 
   //Set function should be used in the future to hold whatever postal numbers are chosen by the user
-  const [checkboxItems, setCheckboxItems] = useState(["3450", "3520"])
+  const [checkboxItems, setCheckboxItems] = useState(["3450", "3520", "3400"])
   //useState to keep track of what checkboxes are checked
   const [checkedItems, setCheckedItems] = useState(checkboxItems.map(() => false));
 
@@ -136,6 +137,7 @@ export default function MarketReportContent() {
   const datasetsRef = useRef({
     dataset1: MarketReportData,
     dataset2: MarketReportData2,
+    dataset3: MarketReportData3
   })
 
   //useEffect to concat chosen datasets together before they are then merged later
