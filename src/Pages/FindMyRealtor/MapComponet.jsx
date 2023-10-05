@@ -31,8 +31,14 @@ function MapComponet({ onSelectCity }) {
 
   useEffect(() => {
     window.addEventListener("keydown", handleEscapeKey);
-    return () => window.removeEventListener("keydown", handleEscapeKey);
-  }, [handleEscapeKey]);
+    return () => {
+      window.removeEventListener("keydown", handleEscapeKey);
+      if (drawingMode) {
+        // Disable FreeDraw mode when unmounting
+        setDrawingMode(false);
+      }
+    };
+  }, [handleEscapeKey, drawingMode]);
 
   const handleToggleFreeDraw = () => {
     setDrawingMode(!drawingMode);
