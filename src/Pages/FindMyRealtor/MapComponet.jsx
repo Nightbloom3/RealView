@@ -15,9 +15,9 @@ function MapComponet({ onSelectCity }) {
  // Leaflet can't render undefined values.
   const [cityAreaCoordinates, setCityAreaCoordinates] = useState([[0, 0]]); // Initialize with a placeholder coordinate
   const [selectedCity, setSelectedCity] = useState(null);
-  const [markerVisible, setMarkerVisible] = useState(false);
-  const [markerCoordinates, setMarkerCoordinates] = useState([0, 0]);
-  const [placeMarkerClicked, setPlaceMarkerClicked] = useState(false);
+  const [markerCoordinates, setMarkerCoordinates] = useState(null);
+  const [placeMarkerMode, setPlaceMarkerMode] = useState(false); // Added state to track "Place Marker" button click
+
 
   const handleEscapeKey = useCallback(
     (event) => {
@@ -79,9 +79,6 @@ function MapComponet({ onSelectCity }) {
     const lat = event.latlng.lat;
     const lng = event.latlng.lng;
 
-    setMarkerCoordinates([lat, lng]);
-    setMarkerVisible(true);
-
     // Which are used here to do a "reverse geocoding" call to openstreetmap API
     // Makeing it possible to get a city name based on the latitude and longitude
     try {
@@ -111,14 +108,16 @@ function MapComponet({ onSelectCity }) {
         handleCityClick(matchingCity.name);
       }
 
+      // Check if the "Place Marker" button was clicked, and update the marker coordinates
+      if (placeMarkerMode) {
+        setMarkerCoordinates([lat, lng]);
+        setPlaceMarkerMode(false); // Reset placeMarkerMode after placing the marker
+      }
+
     } catch (error) {
       console.error("Error fetching reverse geocoding data:", error);
     }
-    
-  };
 
-  const handlePlaceMarker = () => {
-    setPlaceMarkerClicked(true); // Enable marker placement mode
   };
 
   const customIcon = new Icon({
@@ -146,7 +145,7 @@ return (
     <button onClick={handleToggleDeleteMode} disabled={deleteMode}>
       Enable Delete Mode
     </button>
-    <button onClick={handlePlaceMarker}>Place Marker</button>
+    <button onClick={() => setPlaceMarkerMode(true)}>Place Marker</button>
     <MapContainer
       center={[56.2639, 9.5018]}
       zoom={7}
@@ -159,12 +158,6 @@ return (
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-
-        {markerVisible && (
-          <Marker position={markerCoordinates} icon={customIcon}>
-            <Popup>Default Marker Popup Content</Popup>
-          </Marker>
-        )}
 
       <Freedraw
         mode={mode}
@@ -188,6 +181,11 @@ return (
           })}
         />
       )}
+        {markerCoordinates && (
+          <Marker position={markerCoordinates} icon={customIcon}>
+            <Popup>Marker Location</Popup>
+          </Marker>
+        )}
     </MapContainer>
   </div>
   );
