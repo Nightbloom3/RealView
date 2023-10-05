@@ -1,14 +1,13 @@
-import BarChart from "../../Charts/BarChart";
-import PieChart from "../../Charts/PieChart";
-import LineChart from "../../Charts/LineChart";
-import ComparisonChart from "../../Charts/ComparisonChart";
+import BarChart from "../../Components/Charts/BarChart";
+import PieChart from "../../Components/Charts/PieChart";
+import LineChart from "../../Components/Charts/LineChart";
+import ComparisonChart from "../../Components/Charts/ComparisonChart";
 import { useState, useEffect } from "react";
-import { BarData } from "../../Charts/Data/BarData";
-import { PieData } from "../../Charts/Data/PieData";
-import { LineData } from "../../Charts/Data/LineData";
-import { ComparisonData } from "../../Charts/Data/ComparisonData";
-import { Chart as ChartJS } from "chart.js/auto";
-// ^^^^^^ Må ikke slettes - ellers virker siden ikke ^^^^^^^--- import { Chart as ChartJS } from "chart.js/auto";
+import { BarData } from "../../Data/BarData";
+import { PieData } from "../../Data/PieData";
+import { LineData } from "../../Data/LineData";
+import { ComparisonData } from "../../Data/ComparisonData";
+import "chart.js/auto";
 
 export default function FrontPageContent() {
   const [barData, setBarData] = useState({
