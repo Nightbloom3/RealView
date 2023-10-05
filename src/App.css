@@ -48,7 +48,8 @@ body {
 
 .footer {
   background-color: #E5EBF1;
-  text-align: center;
+  text-align: left;
+  padding-left: 20px;
   width: 100%;
 }
 
@@ -58,7 +59,7 @@ body {
 
 .IndividualChartCentered {
   display: grid;
-  grid-template-columns: auto 33.3% auto; 
+  grid-template-columns: auto auto auto; 
   background-color: #5f84a9;
 }
 

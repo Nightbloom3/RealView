@@ -72,13 +72,13 @@ export default function MyProfilePageContent() {
       {
         label: "Houses for Sale",
         data: ProfilePageStats1.map((data) => data.HousesForSale),
-        borderColor: ["#3B9E9B"],
+        borderColor: ["#83C5E2"],
         backgroundColor: ["#ff8c42"]
       },
       {
         label: "Houses Sold",
         data: ProfilePageStats1.map((data) => data.HousesSold),
-        borderColor: ["#83C5E2"],
+        borderColor: ["#3B9E9B"],
         backgroundColor: ["#ff8c42"]
       },
     ],
@@ -117,7 +117,7 @@ export default function MyProfilePageContent() {
       {
         label: "Bidding time in days",
         data: ProfilePageStats3.map((data) => data.AvgBiddingTime),
-        backgroundColor: GenerateRandomColor(ProfilePageStats1.length)
+        backgroundColor: GenerateRandomColor(ProfilePageStats3.length)
       }
     ]
   })

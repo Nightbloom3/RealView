@@ -49,6 +49,7 @@
     border-collapse: collapse;
     width: 100%;
     border-spacing: 2px;
+    position: relative;
   }
   
   .MarketReportTable th,
@@ -56,6 +57,11 @@
     border: 2px solid #F8F8F8;
     padding: 2px;
     color: #295b8c;
+  }
+
+  .MarketReportTable th {
+    position: sticky;
+    top: 0;
   }
   
   .MarketReportTable tbody tr:nth-child(even) {

@@ -22,6 +22,10 @@ export default function FrontPageContent() {
   PieStyling.scales.x.display = false;
   PieStyling.scales.y.display = false;
 
+  const BarStyling = _.cloneDeep(ChartStyling)
+  BarStyling.plugins.legend.labels.boxWidth = 0;
+  BarStyling.plugins.legend.labels.boxHeight = 0;
+  
   const [barData, setBarData] = useState({
     labels: [],
     datasets: [
@@ -73,6 +77,7 @@ export default function FrontPageContent() {
         {
           label: "# Houses Acquired",
           data: BarData.map((data) => data.housesAcquired),
+          backgroundColor: GenerateRandomColor(BarData.length)
         },
       ],
     });
@@ -83,6 +88,7 @@ export default function FrontPageContent() {
         {
           label: "% Market Share",
           data: PieData.map((data) => data.MarketShare),
+          backgroundColor: GenerateRandomColor(PieData.length)
         },
       ],
     });
@@ -93,6 +99,8 @@ export default function FrontPageContent() {
         {
           label: "# Houses Sold",
           data: LineData.map((data) => data.HousesSold),
+          borderColor: "#83C5E2",
+          backgroundColor: "#ff8c42"
         },
       ],
     });
@@ -103,10 +111,12 @@ export default function FrontPageContent() {
         {
           label: "# Houses Acquired",
           data: ComparisonData.map((data) => data.housesAcquired),
+          backgroundColor: "#3B9E9B"
         },
         {
           label: "# Houses Sold",
           data: ComparisonData.map((data) => data.HousesSold),
+          backgroundColor: "#83C5E2"
         },
       ],
     });
@@ -133,7 +143,7 @@ export default function FrontPageContent() {
           ChartData={barData}
           width={ChartStylingWidth}
           height={ChartStylingHeight}
-          StylingOptions={ChartStyling}
+          StylingOptions={BarStyling}
           />
         </div>
       </div>
