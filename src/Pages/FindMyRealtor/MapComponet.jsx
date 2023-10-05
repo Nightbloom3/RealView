@@ -15,6 +15,9 @@ function MapComponet({ onSelectCity }) {
  // Leaflet can't render undefined values.
   const [cityAreaCoordinates, setCityAreaCoordinates] = useState([[0, 0]]); // Initialize with a placeholder coordinate
   const [selectedCity, setSelectedCity] = useState(null);
+  const [markerVisible, setMarkerVisible] = useState(false);
+  const [markerCoordinates, setMarkerCoordinates] = useState([0, 0]);
+  const [placeMarkerClicked, setPlaceMarkerClicked] = useState(false);
 
   const handleEscapeKey = useCallback(
     (event) => {
@@ -55,40 +58,6 @@ function MapComponet({ onSelectCity }) {
     }
   };
 
-  const handleShowCityArea = () => {
-    // Coordinates for the polygon
-    const newCityAreaCoordinates = [
-      [12.623291015625, 55.66732320580018],
-      [12.521667480468752, 55.60220840547116],
-      [12.594451904296875, 55.55640828885052],
-      [12.676849365234377, 55.619272742171056],
-      [12.623291015625, 55.66732320580018],
-    ];
-
-    console.log(newCityAreaCoordinates);
-  
-    // Set the coordinates for the city area
-    setCityAreaCoordinates(newCityAreaCoordinates);
-  
-    // Set the drawing mode to CREATE so that you can draw the polygons
-    setDrawingMode(CREATE);
-  
-    // Set the coordinates for the drawn items (polygons)
-    setDrawnItems({
-      type: "FeatureCollection",
-      features: [
-        {
-          type: "Feature",
-          geometry: {
-            type: "Polygon",
-            coordinates: [newCityAreaCoordinates],
-          },
-          properties: {},
-        },
-      ],
-    });
-  };
-
   const mode = deleteMode
     ? DELETE
     : drawingMode
@@ -109,6 +78,9 @@ function MapComponet({ onSelectCity }) {
   const handleMapClick = async (event) => {
     const lat = event.latlng.lat;
     const lng = event.latlng.lng;
+
+    setMarkerCoordinates([lat, lng]);
+    setMarkerVisible(true);
 
     // Which are used here to do a "reverse geocoding" call to openstreetmap API
     // Makeing it possible to get a city name based on the latitude and longitude
@@ -142,37 +114,18 @@ function MapComponet({ onSelectCity }) {
     } catch (error) {
       console.error("Error fetching reverse geocoding data:", error);
     }
+    
   };
 
-  const [markerCoordinates, setMarkerCoordinates] = useState([
-    55.654492914401786, 12.100073440774317,
-  ]);
+  const handlePlaceMarker = () => {
+    setPlaceMarkerClicked(true); // Enable marker placement mode
+  };
 
   const customIcon = new Icon({
     // iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
     iconUrl: require("../../icons/placeholder.png"),
     iconSize: [26, 26], // size of the icon
   });
-
-  // Define the GeoJSON data for the green area between markers
-  const greenAreaCoordinates = [
-    [12.568394062182847, 55.73629251717131],
-    [12.469517109057847, 55.67284135822011],
-    [12.453037616870349, 55.60540853422476],
-    [12.505909320971911, 55.63642654736689],
-    [12.569767353198474, 55.665483648721555],
-    [12.597919819018786, 55.704579816001036],
-    [12.568394062182847, 55.73629251717131],
-  ];
-
-  const greenAreaFeature = {
-    type: "Feature",
-    geometry: {
-      type: "Polygon",
-      coordinates: [greenAreaCoordinates],
-    },
-    properties: {},
-  };
 
   const cityAreaFeature = {
     type: "Feature",
@@ -193,7 +146,7 @@ return (
     <button onClick={handleToggleDeleteMode} disabled={deleteMode}>
       Enable Delete Mode
     </button>
-    <button onClick={handleShowCityArea}>Press to see city area</button>
+    <button onClick={handlePlaceMarker}>Place Marker</button>
     <MapContainer
       center={[56.2639, 9.5018]}
       zoom={7}
@@ -206,28 +159,18 @@ return (
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {/* Add the Marker with the custom icon */}
-      <Marker position={markerCoordinates} icon={customIcon}>
-        <Popup>Default Marker Popup Content</Popup>
-      </Marker>
+
+        {markerVisible && (
+          <Marker position={markerCoordinates} icon={customIcon}>
+            <Popup>Default Marker Popup Content</Popup>
+          </Marker>
+        )}
 
       <Freedraw
         mode={mode}
         features={drawnItems}
         setFeatures={setDrawnItems}
         ref={freedrawRef}
-      />
-
-      {/* Render the green area */}
-      <GeoJSON
-        data={greenAreaFeature}
-        style={() => ({
-          color: "green", // Change the color of the polygon border
-          fillColor: "green", // Change the fill color of the polygon
-          weight: 2, // Adjust the border weight
-          opacity: 1, // Adjust the opacity of the polygon border
-          fillOpacity: 0.5, // Adjust the fill opacity
-        })}
       />
 
       {/* Conditional rendering of the city area
