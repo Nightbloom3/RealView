@@ -20,7 +20,7 @@ function Navigation() {
               <Link to="/FindMyRealtor">{'>'} Find ejendomsmægler</Link>
             </li>
             <li>
-              <Link to="/MyProfilePage">{'>'} FakePage3</Link>
+              <Link to="/BaseReport">{'>'} Base Report</Link>
             </li>
           </ul>
 

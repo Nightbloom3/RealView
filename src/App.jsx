@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import FrontPage from "./Pages/FrontPage/FrontPage";
 import MyProfilePage from "./Pages/MyProfilePage/MyProfilePage";
 import MarketReport from "./Pages/MarketReport/MarketReport";
+import BaseReport from "./Pages/BaseReport/BaseReport"; 
 import Header from "./Pages/Header";
 import Navigation from "./Pages/Navigation";
 import Footer from "./Pages/Footer";
@@ -32,6 +33,7 @@ function App() {
           <Route path="/MyProfilePage" element={<MyProfilePage />} />
           <Route path="/FindMyRealtor" element={<FindMyRealtor />} />
           <Route path="/MarketReport" element={<MarketReport />}/>
+          <Route path="/BaseReport" element={<BaseReport />} />
         </Routes>
         </div>
       </div>
