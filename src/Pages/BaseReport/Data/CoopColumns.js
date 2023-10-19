@@ -1,151 +1,151 @@
 import _ from "lodash"
 
-export function GenerateVillaColumns({splitDataset}) {
+export function GenerateCoopColumns({splitDataset}) {
 
     const columns = [
         {
             accessor: "postalNumber",
             Footer: "Sum, average",
         },
-        {   
-            accessor: "villaCases",
+        {
+            accessor: "coopCases",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaCases",
+            id: "coopCases",
             Footer: () => {
                 const delimiter = ".";
-                const sumValue = _.sum(_.map(splitDataset, (d) => d.villaCases)).toFixed(0);
+                const sumValue = _.sum(_.map(splitDataset, (d) => d.coopCases)).toFixed(0);
                 const parts = sumValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaInflux",
+            accessor: "coopInflux",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaInflux",
+            id: "coopInflux",
             Footer: () => {
                 const delimiter = ".";
-                const sumValue = _.sum(_.map(splitDataset, (d) => d.villaInflux)).toFixed(0);
+                const sumValue = _.sum(_.map(splitDataset, (d) => d.coopInflux)).toFixed(0);
                 const parts = sumValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaDeparture",
+            accessor: "coopDeparture",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaDeparture",
+            id: "coopDeparture",
             Footer: () => {
                 const delimiter = ".";
-                const sumValue = _.sum(_.map(splitDataset, (d) => d.villaDeparture)).toFixed(0);
+                const sumValue = _.sum(_.map(splitDataset, (d) => d.coopDeparture)).toFixed(0);
                 const parts = sumValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaAVGPrice",
+            accessor: "coopAVGPrice",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaAVGPrice",
+            id: "coopAVGPrice",
             Footer: () => {
                 const delimiter = ".";
-                const meanValue = _.mean(_.map(splitDataset, (d) => d.villaAVGPrice)).toFixed(0);
+                const meanValue = _.mean(_.map(splitDataset, (d) => d.coopAVGPrice)).toFixed(0);
                 const parts = meanValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaAVGPriceChange",
+            accessor: "coopAVGPriceChange",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaAVGPriceChange",
+            id: "coopAVGPriceChange",
             Footer: () => {
                 const delimiter = ".";
-                const meanValue = _.mean(_.map(splitDataset, (d) => d.villaAVGPriceChange)).toFixed(0);
+                const meanValue = _.mean(_.map(splitDataset, (d) => d.coopAVGPriceChange)).toFixed(0);
                 const parts = meanValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaAVGSize",
+            accessor: "coopAVGSize",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaAVGSize",
+            id: "coopAVGSize",
             Footer: () => {
                 const delimiter = ".";
-                const meanValue = _.mean(_.map(splitDataset, (d) => d.villaAVGSize)).toFixed(0);
+                const meanValue = _.mean(_.map(splitDataset, (d) => d.coopAVGSize)).toFixed(0);
                 const parts = meanValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaAVGSizeChange",
+            accessor: "coopAVGSizeChange",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaAVGSizeChange",
+            id: "coopAVGSizeChange",
             Footer: () => {
                 const delimiter = ".";
-                const meanValue = _.mean(_.map(splitDataset, (d) => d.villaAVGSizeChange)).toFixed(0);
+                const meanValue = _.mean(_.map(splitDataset, (d) => d.coopAVGSizeChange)).toFixed(0);
                 const parts = meanValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaAVGPriceBySize",
+            accessor: "coopAVGPriceBySize",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaAVGPriceBySize",
+            id: "coopAVGPriceBySize",
             Footer: () => {
                 const delimiter = ".";
-                const meanValue = _.mean(_.map(splitDataset, (d) => d.villaAVGPriceBySize)).toFixed(0);
+                const meanValue = _.mean(_.map(splitDataset, (d) => d.coopAVGPriceBySize)).toFixed(0);
                 const parts = meanValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaAVGPriceBySizeChange",
+            accessor: "coopAVGPriceBySizeChange",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaAVGPriceBySizeChange",
+            id: "coopAVGPriceBySizeChange",
             Footer: () => {
                 const delimiter = ".";
-                const meanValue = _.mean(_.map(splitDataset, (d) => d.villaAVGPriceBySizeChange)).toFixed(0);
+                const meanValue = _.mean(_.map(splitDataset, (d) => d.coopAVGPriceBySizeChange)).toFixed(0);
                 const parts = meanValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");

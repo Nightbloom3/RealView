@@ -1,151 +1,151 @@
 import _ from "lodash"
 
-export function GenerateVillaColumns({splitDataset}) {
+export function GenerateHolidayColumns({splitDataset}) {
 
     const columns = [
         {
             accessor: "postalNumber",
             Footer: "Sum, average",
         },
-        {   
-            accessor: "villaCases",
+        {
+            accessor: "holidayCases",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaCases",
+            id: "holidayCases",
             Footer: () => {
                 const delimiter = ".";
-                const sumValue = _.sum(_.map(splitDataset, (d) => d.villaCases)).toFixed(0);
+                const sumValue = _.sum(_.map(splitDataset, (d) => d.holidayCases)).toFixed(0);
                 const parts = sumValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaInflux",
+            accessor: "holidayInflux",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaInflux",
+            id: "holidayInflux",
             Footer: () => {
                 const delimiter = ".";
-                const sumValue = _.sum(_.map(splitDataset, (d) => d.villaInflux)).toFixed(0);
+                const sumValue = _.sum(_.map(splitDataset, (d) => d.holidayInflux)).toFixed(0);
                 const parts = sumValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaDeparture",
+            accessor: "holidayDeparture",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaDeparture",
+            id: "holidayDeparture",
             Footer: () => {
                 const delimiter = ".";
-                const sumValue = _.sum(_.map(splitDataset, (d) => d.villaDeparture)).toFixed(0);
+                const sumValue = _.sum(_.map(splitDataset, (d) => d.holidayDeparture)).toFixed(0);
                 const parts = sumValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaAVGPrice",
+            accessor: "holidayAVGPrice",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaAVGPrice",
+            id: "holidayAVGPrice",
             Footer: () => {
                 const delimiter = ".";
-                const meanValue = _.mean(_.map(splitDataset, (d) => d.villaAVGPrice)).toFixed(0);
+                const meanValue = _.mean(_.map(splitDataset, (d) => d.holidayAVGPrice)).toFixed(0);
                 const parts = meanValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaAVGPriceChange",
+            accessor: "holidayAVGPriceChange",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaAVGPriceChange",
+            id: "holidayAVGPriceChange",
             Footer: () => {
                 const delimiter = ".";
-                const meanValue = _.mean(_.map(splitDataset, (d) => d.villaAVGPriceChange)).toFixed(0);
+                const meanValue = _.mean(_.map(splitDataset, (d) => d.holidayAVGPriceChange)).toFixed(0);
                 const parts = meanValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaAVGSize",
+            accessor: "holidayAVGSize",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaAVGSize",
+            id: "holidayAVGSize",
             Footer: () => {
                 const delimiter = ".";
-                const meanValue = _.mean(_.map(splitDataset, (d) => d.villaAVGSize)).toFixed(0);
+                const meanValue = _.mean(_.map(splitDataset, (d) => d.holidayAVGSize)).toFixed(0);
                 const parts = meanValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaAVGSizeChange",
+            accessor: "holidayAVGSizeChange",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaAVGSizeChange",
+            id: "holidayAVGSizeChange",
             Footer: () => {
                 const delimiter = ".";
-                const meanValue = _.mean(_.map(splitDataset, (d) => d.villaAVGSizeChange)).toFixed(0);
+                const meanValue = _.mean(_.map(splitDataset, (d) => d.holidayAVGSizeChange)).toFixed(0);
                 const parts = meanValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaAVGPriceBySize",
+            accessor: "holidayAVGPriceBySize",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaAVGPriceBySize",
+            id: "holidayAVGPriceBySize",
             Footer: () => {
                 const delimiter = ".";
-                const meanValue = _.mean(_.map(splitDataset, (d) => d.villaAVGPriceBySize)).toFixed(0);
+                const meanValue = _.mean(_.map(splitDataset, (d) => d.holidayAVGPriceBySize)).toFixed(0);
                 const parts = meanValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
         },
         {
-            accessor: "villaAVGPriceBySizeChange",
+            accessor: "holidayAVGPriceBySizeChange",
             Cell: ({ value, delimiter = "." }) => {
                 const parts = value.toFixed(0).toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");
             },
-            id: "villaAVGPriceBySizeChange",
+            id: "holidayAVGPriceBySizeChange",
             Footer: () => {
                 const delimiter = ".";
-                const meanValue = _.mean(_.map(splitDataset, (d) => d.villaAVGPriceBySizeChange)).toFixed(0);
+                const meanValue = _.mean(_.map(splitDataset, (d) => d.holidayAVGPriceBySizeChange)).toFixed(0);
                 const parts = meanValue.toString().split(".");
                 parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
                 return parts.join(".");

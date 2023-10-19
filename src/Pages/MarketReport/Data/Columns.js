@@ -50,18 +50,18 @@ const columns = [
       return isFinite(marketShare) ? marketShare.toFixed(2) + " %" : "N/A";
     },
     id: "marketShare",
-    Footer: (columnProps) => {
+    Footer: () => {
         // Calculate the total market share based on the total houses across datasets
         const totalMarketShare =
         totalHousesForSale !== 0
-            ? (_.sumBy(columnProps.data, (d) => d.housesForSale) /
+            ? (_.sum(mergedDataSet, (d) => d.housesForSale) /
             totalHousesForSale) *
               100
             : 0;
 
         return (
           <span>
-            {columnProps.data.length > 0
+            {mergedDataSet.length > 0
               ? totalMarketShare.toFixed(2) + " %"
               : 0}
           </span>
