@@ -88,53 +88,35 @@ function MapComponet({ onSelectCity }) {
     const lat = event.latlng.lat;
     const lng = event.latlng.lng;
   
-    const copenhagenCenter = {
-      lat: 55.68669986331879,
-      lng: 12.570081838092358,
-    };
-  
-    const isWithinCopenhagenCenter =
-      Math.abs(lat - copenhagenCenter.lat) < 0.01 &&
-      Math.abs(lng - copenhagenCenter.lng) < 0.01;
-  
-    if (isWithinCopenhagenCenter) {
-      // Coordinates match the center of Copenhagen, display the blue outline
-      setCityAreaCoordinates(cityBoundaries.find((city) => city.name === "Copenhagen").coordinates);
-      setSelectedCity("Copenhagen");
-    } else {
-      // Coordinates do not match the center of Copenhagen, reset the blue outline
-      setCityAreaCoordinates([[0, 0]]);
-      setSelectedCity(null);
-    }
-  
-    // Perform additional actions based on the clicked coordinates
-    // For example, reverse geocoding and handling marker placement
-  
     try {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
       );
       const data = await response.json();
   
-      const city =
-        data.address.city || data.address.town || data.address.village;
+      const city = data.address.city || data.address.town || data.address.village;
+  
+      // Check if the returned city name matches any city in your data
+      const matchingCity = cityBoundaries.find((cityObject) => cityObject.name === city);
+  
+      if (matchingCity) {
+        // Set the coordinates for the matched city area
+        setCityAreaCoordinates(matchingCity.coordinates);
+        setSelectedCity(matchingCity.name);
+      } else {
+        // Reset the city area coordinates and selected city
+        setCityAreaCoordinates([[0, 0]]);
+        setSelectedCity(null);
+      }
+  
+      // Perform additional actions based on the clicked coordinates
+      // For example, handling marker placement
   
       console.log("Clicked at Latitude:", lat);
       console.log("Clicked at Longitude:", lng);
       console.log("City:", city);
   
-      const matchingCity = cityBoundaries.find((cityObject) => {
-        const [cityLng, cityLat] = cityObject.coordinates[0];
-        const latDiff = Math.abs(lat - cityLat);
-        const lngDiff = Math.abs(lng - cityLng);
-        return latDiff < 0.01 && lngDiff < 0.01;
-      });
-  
       onSelectCity(city);
-  
-      if (matchingCity) {
-        handleCityClick(matchingCity.name);
-      }
   
       if (placeMarkerMode) {
         setMarkerCoordinates([lat, lng]);
@@ -142,8 +124,9 @@ function MapComponet({ onSelectCity }) {
       }
     } catch (error) {
       console.error("Error fetching reverse geocoding data:", error);
-    }
+    };
   };
+  
   
 
   const customIcon = new Icon({
