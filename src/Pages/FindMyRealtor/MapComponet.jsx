@@ -18,6 +18,8 @@ function MapComponet({ onSelectCity }) {
   const [markerCoordinates, setMarkerCoordinates] = useState(null);
   const [placeMarkerMode, setPlaceMarkerMode] = useState(false); // Added state to track "Place Marker" button click
 
+  console.log("if i push this code - there will be a change - then mabye my laptop will work again");
+  // if i push this code - there will be a change - then mabye my laptop will work again
 
   const handleEscapeKey = useCallback(
     (event) => {
