@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, useMapEvents, Marker, Popup } from 'react-leaf
 import Freedraw, { CREATE, EDIT, DELETE, APPEND, ALL } from "react-leaflet-freedraw";
 import { Icon, divIcon, point } from "leaflet";
 import { GeoJSON } from 'react-leaflet';
+import pointInPolygon from 'point-in-polygon';
 
 import 'leaflet/dist/leaflet.css';
 import cityBoundaries from "./CityBoundaries.json"; // Import the JSON file
@@ -17,9 +18,6 @@ function MapComponet({ onSelectCity }) {
   const [selectedCity, setSelectedCity] = useState(null);
   const [markerCoordinates, setMarkerCoordinates] = useState(null);
   const [placeMarkerMode, setPlaceMarkerMode] = useState(false); // Added state to track "Place Marker" button click
-
-  console.log("if i push this code - there will be a change - then mabye my laptop will work again");
-  // if i push this code - there will be a change - then mabye my laptop will work again
 
   const handleEscapeKey = useCallback(
     (event) => {
@@ -81,52 +79,72 @@ function MapComponet({ onSelectCity }) {
     return null;
   }
 
-  // based on the click event / mouse click
-  // we are able to extract the latitude and longitude
+  // can be used to verify if something is within a set of pylogons
+  // function isPointInPolygon(point, polygon) {
+  //   return pointInPolygon(point, polygon);
+  // }
+
   const handleMapClick = async (event) => {
     const lat = event.latlng.lat;
     const lng = event.latlng.lng;
-
-    // Which are used here to do a "reverse geocoding" call to openstreetmap API
-    // Makeing it possible to get a city name based on the latitude and longitude
+  
+    const copenhagenCenter = {
+      lat: 55.68669986331879,
+      lng: 12.570081838092358,
+    };
+  
+    const isWithinCopenhagenCenter =
+      Math.abs(lat - copenhagenCenter.lat) < 0.01 &&
+      Math.abs(lng - copenhagenCenter.lng) < 0.01;
+  
+    if (isWithinCopenhagenCenter) {
+      // Coordinates match the center of Copenhagen, display the blue outline
+      setCityAreaCoordinates(cityBoundaries.find((city) => city.name === "Copenhagen").coordinates);
+      setSelectedCity("Copenhagen");
+    } else {
+      // Coordinates do not match the center of Copenhagen, reset the blue outline
+      setCityAreaCoordinates([[0, 0]]);
+      setSelectedCity(null);
+    }
+  
+    // Perform additional actions based on the clicked coordinates
+    // For example, reverse geocoding and handling marker placement
+  
     try {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
       );
       const data = await response.json();
-
+  
       const city =
         data.address.city || data.address.town || data.address.village;
-
+  
       console.log("Clicked at Latitude:", lat);
       console.log("Clicked at Longitude:", lng);
       console.log("City:", city);
-
+  
       const matchingCity = cityBoundaries.find((cityObject) => {
-        const [cityLng, cityLat] = cityObject.coordinates[0]; // Assuming the first coordinate represents the city's location
+        const [cityLng, cityLat] = cityObject.coordinates[0];
         const latDiff = Math.abs(lat - cityLat);
         const lngDiff = Math.abs(lng - cityLng);
-        return latDiff < 0.01 && lngDiff < 0.01; // Adjust the threshold as needed
+        return latDiff < 0.01 && lngDiff < 0.01;
       });
-
-      // This might need a change from line 135 - 140
+  
       onSelectCity(city);
-
+  
       if (matchingCity) {
         handleCityClick(matchingCity.name);
       }
-
-      // Check if the "Place Marker" button was clicked, and update the marker coordinates
+  
       if (placeMarkerMode) {
         setMarkerCoordinates([lat, lng]);
-        setPlaceMarkerMode(false); // Reset placeMarkerMode after placing the marker
+        setPlaceMarkerMode(false);
       }
-
     } catch (error) {
       console.error("Error fetching reverse geocoding data:", error);
     }
-
   };
+  
 
   const customIcon = new Icon({
     // iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",

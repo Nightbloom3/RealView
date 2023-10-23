@@ -11,9 +11,6 @@ function SearchRealtor() {
 
   const searchInputRef = useRef(null); // Create a reference for the search input element
 
-  console.log("if i push this code - there will be a change - then mabye my laptop will work again");
-  // if i push this code - there will be a change - then mabye my laptop will work again
-
   // Click event listener
   // if clicked inside "search"
   // suggestion list SHOW / true
