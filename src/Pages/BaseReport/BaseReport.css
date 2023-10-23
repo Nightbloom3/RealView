@@ -11,6 +11,7 @@
     color: #F8F8F8;
     border: 2px solid #F8F8F8;
     padding: 2px;
+    width: 10%
 }
 
 .Subtable {
@@ -23,6 +24,7 @@
     border: 1px solid #F8F8F8;
     padding: 1px;
     color: #295b8c;
+    width: 10%
 }
 
 .Subtable th {

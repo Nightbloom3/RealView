@@ -1,13 +1,12 @@
-import React from "react";
+import React, {useMemo} from "react";
 import { useTable } from "react-table";
 
-function MainTable({headers, subTables}) {
+function MainTable({tableHeaders, subTables}) {
   const columns = useMemo(() => {
-    // Define your main table columns using the headers
-    return headers.map((header) => ({
+    return tableHeaders.map((header) => ({
       Header: header,
     }));
-  }, [headers]);
+  }, [tableHeaders]);
 
   const {
     getTableProps,
@@ -18,7 +17,7 @@ function MainTable({headers, subTables}) {
   });
 
   return (
-    <table {...getTableProps()} className="MainTable">
+    <table {...getTableProps()} className="BaseReportTable">
         <thead>
             {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
@@ -33,7 +32,7 @@ function MainTable({headers, subTables}) {
         <tbody>
             {subTables.map((subTable, index) => (
                 <tr key={index}>
-                    <td>
+                    <td colSpan={tableHeaders.length}>
                         {subTable}
                     </td>
                 </tr>
