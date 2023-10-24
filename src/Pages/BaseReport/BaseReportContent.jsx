@@ -6,16 +6,16 @@ import { GenerateBRColumns } from "./Data/BaseReportColumnsGenerator"
 export default function BaseReportContent() {
 
     const headers = [
-        "Postalnumber",
-        "Number of Cases",
-        "Case Influx",
-        "Case Departure",
-        "Average Price",
-        "Average Price Change",
-        "Average Size",
-        "Average Size Change",
-        "Average Price by Size",
-        "Average Price by Size Change"
+        {label: "Postalnumber", id: "postalNumber"},
+        {label: "Number of Cases", id: "Cases"},
+        {label: "Case Influx", id: "Influx"},
+        {label: "Case Departure", id: "Departure"},
+        {label: "Average Price", id: "AVGPrice"},
+        {label: "Average Price Change", id: "AVGPriceChange"},
+        {label: "Average Size", id: "AVGSize"},
+        {label: "Average Size Change", id: "AVGSizeChange"},
+        {label: "Average Price by Size", id: "AVGPriceBySize"},
+        {label: "Average Price by Size Change", id: "AVGPriceBySizeChange"}
     ]
 
     const filterDataByPrefix = (data, prefix) => {

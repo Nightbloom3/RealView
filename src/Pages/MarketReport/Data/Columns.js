@@ -54,9 +54,7 @@ const columns = [
         // Calculate the total market share based on the total houses across datasets
         const totalMarketShare =
         totalHousesForSale !== 0
-            ? (_.sum(mergedDataSet, (d) => d.housesForSale) /
-            totalHousesForSale) *
-              100
+            ? (_.sumBy(mergedDataSet, (d) => d.housesForSale)  / totalHousesForSale) * 100
             : 0;
 
         return (

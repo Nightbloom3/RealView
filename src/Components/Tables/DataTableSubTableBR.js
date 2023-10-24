@@ -1,21 +1,57 @@
-import React, { useMemo } from "react";
-import { useTable } from "react-table"
+import React, { useMemo, useState, useEffect, useRef } from "react";
+import { useSortBy, useTable } from "react-table"
 
-function SubTable({ subTableData, subTableColumns, subTableCategory}) {
+function SubTable({ subTableData, subTableColumns, subTableCategory, sorting, handleSorting}) {
     const columns = useMemo(() => subTableColumns, [subTableColumns])
     const data = useMemo(() => subTableData, [subTableData])
+    const columnRefs = useRef([]);
+
+    const [sortedData, setSortedData] = useState(subTableData);
+
+    const {attribute, order} = sorting
+
+    useEffect(() => {
+        //setSortedData(sortData(subTableData, attribute, order))
+        columnRefs.current = columns.map(() => React.createRef());
+      },[columns] /*[subTableData, attribute, order]*/)
+
+    /*const sortData = (data, attribute, order) => {
+        if (attribute && order) {
+          return data.sort((a, b) => {
+            if (order === "asc") {
+              return a[attribute] - b[attribute];
+            } else {
+              return b[attribute] - a[attribute];
+            }
+          });
+        }
+        return data;
+      }*/
+
+    const getColumnId = () => {
+        return sorting.attribute;
+    };
+
+    const triggerHeaderClick = () => {
+        const columnIndex = columns.findIndex((col) => col.id === getColumnId());
+        if (columnIndex >= 0 && columnRefs.current[columnIndex].current) {
+          columnRefs.current[columnIndex].current.click();
+        }
+      };
 
     const {
         getTableProps,
         getTableBodyProps,
+        headerGroups,
         footerGroups,
         rows,
         prepareRow,
     } = useTable (
         {
             columns,
-            data
-        }
+            data,
+        },
+        useSortBy
     )
 
     // Short method for making sure that the footer in the table gets the right alternating color
@@ -24,6 +60,15 @@ function SubTable({ subTableData, subTableColumns, subTableCategory}) {
     return (
         <table {...getTableProps()} className="Subtable">
             <thead>
+                {headerGroups.map((headerGroup) => (
+                    <tr {...headerGroup.getHeaderGroupProps()} className="hidden-headers">
+                        {headerGroup.headers.map((column) => (
+                            <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                                {column.render("Header")}
+                            </th>
+                        ))}
+                    </tr>
+                ))}
                 <tr>
                     {subTableCategory && (
                         <th colSpan={columns.length} className="SubtableHeader">
@@ -65,4 +110,4 @@ function SubTable({ subTableData, subTableColumns, subTableCategory}) {
     )
 }
 
-export default SubTable;
+export default React.forwardRef(SubTable);

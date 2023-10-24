@@ -56,3 +56,7 @@
 .Subtable tbody tr:hover:nth-child(odd) {
     background-color: #a9c9e6;
 }
+
+.hidden-headers {
+    display: none
+}
