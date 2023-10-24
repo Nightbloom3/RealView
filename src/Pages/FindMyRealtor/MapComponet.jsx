@@ -7,6 +7,7 @@ import pointInPolygon from 'point-in-polygon';
 
 import 'leaflet/dist/leaflet.css';
 import cityBoundaries from "./CityBoundaries.json"; // Import the JSON file
+import HouseForSale from "./HouseForSale.json"; // Import the JSON file
 
 function MapComponet({ onSelectCity }) {
   const [drawingMode, setDrawingMode] = useState(false);
@@ -18,6 +19,118 @@ function MapComponet({ onSelectCity }) {
   const [selectedCity, setSelectedCity] = useState(null);
   const [markerCoordinates, setMarkerCoordinates] = useState(null);
   const [placeMarkerMode, setPlaceMarkerMode] = useState(false); // Added state to track "Place Marker" button click
+  const [housesForSale, setHousesForSale] = useState(HouseForSale); // Store the houses for sale data
+
+// This was supposed to work with the freedraw plugin - it does not --- need fix
+  // // Function to calculate the count of houses within polygons
+  // const countHousesWithinPolygons = () => {
+  //   if (drawnItems && drawnItems.features && drawnItems.features.length > 0) {
+  //     const drawnPolygons = drawnItems.features.map((feature) => feature.geometry.coordinates[0]);
+  //     const housesWithinPolygons = [];
+  
+  //     // Iterate through houses and check if they are within any drawn polygon
+  //     for (const house of housesForSale) {
+  //       const houseCoordinates = [house.longitude, house.latitude];
+  //       const isHouseWithinPolygon = isPointInAnyPolygon(houseCoordinates, drawnPolygons);
+  
+  //       if (isHouseWithinPolygon) {
+  //         housesWithinPolygons.push(house);
+  //       }
+  //     }
+  
+  //     console.log("Number of houses for sale within polygons:", housesWithinPolygons.length);
+  //     console.log("Houses for sale within polygons:", housesWithinPolygons);
+  //   } else {
+  //     console.log("No polygons drawn or invalid data.");
+  //   }
+  // };
+
+    // Test the point-in-polygon library
+    const testPointInPolygon = () => {
+      // Define a polygon as an array of coordinates [longitude, latitude]
+      const polygon = [
+        [12.568394062182847, 55.73629251717131],
+        [12.469517109057847, 55.67284135822011],
+        [12.453037616870349, 55.60540853422476],
+        [12.505909320971911, 55.63642654736689],
+        [12.569767353198474, 55.665483648721555],
+        [12.597919819018786, 55.704579816001036],
+        [12.568394062182847, 55.73629251717131]
+      ];
+  
+      // Define a test point [longitude, latitude]
+      const testPoint = [12.516013, 55.680825];
+  
+      // Check if the test point is inside the polygon
+      const isInside = pointInPolygon(testPoint, polygon);
+  
+      if (isInside) {
+        console.log('The test point is inside the polygon.');
+      } else {
+        console.log('The test point is outside the polygon.');
+      }
+    };
+
+
+  // Function to calculate the count of houses within polygons
+  const countHousesWithinPolygons = () => {
+    if (selectedCity) {
+      const matchingCityObject = cityBoundaries.find((city) => city.name === selectedCity);
+      if (matchingCityObject) {
+        const cityCoordinates = matchingCityObject.coordinates;
+        const housesWithinCity = [];
+  
+        // Iterate through houses and check if they are within the coordinates of the matching city
+        for (const house of housesForSale) {
+          console.log("House Object:", house);
+  
+        // Access and print the "city" property
+        console.log("House city:", house.city);
+
+
+
+          const houseCoordinates = [house.longitude, house.latitude];
+          console.log("House Coordinates:", houseCoordinates);
+          console.log("City Coordinates:", cityCoordinates);
+          const isHouseWithinCity = isPointInAnyPolygon(houseCoordinates, [cityCoordinates]);
+  
+          if (isHouseWithinCity) {
+            housesWithinCity.push(house);
+          }
+        }
+  
+        console.log("Number of houses for sale within the matching city:", housesWithinCity.length);
+        console.log("Houses for sale within the matching city:", housesWithinCity);
+      } else {
+        console.log("No matching city boundaries found.");
+      }
+    } else {
+      console.log("No city selected.");
+    }
+  };
+
+// can be used to verify if something is within a set of polygons
+function isPointInAnyPolygon(point, polygons) {
+  for (const polygon of polygons) {
+    if (pointInPolygon(point, polygon)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   const handleEscapeKey = useCallback(
     (event) => {
@@ -51,18 +164,19 @@ function MapComponet({ onSelectCity }) {
   };
 
   
-  const handleCityClick = (cityName) => {
-    // Find the selected city object based on its name
-    const selectedCityObject = cityBoundaries.find((city) => city.name === cityName);
+  // const handleCityClick = (cityName) => {
+  //   // Find the selected city object based on its name
+  //   const selectedCityObject = cityBoundaries.find((city) => city.name === cityName);
   
-    if (selectedCityObject) {
-      // Set the coordinates for the city area
-      setCityAreaCoordinates(selectedCityObject.coordinates);
+  //   if (selectedCityObject) {
+  //     // Set the coordinates for the city area
+  //     setCityAreaCoordinates(selectedCityObject.coordinates);
  
-      // Set the selected city
-      setSelectedCity(cityName);
-    }
-  };
+  //     // Set the selected city
+  //     setSelectedCity(cityName);
+  //     console.log("Polygon Coordinates:", selectedCityObject.coordinates);
+  //   }
+  // };
 
   const mode = deleteMode
     ? DELETE
@@ -78,11 +192,6 @@ function MapComponet({ onSelectCity }) {
     });
     return null;
   }
-
-  // can be used to verify if something is within a set of pylogons
-  // function isPointInPolygon(point, polygon) {
-  //   return pointInPolygon(point, polygon);
-  // }
 
   const handleMapClick = async (event) => {
     const lat = event.latlng.lat;
@@ -114,7 +223,8 @@ function MapComponet({ onSelectCity }) {
   
       console.log("Clicked at Latitude:", lat);
       console.log("Clicked at Longitude:", lng);
-      console.log("City:", city);
+      console.log("City returned by reverse geocoding:", city);
+      console.log("Matching city polygon coordinates:", matchingCity.coordinates);
   
       onSelectCity(city);
   
@@ -155,6 +265,8 @@ return (
       Enable Delete Mode
     </button>
     <button onClick={() => setPlaceMarkerMode(true)}>Place Marker</button>
+    <button onClick={countHousesWithinPolygons}>Count Houses in Polygons</button> {/* Add this button */}
+    <button onClick={testPointInPolygon}>Test Point in Polygon</button>
     <MapContainer
       center={[56.2639, 9.5018]}
       zoom={7}
