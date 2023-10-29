@@ -74,20 +74,23 @@ const columns = [
         {" "}
         Average
         <br />
-        Price
+        Price(m²)
       </div>
     ),
     accessor: "avgPricePerM2",
-    Cell: ({ value }) => {
-      return value + " m²";
+    Cell: ({ value, delimiter = "." }) => {
+      const parts = value.toFixed(0).toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
+      return parts.join(".");
     },
     id: "avgPricePerM2",
-    Footer: (
-      <span>
-        {_.mean(_.map(mergedDataSet, (d) => d.avgPricePerM2)).toFixed(0) +
-          " m²"}
-      </span>
-    ),
+    Footer: () => {
+      const delimiter = "."
+      const meanValue = _.mean(_.map(mergedDataSet, (d) => d.avgPricePerM2)).toFixed(0)
+      const parts = meanValue.toString().split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, delimiter);
+      return parts.join(".")
+    },
   },
   {
     Header: (

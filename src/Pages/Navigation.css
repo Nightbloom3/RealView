@@ -1,0 +1,11 @@
+.navDiv {
+  background-color: #E5EBF1;
+  height: 90%;
+  min-height: 100vh;
+}
+
+ul {
+    padding: 10px;
+    list-style-type: none;
+    font-size: 14px;
+  }

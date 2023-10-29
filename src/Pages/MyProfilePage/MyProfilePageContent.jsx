@@ -6,7 +6,10 @@ import { ProfilePageData } from "../../Data/ProfilePageData";
 import { ProfilePageStats1 } from "../../Data/ProfilePageStats1";
 import { ProfilePageStats2 } from "../../Data/ProfilePageStats2";
 import { ProfilePageStats3 } from "../../Data/ProfilePageStats3";
+import { GenerateRandomColor } from "../../Components/HelperFunctions/GenerateRandomColor";
+import ChartStyling from "../../Components/Charts/ChartStyling";
 import "chart.js/auto";
+import _ from "lodash";
 
 // Reusable component for the select box
 // onChange is for whichever onChange function you want to run with the SelectBox
@@ -28,23 +31,17 @@ function SelectBox({ onChange, options, defaultValue }) {
 
 export default function MyProfilePageContent() {
   //Options for the chart
-  const ChartStylingWidth = 400; // Set your desired width
-  const ChartStylingHeight = 200; // Set your desired height
-  const ComparisonStyling = {
-    MaintainAspectRatio: true,
-    responsive: true,
-    indexAxis: "y",
-  };
-  const BiddingTimeStyling = {
-    plugins: {
-      legend: {
-        labels: {
-          boxWidth: 0,
-          boxHeight: 0,
-        },
-      },
-    },
-  }
+  const ChartStylingWidth = 480; // Set your desired width
+  const ChartStylingHeight = 240; // Set your desired height
+  const MainChartStylingWidth = 700;
+  const MainChartStylingHeight = 350;
+
+  const ComparisonStyling = _.cloneDeep(ChartStyling)
+  ComparisonStyling.indexAxis = "y"
+
+  const BiddingTimeStyling = _.cloneDeep(ChartStyling)
+  BiddingTimeStyling.plugins.legend.labels.boxWidth = 0;
+  BiddingTimeStyling.plugins.legend.labels.boxHeight = 0;
 
   // useStates for the Chart's Data
   const [selectChoice1, setSelectChoice1] = useState("HousesSold");
@@ -59,12 +56,12 @@ export default function MyProfilePageContent() {
       {
         label: selectText1,
         data: ProfilePageData.map((data) => data[selectChoice1]),
-        backgroundColor: ["blue"],
+        backgroundColor: ["#3B9E9B"],
       },
       {
         label: selectText2,
         data: ProfilePageData.map((data) => data[selectChoice2]),
-        backgroundColor: ["red"],
+        backgroundColor: ["#83C5E2"],
       },
     ],
   });
@@ -75,14 +72,14 @@ export default function MyProfilePageContent() {
       {
         label: "Houses for Sale",
         data: ProfilePageStats1.map((data) => data.HousesForSale),
-        borderColor: ["blue"],
-        backgroundColor: ["black"]
+        borderColor: ["#83C5E2"],
+        backgroundColor: ["#ff8c42"]
       },
       {
         label: "Houses Sold",
         data: ProfilePageStats1.map((data) => data.HousesSold),
-        borderColor: ["red"],
-        backgroundColor: ["black"]
+        borderColor: ["#3B9E9B"],
+        backgroundColor: ["#ff8c42"]
       },
     ],
   });
@@ -94,22 +91,22 @@ export default function MyProfilePageContent() {
       {
       label: "Villa Houses",
       data: [lastMonth.VillaHousesSold],
-      backgroundColor: ["blue"]
+      backgroundColor: ["#3B9E9B"]
     },
     {
       label: "Holiday Houses",
       data: [lastMonth.HolidayHousesSold],
-      backgroundColor: ["red"]
+      backgroundColor: ["#83C5E2"]
     },
     {
       label: "Condominium Houses",
       data: [lastMonth.CondominiumHousesSold],
-      backgroundColor: ["orange"]
+      backgroundColor: ["#ff8c42"]
     },
     {
       label: "Cooperative Houses",
       data: [lastMonth.CooperativeHousesSold],
-      backgroundColor: ["yellow"]
+      backgroundColor: ["#ffd166"]
     }
   ]
   })
@@ -120,7 +117,7 @@ export default function MyProfilePageContent() {
       {
         label: "Bidding time in days",
         data: ProfilePageStats3.map((data) => data.AvgBiddingTime),
-        backgroundColor: ["blue", "red", "green", "yellow", "purple", "orange"]
+        backgroundColor: GenerateRandomColor(ProfilePageStats3.length)
       }
     ]
   })
@@ -133,12 +130,12 @@ export default function MyProfilePageContent() {
         {
           label: selectText1,
           data: ProfilePageData.map((data) => data[selectChoice1]),
-          backgroundColor: ["blue"],
+          backgroundColor: ["#3B9E9B"],
         },
         {
           label: selectText2,
           data: ProfilePageData.map((data) => data[selectChoice2]),
-          backgroundColor: ["red"],
+          backgroundColor: ["#83C5E2"],
         },
       ],
     });
@@ -182,58 +179,73 @@ export default function MyProfilePageContent() {
           </p>
         </div>
 
-        <br />
-
-        <div className="Chart">
+        <div>
+          <br />
+        <div className="IndividualChart">
           <ComparisonChart
             ChartData={profileComparisonData}
-            width={ChartStylingWidth}
-            height={ChartStylingHeight}
+            width={MainChartStylingWidth}
+            height={MainChartStylingHeight}
             StylingOptions={ComparisonStyling}
           />
         </div>
+        </div>
 
-        <br />
+        <div className="SelectionDiv">
+          <br />
+          <br />
+          <SelectBox
+            onChange={(e) =>
+              HandleChoiceChange(e, setSelectChoice1, setSelectText1)
+            }
+            options={selectOptions}
+            defaultValue={selectChoice1}
+          ></SelectBox>
 
-        <SelectBox
-          onChange={(e) =>
-            HandleChoiceChange(e, setSelectChoice1, setSelectText1)
-          }
-          options={selectOptions}
-          defaultValue={selectChoice1}
-        ></SelectBox>
+          <p>Compare to:</p>
 
-        <p>Compare to:</p>
-
-        <SelectBox
-          onChange={(e) =>
-            HandleChoiceChange(e, setSelectChoice2, setSelectText2)
-          }
-          options={selectOptions}
-          defaultValue={selectChoice2}
-        ></SelectBox>
+          <SelectBox
+            onChange={(e) =>
+              HandleChoiceChange(e, setSelectChoice2, setSelectText2)
+            }
+            options={selectOptions}
+            defaultValue={selectChoice2}
+          ></SelectBox>
+        </div>
       </div>
 
-      <div className="ChartDiv">
+      <div className="StatDiv">
         <div className="StatCharts">
+          <div className="IndividualChart">
           <LineChart
             ChartData={statChart1}
             width={ChartStylingWidth}
             height={ChartStylingHeight}
+            StylingOptions={ChartStyling}
           />
+          </div>
 
+          <br />
+          
+          <div className="IndividualChart">
           <BarChart
             ChartData={statChart2}
             width={ChartStylingWidth}
             height={ChartStylingHeight}
+            StylingOptions={ChartStyling}
           />
+          </div>
 
+          <br />
+
+          <div className="IndividualChart">
           <BarChart
             ChartData={statChart3}
             width={ChartStylingWidth}
             height={ChartStylingHeight}
             StylingOptions={BiddingTimeStyling}
           />
+          </div>
         </div>
       </div>
     </div>

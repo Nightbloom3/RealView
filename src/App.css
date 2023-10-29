@@ -1,58 +1,77 @@
 * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    margin: 0;
-  }
-  
-  .header {
-    background-color: #f1f1f1;
-    padding: 20px;
-    text-align: left;
-  }
-  
-  .topnav link {
-    float: left;
-    display: block;
-    color: #60a862;
-    text-align: center;
-    text-decoration: none;
-  }
-  
-  .column {
-    float: left;
-    padding: 10px;
-  }
-  
-  .column.nav-bar {
-    width: 15%;
-  }
-  
-  .column.middle {
-    background-color: #60a862;
-    width: 85%;
-    height: 800px;
-    /* height: calc(100vh - 20px - 40px - 20px); */
-    /* Adjust the values as needed */
-    /* The above calculation subtracts the header and footer heights */
-    /* and some additional padding/margin values */
-  }
-  
-  .row::after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  
-  .footer {
-    background-color: #f1f1f1;
-    text-align: center;
+  box-sizing: border-box;
+}
+
+.App {
+  background-color: #F8F8F8;
+}
+
+body {
+  margin: 0;
+}
+
+.header {
+  background-color: #E5EBF1;
+  padding: 20px;
+  text-align: left;
+}
+
+.topnav link {
+  float: left;
+  display: block;
+  color: #60a862;
+  text-align: center;
+  text-decoration: none;
+}
+
+.column {
+  float: left;
+  padding: 10px;
+}
+
+.column.nav-bar {
+  width: 15%;
+}
+
+.column.middle {
+  width: 85%;
+  min-height: calc(100vh - 20px - 40px - 20px); /* Adjust the values as needed */
+  /* The above calculation subtracts the header and footer heights */
+  /* and some additional padding/margin values */
+}
+
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.footer {
+  background-color: #E5EBF1;
+  text-align: left;
+  padding-left: 20px;
+  width: 100%;
+}
+
+.IndividualChart {
+  background-color: #5f84a9;
+}
+
+.IndividualChartCentered {
+  display: grid;
+  grid-template-columns: auto auto auto; 
+  background-color: #5f84a9;
+}
+
+.IWishIWasCentered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+@media screen and (max-width: 600px) {
+  .column.side, .column.middle {
     width: 100%;
   }
-  
-  @media screen and (max-width: 600px) {
-    .column.side, .column.middle {
-      width: 100%;
-    }
-  }
+}

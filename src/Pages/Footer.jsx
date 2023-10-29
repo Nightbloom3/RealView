@@ -3,7 +3,7 @@ import React from "react";
 function Footer() {
   return (
     <footer>
-      <p>&copy; 2023 Classic Website. All rights reserved.</p>
+      <p> Copyright &copy; 2004 - 2011 RealViewTNI A/S</p>
     </footer>
   );
 }

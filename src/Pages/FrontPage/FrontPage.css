@@ -1,17 +1,22 @@
-
+.FrontPage_Content {
+  background-color: #E5EBF1;
+  padding: 10px;
+  justify-content: center;
+  border: 5px solid grey;
+}
 
 .FrontPage_Content_Grid-Container {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 48% 48%;
   gap: 50px;
   max-width: 100%; /* Set a maximum width for the container */
-  background-color: #2196F3;
-  padding: 10px;
-  justify-content: center;
-  border: 5px solid #6f1515;
 }
 
 .GeneralMarketInfo {
-  text-align: center;
+  text-align: left;
   padding-bottom: 10px;
+}
+
+.FrontPageHeader {
+  text-align: center;
 }
