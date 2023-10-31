@@ -1,7 +1,7 @@
-import React, {useMemo, useState, useCallback, useRef} from "react";
+import React, {useMemo, useState, useCallback} from "react";
 import { useTable } from "react-table";
 
-function MainTable({tableHeaders, subTables}) {
+function MainTable({tableHeaders, subTables, mainTableHeaderRef}) {
   const columns = useMemo(() => {
     return tableHeaders.map((header) => ({
       Header: header.label,
@@ -21,8 +21,6 @@ function MainTable({tableHeaders, subTables}) {
     attribute: null,
     order: null,
   })
-
-  const subTableRefs = useRef([]);
 
   const handleSorting = useCallback((column) => {
     if (sorting.attribute === column.id) {
@@ -46,13 +44,10 @@ function MainTable({tableHeaders, subTables}) {
       setSorting({ attribute: column.id, order: "asc" });
     }
 
-    // Trigger click on the corresponding subtable header
-    subTableRefs.current.forEach((subTableRef) => {
-      if (subTableRef.current && subTableRef.current.getColumnId() === column.id) {
-        subTableRef.current.triggerHeaderClick();
-      }
-    });
-  }, [sorting]);
+    if (mainTableHeaderRef.current) {
+      mainTableHeaderRef.current.click();
+    }
+  }, [sorting, mainTableHeaderRef]);
 
 
   const getSortIcon = (column) => {
@@ -74,8 +69,11 @@ function MainTable({tableHeaders, subTables}) {
             {headerGroups.map((headerGroup) => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
                     {headerGroup.headers.map((column) => (
-                        <th {...column.getHeaderProps()}>
-                          <div onClick={() => handleSorting(column)}>
+                        <th {...column.getHeaderProps()} className="main-table-header">
+                          <div 
+                          onClick={() => handleSorting(column)}
+                          ref={mainTableHeaderRef} 
+                          >
                             {column.render("Header")}
                             {getSortIcon(column)}
                           </div>
@@ -88,11 +86,7 @@ function MainTable({tableHeaders, subTables}) {
             {subTables.map((subTable, index) => (
                 <tr key={index}>
                     <td colSpan={tableHeaders.length}>
-                        {React.cloneElement(subTable, {
-                          sorting,
-                          handleSorting,
-                          ref: (el) => (subTableRefs.current[index] = el),
-                        })}
+                      {subTable}
                     </td>
                 </tr>
             ))}

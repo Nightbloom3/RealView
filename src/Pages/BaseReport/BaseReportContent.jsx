@@ -1,9 +1,11 @@
+import React, {useEffect, useRef } from "react"
 import MainTable from "../../Components/Tables/DataTableMainTableBR"
 import SubTable from "../../Components/Tables/DataTableSubTableBR"
 import { BaseReportData } from "./Data/BaseReportData"
 import { GenerateBRColumns } from "./Data/BaseReportColumnsGenerator"
 
 export default function BaseReportContent() {
+    const mainTableHeaderRef = useRef();
 
     const headers = [
         {label: "Postalnumber", id: "postalNumber"},
@@ -47,11 +49,33 @@ export default function BaseReportContent() {
         <SubTable subTableData={holidayData} subTableColumns={holidayColumns} subTableCategory={"Holiday Housings"}/>,
     ]
 
+    useEffect(() => {
+        const mainTableHeader = mainTableHeaderRef.current;
+        console.log(mainTableHeader)
+
+        if (mainTableHeader) {
+            const handleMainTableHeaderClick = () => {
+                const subTableHeaders = document.querySelectorAll(".sub-table-header")
+
+                subTableHeaders.forEach((subTableHeader) => {
+                    subTableHeader.click();
+                });
+            };
+
+            mainTableHeader.addEventListener("click", handleMainTableHeaderClick)
+
+            return () => {
+                mainTableHeader.removeEventListener("click", handleMainTableHeaderClick)
+            };
+        }
+    }, [mainTableHeaderRef])
+
     return (
         <div>
             <MainTable
             tableHeaders={headers}
             subTables={subTables}
+            mainTableHeaderRef={mainTableHeaderRef}
             />
         </div>
     )

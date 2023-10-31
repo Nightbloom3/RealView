@@ -1,43 +1,9 @@
-import React, { useMemo, useState, useEffect, useRef } from "react";
+import React, { useMemo } from "react";
 import { useSortBy, useTable } from "react-table"
 
-function SubTable({ subTableData, subTableColumns, subTableCategory, sorting, handleSorting}) {
+function SubTable({ subTableData, subTableColumns, subTableCategory }) {
     const columns = useMemo(() => subTableColumns, [subTableColumns])
     const data = useMemo(() => subTableData, [subTableData])
-    const columnRefs = useRef([]);
-
-    const [sortedData, setSortedData] = useState(subTableData);
-
-    const {attribute, order} = sorting
-
-    useEffect(() => {
-        //setSortedData(sortData(subTableData, attribute, order))
-        columnRefs.current = columns.map(() => React.createRef());
-      },[columns] /*[subTableData, attribute, order]*/)
-
-    /*const sortData = (data, attribute, order) => {
-        if (attribute && order) {
-          return data.sort((a, b) => {
-            if (order === "asc") {
-              return a[attribute] - b[attribute];
-            } else {
-              return b[attribute] - a[attribute];
-            }
-          });
-        }
-        return data;
-      }*/
-
-    const getColumnId = () => {
-        return sorting.attribute;
-    };
-
-    const triggerHeaderClick = () => {
-        const columnIndex = columns.findIndex((col) => col.id === getColumnId());
-        if (columnIndex >= 0 && columnRefs.current[columnIndex].current) {
-          columnRefs.current[columnIndex].current.click();
-        }
-      };
 
     const {
         getTableProps,
@@ -61,9 +27,9 @@ function SubTable({ subTableData, subTableColumns, subTableCategory, sorting, ha
         <table {...getTableProps()} className="Subtable">
             <thead>
                 {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()} className="hidden-headers">
+                    <tr {...headerGroup.getHeaderGroupProps()} className="sub-table-header-hidden">
                         {headerGroup.headers.map((column) => (
-                            <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                            <th {...column.getHeaderProps(column.getSortByToggleProps())} className="sub-table-header">
                                 {column.render("Header")}
                             </th>
                         ))}
@@ -110,4 +76,4 @@ function SubTable({ subTableData, subTableColumns, subTableCategory, sorting, ha
     )
 }
 
-export default React.forwardRef(SubTable);
+export default SubTable;
