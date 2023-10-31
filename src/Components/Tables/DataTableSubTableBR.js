@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { useSortBy, useTable } from "react-table"
 
-function SubTable({ subTableData, subTableColumns, subTableCategory }) {
+function SubTable({ subTableData, subTableColumns, subTableCategory, subTableHeaderRef }) {
     const columns = useMemo(() => subTableColumns, [subTableColumns])
     const data = useMemo(() => subTableData, [subTableData])
 
@@ -28,8 +28,11 @@ function SubTable({ subTableData, subTableColumns, subTableCategory }) {
             <thead>
                 {headerGroups.map((headerGroup) => (
                     <tr {...headerGroup.getHeaderGroupProps()} className="sub-table-header-hidden">
-                        {headerGroup.headers.map((column) => (
-                            <th {...column.getHeaderProps(column.getSortByToggleProps())} className="sub-table-header">
+                        {headerGroup.headers.map((column, index) => (
+                            <th {...column.getHeaderProps(column.getSortByToggleProps())}
+                            className="sub-table-header"
+                            ref={(el) => (subTableHeaderRef[index] = el)} // Assign the ref based on index
+                            >   
                                 {column.render("Header")}
                             </th>
                         ))}

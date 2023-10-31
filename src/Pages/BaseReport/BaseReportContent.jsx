@@ -1,11 +1,11 @@
-import React, {useEffect, useRef } from "react"
+import React from "react"
 import MainTable from "../../Components/Tables/DataTableMainTableBR"
 import SubTable from "../../Components/Tables/DataTableSubTableBR"
 import { BaseReportData } from "./Data/BaseReportData"
 import { GenerateBRColumns } from "./Data/BaseReportColumnsGenerator"
 
 export default function BaseReportContent() {
-    const mainTableHeaderRef = useRef();
+    const subTableHeaderRefs = Array(4).fill(React.createRef());
 
     const headers = [
         {label: "Postalnumber", id: "postalNumber"},
@@ -43,39 +43,18 @@ export default function BaseReportContent() {
     const holidayColumns = GenerateBRColumns({houseType: "holiday", splitDataset: holidayData})
 
     const subTables = [
-        <SubTable subTableData={villaData} subTableColumns={villaColumns} subTableCategory={"Villas / Townhousing"}/>,
-        <SubTable subTableData={condoData} subTableColumns={condoColumns} subTableCategory={"Condominiums"}/>,
-        <SubTable subTableData={coopData} subTableColumns={coopColumns} subTableCategory={"Cooperative Housings"}/>,
-        <SubTable subTableData={holidayData} subTableColumns={holidayColumns} subTableCategory={"Holiday Housings"}/>,
+        <SubTable subTableData={villaData} subTableColumns={villaColumns} subTableCategory={"Villas / Townhousing"} subTableHeaderRef={subTableHeaderRefs[0]}/>,
+        <SubTable subTableData={condoData} subTableColumns={condoColumns} subTableCategory={"Condominiums"} subTableHeaderRef={subTableHeaderRefs[1]}/>,
+        <SubTable subTableData={coopData} subTableColumns={coopColumns} subTableCategory={"Cooperative Housings"} subTableHeaderRef={subTableHeaderRefs[2]}/>,
+        <SubTable subTableData={holidayData} subTableColumns={holidayColumns} subTableCategory={"Holiday Housings"} subTableHeaderRef={subTableHeaderRefs[3]}/>,
     ]
-
-    useEffect(() => {
-        const mainTableHeader = mainTableHeaderRef.current;
-        console.log(mainTableHeader)
-
-        if (mainTableHeader) {
-            const handleMainTableHeaderClick = () => {
-                const subTableHeaders = document.querySelectorAll(".sub-table-header")
-
-                subTableHeaders.forEach((subTableHeader) => {
-                    subTableHeader.click();
-                });
-            };
-
-            mainTableHeader.addEventListener("click", handleMainTableHeaderClick)
-
-            return () => {
-                mainTableHeader.removeEventListener("click", handleMainTableHeaderClick)
-            };
-        }
-    }, [mainTableHeaderRef])
 
     return (
         <div>
             <MainTable
             tableHeaders={headers}
             subTables={subTables}
-            mainTableHeaderRef={mainTableHeaderRef}
+            subTableHeaderRefs={subTableHeaderRefs}
             />
         </div>
     )
