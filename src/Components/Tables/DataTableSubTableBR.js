@@ -1,14 +1,13 @@
 import React, { useMemo } from "react";
-import { useSortBy, useTable } from "react-table"
+import { useTable } from "react-table"
 
-function SubTable({ subTableData, subTableColumns, subTableCategory, subTableHeaderRef }) {
+function SubTable({ subTableData, subTableColumns, subTableCategory }) {
     const columns = useMemo(() => subTableColumns, [subTableColumns])
     const data = useMemo(() => subTableData, [subTableData])
 
     const {
         getTableProps,
         getTableBodyProps,
-        headerGroups,
         footerGroups,
         rows,
         prepareRow,
@@ -16,8 +15,7 @@ function SubTable({ subTableData, subTableColumns, subTableCategory, subTableHea
         {
             columns,
             data,
-        },
-        useSortBy
+        }
     )
 
     // Short method for making sure that the footer in the table gets the right alternating color
@@ -26,18 +24,6 @@ function SubTable({ subTableData, subTableColumns, subTableCategory, subTableHea
     return (
         <table {...getTableProps()} className="Subtable">
             <thead>
-                {headerGroups.map((headerGroup) => (
-                    <tr {...headerGroup.getHeaderGroupProps()} className="sub-table-header-hidden">
-                        {headerGroup.headers.map((column, index) => (
-                            <th {...column.getHeaderProps(column.getSortByToggleProps())}
-                            className="sub-table-header"
-                            ref={(el) => (subTableHeaderRef[index] = el)} // Assign the ref based on index
-                            >   
-                                {column.render("Header")}
-                            </th>
-                        ))}
-                    </tr>
-                ))}
                 <tr>
                     {subTableCategory && (
                         <th colSpan={columns.length} className="SubtableHeader">

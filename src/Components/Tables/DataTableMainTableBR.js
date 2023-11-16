@@ -1,12 +1,7 @@
-import React, {useMemo, useState, useEffect} from "react";
+import React, { useMemo } from "react";
 import { useTable } from "react-table";
 
 function MainTable({tableHeaders, subTables, subTableHeaderRefs}) {
-  const mainTableHeaderRefs = Array(tableHeaders.length).fill(React.createRef());
-
-  useEffect(() => {
-    mainTableHeaderRefs.current = tableHeaders.map(() => React.createRef());
-  }, [tableHeaders, mainTableHeaderRefs]);
 
   const columns = useMemo(() => {
     return tableHeaders.map((header) => ({
@@ -23,12 +18,12 @@ function MainTable({tableHeaders, subTables, subTableHeaderRefs}) {
     data: []
   });
 
-  const [sorting, setSorting] = useState({
+  /*const [sorting, setSorting] = useState({
     attribute: null,
     order: null,
-  })
+  })*/
 
-  const handleSorting = (column, index) => {
+  /*const handleSorting = (column, index) => {
     if (sorting.attribute === column.id) {
       if (sorting.order === "asc") {
         setSorting({
@@ -54,10 +49,10 @@ function MainTable({tableHeaders, subTables, subTableHeaderRefs}) {
     if (subTableHeaderRefs[index] && subTableHeaderRefs[index].current) {
       subTableHeaderRefs[index].current.click();
     }
-  };
+  };*/
 
 
-  const getSortIcon = (column) => {
+  /*const getSortIcon = (column) => {
     if (sorting.attribute === column.id) {
       if (sorting.order === 'asc') {
         return '↑';
@@ -68,33 +63,7 @@ function MainTable({tableHeaders, subTables, subTableHeaderRefs}) {
       }
     }
     return '';
-  };
-
-  useEffect(() => {
-    const handleMainTableHeaderClick = () => {
-      subTableHeaderRefs.forEach((ref) => {
-        if (ref.current) {
-          ref.current.click(); // Trigger the click event on sub-table headers
-        }
-      });
-  
-      mainTableHeaderRefs.current.forEach((ref) => {
-        if (ref.current) {
-          ref.current.addEventListener("click", handleMainTableHeaderClick);
-        }
-      });
-  
-      return () => {
-        mainTableHeaderRefs.current.forEach((ref) => {
-          if (ref.current) {
-            ref.current.removeEventListener("click", handleMainTableHeaderClick);
-          }
-        });
-      };
-    };
-  
-    handleMainTableHeaderClick(); // Invoke the function immediately
-  }, [mainTableHeaderRefs, subTableHeaderRefs]);
+  };*/
 
   return (
     <table {...getTableProps()} className="BaseReportTable">
@@ -103,12 +72,9 @@ function MainTable({tableHeaders, subTables, subTableHeaderRefs}) {
                 <tr {...headerGroup.getHeaderGroupProps()}>
                     {headerGroup.headers.map((column, index) => (
                         <th {...column.getHeaderProps()} key={index} className="main-table-header">
-                          <div 
-                          onClick={() => handleSorting(column, index)}
-                          ref={mainTableHeaderRefs.current[index]}
-                          >
+                          <div>
                             {column.render("Header")}
-                            {getSortIcon(column)}
+                            {/*getSortIcon(column)*/}
                           </div>
                         </th>
                     ))}
@@ -120,6 +86,7 @@ function MainTable({tableHeaders, subTables, subTableHeaderRefs}) {
                 <tr key={index}>
                     <td colSpan={tableHeaders.length}>
                       {subTable}
+                      <br/>
                     </td>
                 </tr>
             ))}
