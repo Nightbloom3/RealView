@@ -1,0 +1,128 @@
+[
+  {
+    "name": "House 1",
+    "latitude": 55.680825,
+    "longitude": 12.516013,
+    "zipCode": "1050",
+    "city": "Copenhagen",
+    "commune": "Copenhagen",
+    "region": "Hovedstaden"
+  },
+  {
+    "name": "House 2",
+    "latitude": 55.73629251717131,
+    "longitude": 12.568394062182847,
+    "zipCode": "2100",
+    "city": "Copenhagen East",
+    "commune": "Copenhagen",
+    "region": "Hovedstaden"
+  },
+  {
+    "name": "House 123",
+    "latitude": 55.73629251717131,
+    "longitude": 12.568394062182847,
+    "zipCode": "2100",
+    "city": "Copenhagen East",
+    "commune": "Copenhagen",
+    "region": "Hovedstaden"
+  },
+  {
+    "name": "House 3",
+    "latitude": 12.516013,
+    "longitude": 55.680825,
+    "zipCode": "2200",
+    "city": "Copenhagen North",
+    "commune": "Copenhagen",
+    "region": "Hovedstaden"
+  },
+  {
+    "name": "House 4",
+    "latitude": 55.6646,
+    "longitude": 12.5892,
+    "zipCode": "2300",
+    "city": "Copenhagen South",
+    "commune": "Copenhagen",
+    "region": "Hovedstaden"
+  },
+  {
+    "name": "House 5",
+    "latitude": 55.6992,
+    "longitude": 12.5231,
+    "zipCode": "2400",
+    "city": "Copenhagen Northwest",
+    "commune": "Copenhagen",
+    "region": "Hovedstaden"
+  },
+  {
+    "name": "House 6",
+    "latitude": 55.6493,
+    "longitude": 12.6111,
+    "zipCode": "2450",
+    "city": "Copenhagen Southwest",
+    "commune": "Copenhagen",
+    "region": "Hovedstaden"
+  },
+  {
+    "name": "House 7",
+    "latitude": 55.6614,
+    "longitude": 12.54,
+    "zipCode": "1500",
+    "city": "Copenhagen West",
+    "commune": "Copenhagen",
+    "region": "Hovedstaden"
+  },
+  {
+    "name": "House 8",
+    "latitude": 55.6533,
+    "longitude": 12.1863,
+    "zipCode": "2640",
+    "city": "Hedehusene",
+    "commune": "Høje-Taastrup",
+    "region": "Hovedstaden"
+  },
+  {
+    "name": "House 9",
+    "latitude": 55.6411,
+    "longitude": 12.1806,
+    "zipCode": "2640",
+    "city": "Fløng",
+    "commune": "Høje-Taastrup",
+    "region": "Hovedstaden"
+  },
+  {
+    "name": "House 10",
+    "latitude": 55.6359,
+    "longitude": 12.1577,
+    "zipCode": "2640",
+    "city": "Charlotteager",
+    "commune": "Høje-Taastrup",
+    "region": "Hovedstaden"
+  },
+  {
+    "name": "House 11",
+    "latitude": 55.6302,
+    "longitude": 12.1555,
+    "zipCode": "2640",
+    "city": "Kallerup",
+    "commune": "Høje-Taastrup",
+    "region": "Hovedstaden"
+  },
+  {
+    "name": "House 12",
+    "latitude": 55.0,
+    "longitude": 10.0,
+    "zipCode": "2640",
+    "city": "Test",
+    "commune": "Test",
+    "region": "Test"
+  },
+  {
+    "name": "House 13",
+    "latitude": 55.0,
+    "longitude": 11.0,
+    "zipCode": "2640",
+    "city": "Test",
+    "commune": "Test",
+    "region": "Test"
+  }
+]

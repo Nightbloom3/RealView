@@ -128,7 +128,7 @@ function SearchRealtor() {
     }
   };
   const handleSelectCity = (city) => {
-    setSearchText(city); // Update the search field when a city is selected
+    setSearchText(city || ''); // Update the search field when a city is selected but also Ensures city is not undefined or null
   };
 
   return (
