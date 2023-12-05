@@ -4,8 +4,8 @@
     "latitude": 55.680825,
     "longitude": 12.516013,
     "zipCode": "1050",
-    "city": "Copenhagen",
-    "commune": "Copenhagen",
+    "city": "København",
+    "commune": "København",
     "region": "Hovedstaden"
   },
   {
@@ -13,8 +13,8 @@
     "latitude": 55.73629251717131,
     "longitude": 12.568394062182847,
     "zipCode": "2100",
-    "city": "Copenhagen East",
-    "commune": "Copenhagen",
+    "city": "København Øst",
+    "commune": "København",
     "region": "Hovedstaden"
   },
   {
@@ -22,8 +22,8 @@
     "latitude": 55.73629251717131,
     "longitude": 12.568394062182847,
     "zipCode": "2100",
-    "city": "Copenhagen East",
-    "commune": "Copenhagen",
+    "city": "København Øst",
+    "commune": "København",
     "region": "Hovedstaden"
   },
   {
@@ -31,8 +31,8 @@
     "latitude": 12.516013,
     "longitude": 55.680825,
     "zipCode": "2200",
-    "city": "Copenhagen North",
-    "commune": "Copenhagen",
+    "city": "København Nord",
+    "commune": "København",
     "region": "Hovedstaden"
   },
   {
@@ -40,8 +40,8 @@
     "latitude": 55.6646,
     "longitude": 12.5892,
     "zipCode": "2300",
-    "city": "Copenhagen South",
-    "commune": "Copenhagen",
+    "city": "København Syd",
+    "commune": "København",
     "region": "Hovedstaden"
   },
   {
@@ -49,8 +49,8 @@
     "latitude": 55.6992,
     "longitude": 12.5231,
     "zipCode": "2400",
-    "city": "Copenhagen Northwest",
-    "commune": "Copenhagen",
+    "city": "København Nordvest",
+    "commune": "København",
     "region": "Hovedstaden"
   },
   {
@@ -58,8 +58,8 @@
     "latitude": 55.6493,
     "longitude": 12.6111,
     "zipCode": "2450",
-    "city": "Copenhagen Southwest",
-    "commune": "Copenhagen",
+    "city": "København Sydvest",
+    "commune": "København",
     "region": "Hovedstaden"
   },
   {
@@ -67,14 +67,14 @@
     "latitude": 55.6614,
     "longitude": 12.54,
     "zipCode": "1500",
-    "city": "Copenhagen West",
-    "commune": "Copenhagen",
+    "city": "København Vest",
+    "commune": "København",
     "region": "Hovedstaden"
   },
   {
     "name": "House 8",
-    "latitude": 55.6533,
-    "longitude": 12.1863,
+    "latitude": 55.64771294932044,
+    "longitude": 12.304523563687317,
     "zipCode": "2640",
     "city": "Hedehusene",
     "commune": "Høje-Taastrup",
@@ -109,12 +109,12 @@
   },
   {
     "name": "House 12",
-    "latitude": 55.0,
-    "longitude": 10.0,
+    "latitude": 55.64771294932044,
+    "longitude": 12.304523563687317,
     "zipCode": "2640",
-    "city": "Test",
-    "commune": "Test",
-    "region": "Test"
+    "city": "Taastrup",
+    "commune": "Taastrup",
+    "region": "Taastrup"
   },
   {
     "name": "House 13",
