@@ -21,31 +21,7 @@ function MapComponet({ onSelectCity }) {
   const [placeMarkerMode, setPlaceMarkerMode] = useState(false); // Added state to track "Place Marker" button click
   const [housesForSale, setHousesForSale] = useState(HouseForSale); // Store the houses for sale data
 
-// This was supposed to work with the freedraw plugin - it does not --- need fix
-  // // Function to calculate the count of houses within polygons
-  // const countHousesWithinPolygons = () => {
-  //   if (drawnItems && drawnItems.features && drawnItems.features.length > 0) {
-  //     const drawnPolygons = drawnItems.features.map((feature) => feature.geometry.coordinates[0]);
-  //     const housesWithinPolygons = [];
-  
-  //     // Iterate through houses and check if they are within any drawn polygon
-  //     for (const house of housesForSale) {
-  //       const houseCoordinates = [house.longitude, house.latitude];
-  //       const isHouseWithinPolygon = isPointInAnyPolygon(houseCoordinates, drawnPolygons);
-  
-  //       if (isHouseWithinPolygon) {
-  //         housesWithinPolygons.push(house);
-  //       }
-  //     }
-  
-  //     console.log("Number of houses for sale within polygons:", housesWithinPolygons.length);
-  //     console.log("Houses for sale within polygons:", housesWithinPolygons);
-  //   } else {
-  //     console.log("No polygons drawn or invalid data.");
-  //   }
-  // };
-
-    // Test the point-in-polygon library
+  // Test the point-in-polygon library
     const testPointInPolygon = () => {
       // Define a polygon as an array of coordinates [longitude, latitude]
       const polygon = [
@@ -193,50 +169,65 @@ function isPointInAnyPolygon(point, polygons) {
     return null;
   }
 
-  const handleMapClick = async (event) => {
-    const lat = event.latlng.lat;
-    const lng = event.latlng.lng;
-  
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
-      );
-      const data = await response.json();
-  
-      const city = data.address.city || data.address.town || data.address.village;
-  
-      // Check if the returned city name matches any city in your data
-      const matchingCity = cityBoundaries.find((cityObject) => cityObject.name === city);
-  
-      if (matchingCity) {
-        // Set the coordinates for the matched city area
-        setCityAreaCoordinates(matchingCity.coordinates);
-        setSelectedCity(matchingCity.name);
+const handleMapClick = async (event) => {
+  const lat = event.latlng.lat;
+  const lng = event.latlng.lng;
+
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+    );
+    const data = await response.json();
+
+    const city = data.address.city || data.address.town || data.address.village;
+
+    console.log("Clicked at Latitude:", lat);
+    console.log("Clicked at Longitude:", lng);
+    console.log("City returned by reverse geocoding:", city);
+
+    onSelectCity(city);
+
+    if (placeMarkerMode) {
+      setMarkerCoordinates([lat, lng]);
+      setPlaceMarkerMode(false);
+    }
+
+    // API Request - Geo Reverse Coding
+    const cityInfoResponse = await fetch(
+      `https://api.dataforsyningen.dk/steder?hovedtype=Bebyggelse&undertype
+      =by&primærtnavn=${city}&format=geojson`
+    );
+
+    // Parse the response from the GeoJSON API
+    const cityInfoData = await cityInfoResponse.json();
+
+    // Check if there are features in the response
+    if (cityInfoData.features.length > 0) {
+      // Extract the geometry information from the first feature
+      const geometry = cityInfoData.features[0].geometry;
+
+      // Check the type of geometry (Polygon or MultiPolygon)
+      if (geometry.type === "Polygon") {
+        // For a Polygon, directly set the coordinates in state
+        setCityAreaCoordinates(geometry.coordinates[0]);
+      } else if (geometry.type === "MultiPolygon") {
+        // For a MultiPolygon, directly set the coordinates in state
+        setCityAreaCoordinates(
+          geometry.coordinates.reduce((accumulator, polygon) => {
+            // Flatten each polygon's coordinates and concatenate to the accumulator
+            return [...accumulator, ...polygon[0]];
+          }, [])
+        );
       } else {
-        // Reset the city area coordinates and selected city
-        setCityAreaCoordinates([[0, 0]]);
-        setSelectedCity(null);
+        // Handle unknown geometry type
+        console.error("Unknown geometry type:", geometry.type);
+        // Optionally, provide feedback to the user, e.g., display an error message
       }
-  
-      // Perform additional actions based on the clicked coordinates
-      // For example, handling marker placement
-  
-      console.log("Clicked at Latitude:", lat);
-      console.log("Clicked at Longitude:", lng);
-      console.log("City returned by reverse geocoding:", city);
-      console.log("Matching city polygon coordinates:", matchingCity.coordinates);
-  
-      onSelectCity(city);
-  
-      if (placeMarkerMode) {
-        setMarkerCoordinates([lat, lng]);
-        setPlaceMarkerMode(false);
-      }
-    } catch (error) {
-      console.error("Error fetching reverse geocoding data:", error);
-    };
-  };
-  
+    }
+  } catch (error) {
+    console.error("Error fetching reverse geocoding data:", error);
+  }
+};
   
 
   const customIcon = new Icon({
@@ -245,14 +236,6 @@ function isPointInAnyPolygon(point, polygons) {
     iconSize: [26, 26], // size of the icon
   });
 
-  const cityAreaFeature = {
-    type: "Feature",
-    geometry: {
-      type: "Polygon",
-      coordinates: [cityAreaCoordinates],
-    },
-    properties: {},
-  };
 
   // Map Container is just to determine where on the map i should focus when render
   // and the size  and zoom
@@ -265,7 +248,10 @@ return (
       Enable Delete Mode
     </button>
     <button onClick={() => setPlaceMarkerMode(true)}>Place Marker</button>
-    <button onClick={countHousesWithinPolygons}>Count Houses in Polygons</button> {/* Add this button */}
+    <button onClick={countHousesWithinPolygons}>
+      Count Houses in Polygons
+    </button>{" "}
+    {/* Add this button */}
     <button onClick={testPointInPolygon}>Test Point in Polygon</button>
     <MapContainer
       center={[56.2639, 9.5018]}
@@ -292,24 +278,33 @@ return (
       There by forceing a re-render of the map, showing the polygons       */}
       {cityAreaCoordinates[0][0] !== 0 && (
         <GeoJSON
-          data={cityAreaFeature}
+          data={{
+            type: "Feature",
+            geometry: {
+              type: "Polygon",
+              coordinates: [cityAreaCoordinates],
+            },
+            properties: {},
+          }}
           style={() => ({
-            color: "blue", // Change the color of the polygon border
-            fillColor: "blue", // Change the fill color of the polygon
-            weight: 2, // Adjust the border weight
-            opacity: 1, // Adjust the opacity of the polygon border
-            fillOpacity: 0.5, // Adjust the fill opacity
+            color: "blue",
+            fillColor: "blue",
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.5,
           })}
         />
       )}
-        {markerCoordinates && (
-          <Marker position={markerCoordinates} icon={customIcon}>
-            <Popup>Marker Location</Popup>
-          </Marker>
-        )}
+
+      {markerCoordinates && (
+        <Marker position={markerCoordinates} icon={customIcon}>
+          <Popup>Marker Location</Popup>
+        </Marker>
+      )}
+      
     </MapContainer>
   </div>
-  );
+);
 }
 
 export default MapComponet;
