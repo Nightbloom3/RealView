@@ -8,7 +8,7 @@ import pointInPolygon from 'point-in-polygon';
 import 'leaflet/dist/leaflet.css';
 import HouseForSale from "./HouseForSale.json"; // Import the JSON file
 
-function MapComponet({ onSelectCity }) {
+function MapComponent({ onSelectCity }) {
   const [drawingMode, setDrawingMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(true); // Start with Delete Mode active
   const [drawnItems, setDrawnItems] = useState({});
@@ -30,8 +30,7 @@ function MapComponet({ onSelectCity }) {
       );
       const data = await response.json();
 
-      const city =
-        data.address.city || data.address.town || data.address.village;
+      const city = data.address.city || data.address.town || data.address.village;
 
       console.log("Clicked at Latitude:", lat);
       console.log("Clicked at Longitude:", lng);
@@ -190,6 +189,7 @@ function MapComponet({ onSelectCity }) {
         center={[56.2639, 9.5018]}
         zoom={7}
         style={{ height: "600px", width: "100%" }}
+        data-testid="your-map-element"
       >
         {/* makes it possible to have the mouse click */}
         <ClickListener />
@@ -239,5 +239,5 @@ function MapComponet({ onSelectCity }) {
   );
 }
 
-export default MapComponet;
+export default MapComponent;
 

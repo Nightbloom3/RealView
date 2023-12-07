@@ -45,6 +45,10 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.1.5"
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^12.1.2",
+    "jest": "^27.5.1",
+    "jest-fetch-mock": "^3.0.3",
+    "jest-watch-typeahead": "^2.2.2"
   }
 }

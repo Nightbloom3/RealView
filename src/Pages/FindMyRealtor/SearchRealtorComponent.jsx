@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import realtorData from "./RealtorData.json";
-import MapComponet from "./MapComponet";
+import MapComponent from "./MapComponent";
 import "./Search.css";
 
 function SearchRealtor() {
@@ -237,8 +237,8 @@ function SearchRealtor() {
         </div>
       </div>
 
-      <div className="mapComponetDiv">
-        <MapComponet onSelectCity={handleSelectCity} />
+      <div className="MapComponentDiv">
+        <MapComponent onSelectCity={handleSelectCity} />
       </div>
     </div>
   );
