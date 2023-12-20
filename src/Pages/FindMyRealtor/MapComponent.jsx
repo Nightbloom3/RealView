@@ -98,8 +98,8 @@ function MapComponent({ onSelectCity }) {
       for (const house of housesForSale) {
         if (house.city === selectedCity) {
           const houseCoordinates = [house.longitude, house.latitude];
-          console.log("House Coordinates:", houseCoordinates);
-          console.log("City Coordinates:", cityAreaCoordinates);
+          // console.log("House Coordinates:", houseCoordinates);
+          // console.log("City Coordinates:", cityAreaCoordinates);
 
           const isHouseWithinCity = isPointInAnyPolygon(houseCoordinates, [
             cityAreaCoordinates,
@@ -132,6 +132,21 @@ function MapComponent({ onSelectCity }) {
     }
     return false;
   }
+
+  const getHousesForSaleBySelectedCity = () => {
+    const housesWithinSelectedCity = [];
+  
+    for (const house of housesForSale) {
+      if (house.city === selectedCity) {
+        housesWithinSelectedCity.push(house);
+      }
+    }
+  
+    console.log(`Number of houses for sale in ${selectedCity}:`, housesWithinSelectedCity.length);
+    console.log(`Houses for sale in ${selectedCity}:`, housesWithinSelectedCity);
+  
+    return housesWithinSelectedCity;
+  };
 
   const handleEscapeKey = useCallback(
     (event) => {
@@ -184,6 +199,7 @@ function MapComponent({ onSelectCity }) {
       <button onClick={handleToggleDeleteMode} disabled={deleteMode}>Enable Delete Mode</button>
       <button onClick={() => setPlaceMarkerMode(true)}>Place Marker</button>
       <button onClick={countHousesWithinPolygons}>Count Houses in Polygons</button>
+      <button onClick={getHousesForSaleBySelectedCity}>Count Houses in Polygons</button>
 
       <MapContainer
         center={[56.2639, 9.5018]}

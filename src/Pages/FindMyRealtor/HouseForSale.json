@@ -76,53 +76,44 @@
     "latitude": 55.64771294932044,
     "longitude": 12.304523563687317,
     "zipCode": "2640",
-    "city": "Hedehusene",
+    "city": "Taastrup",
     "commune": "Høje-Taastrup",
     "region": "Hovedstaden"
   },
   {
-    "name": "House 9",
-    "latitude": 55.6411,
-    "longitude": 12.1806,
+    "name": "Fløng Skole",
+    "latitude": 55.661207,
+    "longitude": 12.179162,
     "zipCode": "2640",
     "city": "Fløng",
     "commune": "Høje-Taastrup",
     "region": "Hovedstaden"
   },
   {
-    "name": "House 10",
-    "latitude": 55.6359,
-    "longitude": 12.1577,
+    "name": "Daginstitutionen Solhøj",
+    "latitude": 55.649259,
+    "longitude": 12.220802,
     "zipCode": "2640",
     "city": "Charlotteager",
     "commune": "Høje-Taastrup",
     "region": "Hovedstaden"
   },
   {
-    "name": "House 11",
-    "latitude": 55.6302,
-    "longitude": 12.1555,
+    "name": "Kallerup Renseanlæg",
+    "latitude": 55.663447,
+    "longitude": 12.197665,
     "zipCode": "2640",
     "city": "Kallerup",
     "commune": "Høje-Taastrup",
     "region": "Hovedstaden"
   },
   {
-    "name": "House 12",
-    "latitude": 55.64771294932044,
-    "longitude": 12.304523563687317,
+    "name": "Borgerskolen - Taastrup",
+    "latitude": 55.645534,
+    "longitude": 12.298098,
     "zipCode": "2640",
     "city": "Taastrup",
     "commune": "Taastrup",
     "region": "Taastrup"
-  },
-  {
-    "name": "House 13",
-    "latitude": 55.0,
-    "longitude": 11.0,
-    "zipCode": "2640",
-    "city": "Test",
-    "commune": "Test",
-    "region": "Test"
   }
 ]
