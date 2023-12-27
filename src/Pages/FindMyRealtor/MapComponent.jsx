@@ -199,7 +199,7 @@ function MapComponent({ onSelectCity }) {
       <button onClick={handleToggleDeleteMode} disabled={deleteMode}>Enable Delete Mode</button>
       <button onClick={() => setPlaceMarkerMode(true)}>Place Marker</button>
       <button onClick={countHousesWithinPolygons}>Count Houses in Polygons</button>
-      <button onClick={getHousesForSaleBySelectedCity}>Count Houses in Polygons</button>
+      <button onClick={getHousesForSaleBySelectedCity}>Get Houses For Sale By Selected City</button>
 
       <MapContainer
         center={[56.2639, 9.5018]}
