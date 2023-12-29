@@ -11,6 +11,12 @@ const searchTermENV = process.env.SEARCHTEXT ?? "Volbeat";
   });
   const page = await browser.newPage();
   try {
+    let printValues = {
+      videoMatch: "",
+      commentsAmount: "",
+      videoSuggested: "",
+    };
+
     await page.setViewport({
       width: 1920,
       height: 1080,
@@ -30,10 +36,10 @@ const searchTermENV = process.env.SEARCHTEXT ?? "Volbeat";
     await page.waitForSelector("#search-input #search");
     await page.type("#search-input #search", searchTermCLI, { delay: 100 });
 
-    await page.emulateVisionDeficiency("blurredVision");
-    await page.screenshot({ path: "../test/youtube-home-blurred.jpg" });
-    await page.emulateVisionDeficiency("none");
-    await page.screenshot({ path: "../test/youtube-home.jpg" });
+    //await page.emulateVisionDeficiency("blurredVision");
+    //await page.screenshot({ path: "../test/youtube-home-blurred.jpg" });
+    //await page.emulateVisionDeficiency("none");
+    //await page.screenshot({ path: "../test/youtube-home.jpg" });
 
     await Promise.all([
       page.waitForNavigation(),
@@ -42,7 +48,7 @@ const searchTermENV = process.env.SEARCHTEXT ?? "Volbeat";
     ]);
     //wait till next page
     await page.waitForSelector("ytd-video-renderer h3 a#video-title");
-    await page.screenshot({ path: "../test/search-results.jpg" });
+    //await page.screenshot({ path: "../test/search-results.jpg" });
 
     const firstMatch = await page.$eval(
       "ytd-video-renderer h3 a#video-title",
@@ -51,13 +57,15 @@ const searchTermENV = process.env.SEARCHTEXT ?? "Volbeat";
         return elem.innerText;
       }
     );
-    console.log({ firstMatch });
+    //console.log({ firstMatch });
+    printValues.videoMatch = firstMatch;
+
     await Promise.all([
       page.waitForNavigation(),
       page.click("ytd-video-renderer h3 a#video-title"),
       new Promise((resolve) => setTimeout(resolve, 4000)),
     ]);
-    await page.screenshot({ path: "../test/first-video.jpg" });
+    //await page.screenshot({ path: "../test/first-video.jpg" });
 
     const scrollToComments = async () => {
       const commentsSelector = "ytd-comments";
@@ -82,7 +90,8 @@ const searchTermENV = process.env.SEARCHTEXT ?? "Volbeat";
           return h2.innerText;
         }
       );
-      console.log({ videoComments });
+      //console.log({ videoComments });
+      printValues.commentsAmount = videoComments;
 
       await page.evaluate(() => {
         window.scrollTo(0, 0);
@@ -97,7 +106,10 @@ const searchTermENV = process.env.SEARCHTEXT ?? "Volbeat";
         return elem.querySelector("h3").innerText;
       }
     );
-    console.log({ firstSuggested });
+    //console.log({ firstSuggested });
+    printValues.videoSuggested = firstSuggested;
+
+    console.log(printValues);
   } catch (error) {
     console.log("an error occured", error);
   } finally {
