@@ -12,6 +12,7 @@ function MapComponent({ onSelectCity }) {
   const [drawingMode, setDrawingMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(true); // Start with Delete Mode active
   const [drawnItems, setDrawnItems] = useState({});
+  const [drawnPolygons, setDrawnPolygons] = useState([]);
   const freedrawRef = useRef(null);
   // Leaflet can't render undefined values.
   const [cityAreaCoordinates, setCityAreaCoordinates] = useState([[0, 0]]); // Initialize with a placeholder coordinate
@@ -200,6 +201,7 @@ function MapComponent({ onSelectCity }) {
       <button onClick={() => setPlaceMarkerMode(true)}>Place Marker</button>
       <button onClick={countHousesWithinPolygons}>Count Houses in Polygons</button>
       <button onClick={getHousesForSaleBySelectedCity}>Get Houses For Sale By Selected City</button>
+      <button onClick={() => console.log("Drawn Polygons:", drawnPolygons)}>Log Drawn Polygons</button>
 
       <MapContainer
         center={[56.2639, 9.5018]}
@@ -215,12 +217,13 @@ function MapComponent({ onSelectCity }) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
 
-        <Freedraw
-          mode={mode}
-          features={drawnItems}
-          setFeatures={setDrawnItems}
-          ref={freedrawRef}
-        />
+<Freedraw
+  mode={mode}
+  features={drawnItems}
+  setFeatures={setDrawnItems}
+  onChange={(event) => setDrawnPolygons(event.features)}
+  ref={freedrawRef}
+/>
 
         {/* Conditional rendering of the city area
       The city area polygon is only rendered if cityAreaCoordinates does not contain the initial placeholder value [0, 0]
