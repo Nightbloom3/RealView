@@ -1,0 +1,77 @@
+.BaseReportTable {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border-spacing: 2px;
+    position: relative;
+}
+
+.BaseReportTable th {
+    background-color: #5f84a9;
+    color: #F8F8F8;
+    border: 2px solid #F8F8F8;
+    padding: 2px;
+    width: 10%
+}
+
+.Subtable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+.Subtable th,
+.Subtable td {
+    border: 1px solid #F8F8F8;
+    padding: 1px;
+    color: #295b8c;
+    width: 10%
+}
+
+.Subtable th {
+  background-color: #5f84a9;
+  color: #F8F8F8;
+  border: 1px solid #F8F8F8;
+  padding: 12px;
+  text-align: left;
+}
+
+.Subtable td {
+    border: 1px solid #F8F8F8;
+    padding: 1px;
+    color: #295b8c;
+  }
+
+.Subtable tbody tr:nth-child(even) {
+    background-color: #d9e2ea;
+}
+  
+.Subtable tbody tr:nth-child(odd) {
+    background-color: #ecf0f5;
+}
+  
+.Subtable tbody tr:hover:nth-child(even) {
+    background-color: #93aecf;
+}
+
+.Subtable tbody tr:hover:nth-child(odd) {
+    background-color: #a9c9e6;
+}
+
+.sub-table-header-hidden {
+    visibility: hidden;
+}
+
+.choice-div fieldset {
+    background-color: #5f84a9;
+    color: #F8F8F8;
+    border: 2px solid #F8F8F8;
+    padding: 10px;
+}
+
+.choice-div legend {
+    background-color: #5f84a9;
+    border: 2px solid transparent #F8F8F8;
+    color: #F8F8F8;
+    padding: 0 10px;
+    margin: 0;
+}
